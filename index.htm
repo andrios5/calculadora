@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><h1><img src="favicon.ico" alt="Calculadora">Calculadora Multifuncional</h1></header>
+
+    <main>
+        <h2>⏲️ Contador Diario</h2>
+        <section class="out">
+                <button id="menos"id="menos">-</button>
+                <section class="tela"></section>
+                <button id="mais"id="mais">+</button><br>
+                <section class="tela15"></section>
+                <button id="reset"id="reset">Reset Dia</button>
+                <section class="tela2"></section>
+                <button id="reset2"id="reset">Reset Mês</button>
+                <section class="tela25"></section>
+        </section>
+
+        <h2>💸 Compara Preço</h2>
+        <section class="out" id="comparaPreco">
+            <p class="titulo">1º Preço</p><p class="titulo">2º Preço</p><br>
+            <input type="number" name="valor1" id="valor1" placeholder="Digite o 1º preço:">
+            <input type="number" name="valor2" id="valor2" placeholder="Digite o 2º preço:"><br>
+            <p class="titulo">1º Peso</p><p class="titulo">2º Peso</p><br>
+            <input type="number" name="peso1" id="peso1" placeholder="Digite o 1º peso:">
+            <input type="number" name="peso2" id="peso2" placeholder="Digite o 2º peso:"><br>
+            <select name="peso" id="peso"></select>
+            <button id="dif1" id="dif1">Verificar</button>
+            <select name="pes2" id="pes2"></select>
+            <section id="resultado1" class="in">
+            <ul></ul>
+            </section>
+        </section>
+
+        <h2>Medição</h2>
+        <section class="out" id="medicao">
+            <input type="number" name="altura" id="altura" placeholder="Altura:">
+            <input type="number" name="largura" id="largura" placeholder="Largura:">
+            <input type="number" name="profundidade" id="profundidade" placeholder="Profundidade:"><br>
+            <button id="med">Somar</button>
+                <table>
+                    <tbody id="resultadoM">
+                        <tr><th>Altura</th><th>Largura</th><th>m²</th><th id="m3">m³</th></tr>
+                    </tbody>
+                    <tfoot id="resultadoS"></tfoot>
+
+                </table>
+           
+            
+        </section>
+
+        <h2>📅 Verificar Ano Bissexto</h2>
+        <section class="out">
+            <input type="number" name="ano" id="ano" placeholder="Digite um ano:"><br>
+            <button id="anob">Verificar</button>
+            <section id="resultado2" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>📏 Conversor de Medidas</h2>
+        <section class="out">
+            <input type="number" name="medida1" id="medida1" placeholder="Digite uma medida em metros:"><br>
+            <button id="med1">Converter</button>
+            <section id="resultado3" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>🌡️ Conversor de Temperatura</h2>
+        <section class="out">
+            <input type="number" name="temp1" id="temp1" placeholder="Digite a temperatura em C°:"><br>
+            <button id="tem1">Converter</button>
+            <section id="resultado4" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>💵 Conversor R$ → US$</h2>
+        <section class="out">
+            <input type="number" name="dolar1" id="dolar1" placeholder="Digite a cotação do dólar:">
+            <input type="number" name="reais1" id="reais1" placeholder="Digite o valor em R$:"><br>
+            <button id="dolar">Converter</button><br>
+            <section id="resultado5" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>💴 Conversor de Moeda</h2>
+        
+        <section class="out">
+            <div>
+                <select id="from_currency" class="moeda2"></select>
+                <input type="number" id="from_ammount" value="1" class="moeda1"/>
+              </div>
+              <br><button id="swap"> ⇅ </button><br>
+              <select id="to_currency" class="moeda2"></select>
+                <input type="number" id="to_ammount" class="moeda1"/>
+                 </div>
+                 <br><section id="tax_info" class="tela"></section>
+        </section>
+
+    </main>
+    <script src="script.js"></script>
+
+ 
+</body>
+</html>
