@@ -24,9 +24,19 @@ numVal = 0
 numMes = 0
 difdia = 0
 const dataAtual = new Date(); // Cria um objeto Date com a data atual
-let diaDoMes = dataAtual.getDate(); // Obtém o dia do mês atual
 
 
+diaDoMes = diaDoAno(dataAtual) // Chama a função para obter o dia do ano atual
+function diaDoAno(data) {
+  const primeiroDoAno = new Date(data.getFullYear(), 0, 1);
+  const milissegundosNoAno = data - primeiroDoAno;
+  const milissegundosEmUmDia = 1000 * 60 * 60 * 24;
+  const diaDoAno = Math.floor(milissegundosNoAno / milissegundosEmUmDia) + 1;
+  return diaDoAno;
+}
+
+
+// Mostra o dia do mês atual no console
 
 document.querySelector('#mais').addEventListener('click', maisUm)
 document.querySelector('#menos').addEventListener('click', menosUm)
@@ -38,32 +48,30 @@ tela15 = document.querySelector('section.tela15')
 tela2 = document.querySelector('section.tela2')
 tela25 = document.querySelector('section.tela25')
 
+
+dataIni = getCookie('dataIn') //Verifica se a semana passou
+difDia = diaDoMes - dataIni
+if (difDia > 7){
+    resetMes()
+}
+
 lerDia() // Chama a função para ler o cookie e exibir o valor na tela
 checarDataDia() // Chama a função para verificar se o dia do mês mudou e atualizar o cookie
 
 
 let contMes = getCookie('diaDia') // Lê o cookie Da contagem do mês
 numMes = Number(contMes) // Converte o valor do cookie para número
-tela2.innerHTML = `Por mês: ${contMes}` // Mostra o valor do cookie na tela
+tela2.innerHTML = `Semana: ${contMes}` // Mostra o valor do cookie na tela
 
 dataIni = getCookie('dataIn')
 
-if (dataIni > 0){
-    if (dataIni < diaDoMes){ // Mostra a data inicial na tela comos dias passados
-        difdia = diaDoMes - dataIni 
-        tela15.innerHTML = `Dias Passados: ${difdia}<br> Dia Inicial: ${dataIni}`
-        tela15.style.display = 'block'
-    }else{
-    tela15.innerHTML = `Dia Inicial: ${dataIni}` // Mostra a data inicial na tela sem os dias passados
-    tela15.style.display = 'block'}
-}
+
 
 function lerDia(){
     const contDiario = getCookie('conDia') // Lê o cookie
     numVal = Number(contDiario) // Converte o valor do cookie para número
     tela.innerHTML = `${contDiario}` // Mostra o valor do cookie na tela
 }
-
 
 
 function checarDataDia(){
@@ -77,8 +85,10 @@ function checarDataDia(){
         diaAnterior = getCookie('diaAnterior') // Lê o cookie dia anterior
         tela25.innerHTML = `Dia anterior: ${diaAnterior}` // Mostra dia anterior na tela
         contDiario = `${numVal= 0}` // Incrementa o valor do cookie
-        setCookie('conDia', contDiario, 1); // Salva o cookie por 1 dia
-        tela.innerHTML = `${contDiario}`} 
+        setCookie('conDia', contDiario, 1);
+        tela.innerHTML = `${contDiario}`}
+    antSem = getCookie('antSem')
+    
     
 }
 
@@ -98,17 +108,17 @@ function maisUm(){
         dataIni = diaDoMes
         setCookie('dataIn', dataIni, 30)
     }
+    Ano = getCookie
     dataIni = getCookie('dataIn')
     diario = `${numMes+= 1}` // Incrementa o valor do cookie
     setCookie('diaDia', diario, 30); // Salva o cookie por 1 dia
     if (dataIni < diaDoMes){ // Mostra a data inicial na tela comos dias passados
-        difdia = diaDoMes - dataIni 
-        tela15.innerHTML = `Dias Passados: ${difdia}<br> Dia Inicial: ${dataIni}`
+        difdia = diaDoMes - dataIni
+        tela15.innerHTML = `Dias Passados: ${difdia}`
         tela15.style.display = 'block'
-    }else{
-    tela15.innerHTML = `Dia Inicial: ${dataIni}` // Mostra a data inicial na tela sem os dias passados
-    tela15.style.display = 'block'}
-    tela2.innerHTML = `Por mês: ${diario}` 
+    }else{ // Mostra a data inicial na tela sem os dias passados
+    tela15.style.display = 'none'}
+    tela2.innerHTML = `Semana: ${diario}` 
 }
 
 function menosUm(){
@@ -117,27 +127,30 @@ function menosUm(){
     setCookie('conDia', contDiario, 1); // Salva o cookie por 1 dia
     tela.innerHTML = `${contDiario}` // Mostra o valor do cookie na tela
     diario = `${numMes-= 1}` // Incrementa o valor do cookie
-    setCookie('diaDia', diario, 30); // Salva o cookie por 1 dia
-    tela2.innerHTML = `Por mês: ${diario}`
+    tela2.innerHTML = `Semana: ${diario}`
 }
 
 function reset(){
     let contDiario = getCookie('conDia') // Lê o cookie
     contDiario = `${numVal= 0}` // Incrementa o valor do cookie
-    setCookie('conDia', contDiario, 1); // Salva o cookie por 1 dia
+    setCookie('conDia', contDiario, 1);
     tela.innerHTML = `${contDiario}` // Mostra o valor do cookie na tela
 }
 
 function resetMes(){
+
     diario = `${numMes= 0}` // Incrementa o valor do cookie
-    setCookie('diaDia', diario, 30); // Salva o cookie por 1 dia
-    tela2.innerHTML = `Por mês: ${diario}`
+    setCookie('diaDia', diario, 30);
+    tela2.innerHTML = `Semana: ${diario}`
     dataIni = 0
     setCookie('dataIn', dataIni, 30)
     tela15.style.display = 'none'
     tela25.style.display = 'none'
+    difdia = 0
+    
 }
 
+// Compara preços
 
 diaAnterior = getCookie('diaAnterior')
 tela25.innerHTML = `Dia anterior: ${diaAnterior}`
@@ -381,40 +394,59 @@ pes2.innerHTML += `<option value="4">Litros</option>`
 
 //Medição
 
-med = document.querySelector('#med')
-med.addEventListener('click', calcularArea)
+
+med2 = document.querySelector('button#med2')
+med2.addEventListener('click', calcularArea2)
 temp1 = 0
-    function calcularArea(){
+    function calcularArea2(){
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
-        pro = document.querySelector('#profundidade')
-        resM = document.querySelector('#resultadoM')
-        resS = document.querySelector('#resultadoS')
-        tabela = document.querySelector('table')
+        resM2 = document.querySelector('#resultadoM2')
+        resS2 = document.querySelector('#resultadoS2')
+        tabela = document.querySelector('table#m2')
         m3 = document.querySelector('th#m3')
         tabela.style.display = 'block'
         
+        
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (pro.value.includes(',')){pro = pro.replace(",", ".")} //Troca virgula por ponto se tiver
         alt = Number(alt.value)
         lar = Number(lar.value)
-        pro = Number(pro.value)
-        if (pro == 0 || pro == '' || pro == null){
         area = alt * lar
         temp1 += area
-        resM.innerHTML += `<tr><td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`
-        resS.innerHTML = `<tr><th colspan="2">Soma:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
+        resM2.innerHTML += `<tr><td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`
+        resS2.innerHTML = `<tr><th colspan="2">Soma:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#largura').value = ''
-    }else{
-        m3.style.display = 'block'
-        tabela.style.width = '400px'
-        area = alt * lar * pro
-        temp1 += area
-        resM.innerHTML += `<tr><td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td></tr>`
-        resS.innerHTML = `<tr><th colspan="2">Soma:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
-        document.querySelector('#profundidade').value = ''
-    }
+
+}
+
+med3 = document.querySelector('button#med3')
+med3.addEventListener('click', calcularArea3)
+temp2 = 0
+    function calcularArea3(){
+        alt3 = document.querySelector('#alturam3')
+        lar3 = document.querySelector('#larguram3')
+        pro3 = document.querySelector('#profundidadem3')
+        resM3 = document.querySelector('#resultadoM3')
+        resS3 = document.querySelector('#resultadoS3')
+        tabela = document.querySelector('table#m3')
+        tabela.style.display = 'block'
+       
+        
+        if (alt3.value.includes(',')){alt3 = alt3.replace(",", ".")} //Troca virgula por ponto se tiver
+        if (lar3.value.includes(',')){lar3 = lar3.replace(",", ".")} //Troca virgula por ponto se tiver
+        if (pro3.value.includes(',')){pro3 = pro3.replace(",", ".")} //Troca virgula por ponto se tiver
+        alt3 = Number(alt3.value)
+        lar3 = Number(lar3.value)
+        pro3 = Number(pro3.value)
+        
+        aream2 = alt3 * lar3
+        area3 = alt3 * lar3 * pro3
+        temp2 += area3
+        resM3.innerHTML += `<tr><td>${alt3.toLocaleString('pt-BR')}</td> <td>${lar3.toLocaleString('pt-BR')}</td><td>${pro3.toLocaleString('pt-BR')}</td><td>${aream2.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`
+        resS3.innerHTML = `<tr><th colspan="3">Soma:</th> <td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
+        document.querySelector('#profundidadem3').value = ''
+    
 }
     
 

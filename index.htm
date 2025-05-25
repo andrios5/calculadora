@@ -19,7 +19,7 @@
                 <section class="tela15"></section>
                 <button id="reset"id="reset">Reset Dia</button>
                 <section class="tela2"></section>
-                <button id="reset2"id="reset">Reset Mês</button>
+                <button id="reset2"id="reset">Reset Sem</button>
                 <section class="tela25"></section>
         </section>
 
@@ -40,18 +40,42 @@
         </section>
 
         <h2>📏 Medição</h2>
-        <section class="out" id="medicao">
-            <input type="number" name="altura" id="altura" placeholder="Altura:">
-            <input type="number" name="largura" id="largura" placeholder="Largura:">
-            <input type="number" name="profundidade" id="profundidade" placeholder="Profundidade:"><br>
-            <button id="med">Somar</button>
-                <table>
-                    <tbody id="resultadoM">
-                        <tr><th>Altura</th><th>Largura</th><th>m²</th><th id="m3">m³</th></tr>
-                    </tbody>
-                    <tfoot id="resultadoS"></tfoot>
+        <section class="out">
+            <p>Escolha que tipo de medição você quer fazer:</p>
+            <h3 id="tm2">Metros quadrados m²</h3>
+            
+                <section class="in" id="m2">
+                    <input type="number" name="altura" id="altura" placeholder="Altura:">
+                    <input type="number" name="largura" id="largura" placeholder="Largura:">
+                    <button id="med2">Somar</button>
+                        <table id="m2">
+                            <thead>
+                                <tr><th>Altura</th><th>Largura</th><th>m²</th></tr>
+                            </thead>
+                            <tbody id="resultadoM2">
+                            </tbody>
+                            <tfoot id="resultadoS2"></tfoot>
+                        </table>
+            </section>
 
-                </table>
+            <h3 id="tm3">Metros quadrados m³</h3>
+            
+                <section class="in" id="m3">
+                    
+                        <input type="number" name="altura" id="alturam3" placeholder="Altura:">
+                        <input type="number" name="largura" id="larguram3" placeholder="Largura:">
+                        <input type="number" name="profundidade" id="profundidadem3" placeholder="Profundidade:">
+                        <button id="med3">Somar</button>
+                    
+                        <div class="container">
+                            <table id="m3">
+                                <thead><tr><th>Altura</th><th>Largura</th><th>Profundidade</th><th>m²</th><th>m³</th></tr></thead>
+                                <tbody id="resultadoM3"></tbody>
+                                <tfoot id="resultadoS3"></tfoot>
+                            </table>
+                        </div>
+                        </section>
+        </section>
            
             
         </section>
@@ -106,6 +130,9 @@
   gtag('js', new Date());
 
   gtag('config', 'G-RQ819RVB2H');
+
+
+
 </script>
 </body>
 </html>
