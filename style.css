@@ -261,11 +261,11 @@ button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, 
 }
 
 button#UNM{
-    padding: 0;
+    padding: 0 5px;
 }
 
 button#UN{
-    padding: 0;
+    padding: 0 10px;
     display: none;
 }
 
@@ -352,7 +352,7 @@ div.container {
         max-width: 200px;
     }
 
-    #comparaPreco > input {
+    #comparaPreco input {
         max-width: 180px;
     }
     
@@ -401,7 +401,7 @@ div.container {
         padding: 15px 5px;
         
     }
-    #comparaPreco > input {
+    #comparaPreco input {
         max-width: 140px;
     }
     #medicao > input {
