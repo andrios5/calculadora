@@ -396,32 +396,119 @@ pes2.innerHTML += `<option value="4">Litros</option>`
 
 
 med2 = document.querySelector('button#med2')
+resetC2 = document.querySelector('button#resetC2')
+menosC2 = document.querySelector('button#menosC2')
+export2 = document.querySelector('button#export2')
+
 med2.addEventListener('click', calcularArea2)
+resetC2.addEventListener('click', resetarC2)
+menosC2.addEventListener('click', diminuirC2)
+export2.addEventListener('click', exportar2)
+
 temp1 = 0
+temp21 = 0
+var tempNome2
+
     function calcularArea2(){
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
+        nome2 = document.querySelector('#nome2').value
         resM2 = document.querySelector('#resultadoM2')
         resS2 = document.querySelector('#resultadoS2')
         tabela = document.querySelector('table#m2')
         m3 = document.querySelector('th#m3')
         tabela.style.display = 'block'
         
-        
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
+
+        if (nome2 != tempNome2){ // Verifica se o nome mudou
+            if (tempNome2 != '' && tempNome2 != null){ // Se não for a primeira vez, remove o nome antigo
+                resM2.innerHTML += `<tr><th colspan="2">Soma ${tempNome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
+            }
+            tempNome2 = nome2
+            resM2.innerHTML += `<tr><th colspan="3">${nome2}</th></tr>` // Se mudou, atualiza o nome na tabela
+            temp21 = 0
+        }
+
         alt = Number(alt.value)
         lar = Number(lar.value)
         area = alt * lar
         temp1 += area
+        temp21 += area // Acumula a área para o nome atual
         resM2.innerHTML += `<tr><td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`
-        resS2.innerHTML = `<tr><th colspan="2">Soma:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
+        resS2.innerHTML = `<tr><th colspan="2">Soma Total:</th> <td colspan="1">${temp1.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#largura').value = ''
+        menosC2.style.display = 'inline-block'
+        export2.style.display = 'inline-block'
+}
 
+function resetarC2(){
+    resM2.innerHTML = ''
+    resS2.innerHTML = ''
+    temp1 = 0
+    tabela.style.display = 'none'
+    document.querySelector('#altura').value = ''
+    document.querySelector('#largura').value = ''
+    document.querySelector('#nome2').value = 'Área'
+    nome2 = 'Área'
+    tempNome2 = ''
+    menosC2.style.display = 'none'
+    export2.style.display = 'none'
+}
+
+function diminuirC2(){
+    resM2 = document.querySelector('#resultadoM2')
+    resS2 = document.querySelector('#resultadoS2')
+    tabela = document.querySelector('table#m2')
+    if (temp1 > 0){ // Verifica se a área total é maior que zero
+        temp1 -= area // Subtrai a última área calculada
+        resS2.innerHTML = `<tr><th colspan="2">Soma Total:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
+        resM2.deleteRow(resM2.rows.length - 1) // Remove a última linha da tabela
+        menosC2.style.display = 'none'
+    }
+}
+
+function exportar2(){
+    resM2.innerHTML += `<tr><th colspan="2">Soma ${nome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
+    var tabela = document.querySelector('table#m2');
+    var rodape = document.querySelector('#resultadoS2');
+    if (!tabela) return;
+
+    // Cria uma cópia da tabela para não alterar a original na tela
+    var tabelaClone = tabela.cloneNode(true);
+
+    // Adiciona o rodapé como última linha do tbody
+    if (rodape && rodape.innerHTML.trim() !== '') {
+        // Cria um elemento temporário para manipular as linhas do rodapé
+        var temp = document.createElement('tbody');
+        temp.innerHTML = rodape.innerHTML;
+        // Adiciona cada linha do rodapé ao tbody da tabela clonada
+        var tbody = tabelaClone.querySelector('tbody') || tabelaClone;
+        Array.from(temp.children).forEach(function(tr){
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Monta o HTML da tabela para exportação
+    var html = tabelaClone.outerHTML.replace(/ /g, '%20');
+
+    // Cria um link para download
+    var a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + html;
+    a.download = 'area.xls';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
 
 med3 = document.querySelector('button#med3')
+resetC3 = document.querySelector('button#resetC3')
+menosC3 = document.querySelector('button#menosC3')
+
 med3.addEventListener('click', calcularArea3)
+resetC3.addEventListener('click', resetarC3)
+menosC3.addEventListener('click', diminuirC3)
 temp2 = 0
     function calcularArea3(){
         alt3 = document.querySelector('#alturam3')
@@ -446,9 +533,32 @@ temp2 = 0
         resM3.innerHTML += `<tr><td>${alt3.toLocaleString('pt-BR')}</td> <td>${lar3.toLocaleString('pt-BR')}</td><td>${pro3.toLocaleString('pt-BR')}</td><td>${aream2.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`
         resS3.innerHTML = `<tr><th colspan="3">Soma:</th> <td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#profundidadem3').value = ''
-    
+        menosC3.style.display = 'inline-block'
 }
-    
+
+    function resetarC3(){
+        resM3.innerHTML = ''
+        resS3.innerHTML = ''
+        temp2 = 0
+        tabela.style.display = 'none'
+        document.querySelector('#alturam3').value = ''
+        document.querySelector('#larguram3').value = ''
+        document.querySelector('#profundidadem3').value = ''
+        menosC3.style.display = 'none'
+    }
+
+function diminuirC3(){
+    resM3 = document.querySelector('#resultadoM3')
+    resS3 = document.querySelector('#resultadoS3')
+    tabela = document.querySelector('table#m3')
+    if (temp2 > 0){ // Verifica se a área total é maior que zero
+        temp2 -= area3 // Subtrai a última área calculada
+        resS3.innerHTML = `<tr><th colspan="3">Soma:</th> <td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
+        resM3.deleteRow(resM3.rows.length - 1) // Remove a última linha da tabela
+        menosC3.style.display = 'none'
+    }
+}
+        
 
 
 

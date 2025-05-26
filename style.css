@@ -245,8 +245,8 @@ section#m2, section#m3 {
     display: block;
 }
 
-section#m3 > input{
-    max-width: 150px;
+button#menosC2, button#menosC3, button#export2, button#export3 {
+    display: none;
 }
 
 
