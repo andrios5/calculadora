@@ -162,6 +162,9 @@ res1 = document.querySelector('section#resultado1')
 dif1 = document.querySelector('#dif1')
 peso = document.querySelector('#peso')
 pes2 = document.querySelector('#pes2')
+unm = document.querySelector('#UNM')
+voltarUN = document.querySelector('#UN')
+containerMedida = document.querySelector('div.containerMedida')
 
 peso.innerHTML = `<option value="0">Unidade</option>`
 peso.innerHTML += `<option value="1">Grama</option>`
@@ -169,12 +172,17 @@ peso.innerHTML += `<option value="2">Kilo</option>`
 peso.innerHTML += `<option value="3">Mililitros</option>`
 peso.innerHTML += `<option value="4">Litros</option>`
 
+
 pes2.innerHTML = `<option value="0">Unidade</option>`
 pes2.innerHTML += `<option value="1">Grama</option>`
 pes2.innerHTML += `<option value="2">Kilo</option>`
 pes2.innerHTML += `<option value="3">Mililitros</option>`
 pes2.innerHTML += `<option value="4">Litros</option>`
 
+unm.addEventListener('click', unidadeM)
+voltarUN.addEventListener('click', voltarUNM)
+
+tempP1 = 0
 
 
     function diferenca(){
@@ -182,6 +190,8 @@ pes2.innerHTML += `<option value="4">Litros</option>`
         valor2 = document.querySelector('#valor2')
         peso1 = document.querySelector('#peso1')
         peso2 = document.querySelector('#peso2')
+        medidaU1 = document.querySelector('#medidaU1')
+        medidaU2 = document.querySelector('#medidaU2')
             if (valor1.value.includes(',')){valor1 = valor1.replace(",", ".")} //Troca virgula por ponto se tiver
             valor1 = Number(valor1.value)
             if (valor2.value.includes(',')){valor2 = valor2.replace(",", ".")} //Troca virgula por ponto se tiver
@@ -190,8 +200,15 @@ pes2.innerHTML += `<option value="4">Litros</option>`
             peso1 = Number(peso1.value)
             if (peso2.value.includes(',')){peso2 = peso2.replace(",", ".")} //Troca virgula por ponto se tiver
             peso2 = Number(peso2.value)
-        
-        if (peso1 > 0 && peso2 > 0){ // Verifica se peso1 e peso2 foram preenchidos
+            if (medidaU1.value.includes(',')){medidaU1 = medidaU1.replace(",", ".")} //Troca virgula por ponto se tiver
+            medidaU1 = Number(medidaU1.value)
+            if (medidaU2.value.includes(',')){medidaU2 = medidaU2.replace(",", ".")} //Troca virgula por ponto se tiver
+            medidaU2 = Number(medidaU2.value)
+
+        if (tempP1 == 1){
+            res1.style.display = 'block'
+            calculaUNPeso(valor1, valor2, peso1, peso2, medidaU1, medidaU2) // Chama a função calculaUNPeso
+        }else if(peso1 > 0 && peso2 > 0){ // Verifica se peso1 e peso2 foram preenchidos
             res1.style.display = 'block'
             comparaPeso(valor1, valor2, peso1, peso2, peso, pes2) // Chama a função comparaPeso
         }else{
@@ -199,7 +216,6 @@ pes2.innerHTML += `<option value="4">Litros</option>`
         compara(valor1, valor2)
     }
     }
-
 
     function compara(valor1, valor2){
         valorP1 = valor1 / peso1
@@ -391,6 +407,58 @@ pes2.innerHTML += `<option value="4">Litros</option>`
         }
     }
 
+    function unidadeM(){
+        unm.style.display = 'none'
+        peso.style.display = 'none'
+        pes2.style.display = 'none'
+        voltarUN.style.display = 'inline-block'
+        containerMedida.style.display = 'block'
+        tempP1 = 1
+    }
+
+    function voltarUNM(){
+        unm.style.display = 'inline-block'
+        peso.style.display = 'inline-block'
+        pes2.style.display = 'inline-block'
+        voltarUN.style.display = 'none'
+        containerMedida.style.display = 'none'
+        tempP1 = 0
+    }
+
+    function calculaUNPeso(valor1, valor2, peso1, peso2, medidaU1, medidaU2){
+        pesmed1 = medidaU1 * peso1 // Calcula o peso por unidade do primeiro produto
+        pesmed2 = medidaU2 * peso2// Calcula o peso por unidade do segundo produto
+        valorP1 = valor1 / pesmed1 // Calcula o valor por unidade do primeiro produto
+        valorP2 = valor2 / pesmed2 // Calcula o valor por unidade do segundo produto
+
+        dif = valorP2 - valorP1
+        por = (dif * 100) / valorP1
+        preco1 = valor1.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        preco2 = valor2.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        precoP1 = valorP1.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        precoP2 = valorP2.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        dife = dif.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        por = por.toFixed(2).replace('.', ',')
+        if (dif > 0){
+            res1.innerHTML = `<li>O 1º produto custa <strong>${preco1}</strong> e vem <strong>${peso1}un</strong> com <strong>${medidaU1}m</strong>. No total tem <strong>${pesmed1}m</strong> e você paga <strong>${precoP1}</strong> por <strong>m</strong>.`
+            res1.innerHTML += `<li>O 2º produto custa <strong>${preco2}</strong> e vem <strong>${peso2}un</strong> com <strong>${medidaU2}m</strong>. No total tem <strong>${pesmed2}m</strong> e você paga <strong>${precoP2}</strong> por <strong>m</strong>.`
+            res1.innerHTML += `<li>Portanto o 2º produto está mais <mark>CARO</mark> ❌`
+            res1.innerHTML += `<li>O preço do 2º produto é <strong>${dife}</strong>  mais caro por <strong>m</strong>. em ralação ao 1º.`
+            res1.innerHTML += `<li class="maior">Uma variação de <strong>${por}%</strong> pra cima.`
+            document.querySelector('mark').style.backgroundColor = 'red'
+        }else if (dif < 0){
+            res1.innerHTML = `<li>O 1º produto custa <strong>${preco1}</strong> e vem <strong>${peso1}un</strong> com <strong>${medidaU1}m</strong>. No total tem <strong>${pesmed1}m</strong> e você paga <strong>${precoP1}</strong> por <strong>m</strong>.`
+            res1.innerHTML += `<li>O 2º produto custa <strong>${preco2}</strong> e vem <strong>${peso2}un</strong> com <strong>${medidaU2}m</strong>. No total tem <strong>${pesmed2}m</strong> e você paga <strong>${precoP2}</strong> por <strong>m</strong>.`
+            res1.innerHTML += `<li>Portanto o 2º produto está mais <mark>BARATO</mark> ✅`
+            res1.innerHTML += `<li>O preço do 2º produto é <strong>${dife}</strong> mais barato por <strong>m</strong>. em ralação ao 1º.`
+            res1.innerHTML += `<li class="maior">Uma variação de <strong>${por}%</strong> pra baixo.`
+            document.querySelector('mark').style.backgroundColor = 'green'
+        }else {
+            res1.innerHTML = `<p>Hoje o produto está custando o mesmo <mark>preço</mark> por peso✅</p>`
+            document.querySelector('mark').style.backgroundColor = 'green'
+        }
+    }
+
 
 //Medição
 
@@ -421,13 +489,14 @@ var tempNome2
         
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
-
+        if (nome2 == '' || nome2 == null){ // Se o nome estiver vazio, define como 'Área'
+            nome2 = 'Área'
+        }
         if (nome2 != tempNome2){ // Verifica se o nome mudou
             if (tempNome2 != '' && tempNome2 != null){ // Se não for a primeira vez, remove o nome antigo
-                resM2.innerHTML += `<tr><th colspan="2">Soma ${tempNome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
+                resM2.innerHTML += `<tr><th colspan="3">Soma ${tempNome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
             }
             tempNome2 = nome2
-            resM2.innerHTML += `<tr><th colspan="3">${nome2}</th></tr>` // Se mudou, atualiza o nome na tabela
             temp21 = 0
         }
 
@@ -436,11 +505,12 @@ var tempNome2
         area = alt * lar
         temp1 += area
         temp21 += area // Acumula a área para o nome atual
-        resM2.innerHTML += `<tr><td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`
-        resS2.innerHTML = `<tr><th colspan="2">Soma Total:</th> <td colspan="1">${temp1.toLocaleString('pt-BR')}</td></tr>`
+        resM2.innerHTML += `<tr><th>${nome2}<td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`
+        resS2.innerHTML = `<tr><th colspan="3">Soma Total:</th> <td colspan="1">${temp1.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#largura').value = ''
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
+        resetC2.style.display = 'inline-block'
 }
 
 function resetarC2(){
@@ -455,6 +525,7 @@ function resetarC2(){
     tempNome2 = ''
     menosC2.style.display = 'none'
     export2.style.display = 'none'
+    resetC2.style.display = 'none'
 }
 
 function diminuirC2(){
@@ -463,14 +534,15 @@ function diminuirC2(){
     tabela = document.querySelector('table#m2')
     if (temp1 > 0){ // Verifica se a área total é maior que zero
         temp1 -= area // Subtrai a última área calculada
-        resS2.innerHTML = `<tr><th colspan="2">Soma Total:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
+        temp21 -= area // Subtrai a última área calculada para o nome atual
+        resS2.innerHTML = `<tr><th colspan="3">Soma Total:</th> <td colspan="2">${temp1.toLocaleString('pt-BR')}</td></tr>`
         resM2.deleteRow(resM2.rows.length - 1) // Remove a última linha da tabela
         menosC2.style.display = 'none'
     }
 }
 
 function exportar2(){
-    resM2.innerHTML += `<tr><th colspan="2">Soma ${nome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
+    resM2.innerHTML += `<tr><th colspan="3">Soma ${nome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
     var tabela = document.querySelector('table#m2');
     var rodape = document.querySelector('#resultadoS2');
     if (!tabela) return;
@@ -502,22 +574,28 @@ function exportar2(){
     document.body.removeChild(a);
 }
 
+// Medição 3D
+
 med3 = document.querySelector('button#med3')
 resetC3 = document.querySelector('button#resetC3')
 menosC3 = document.querySelector('button#menosC3')
+export3 = document.querySelector('button#export3')
 
 med3.addEventListener('click', calcularArea3)
 resetC3.addEventListener('click', resetarC3)
 menosC3.addEventListener('click', diminuirC3)
+export3.addEventListener('click', exportar3)
 temp2 = 0
+temp3 = 0
     function calcularArea3(){
         alt3 = document.querySelector('#alturam3')
         lar3 = document.querySelector('#larguram3')
         pro3 = document.querySelector('#profundidadem3')
         resM3 = document.querySelector('#resultadoM3')
         resS3 = document.querySelector('#resultadoS3')
-        tabela = document.querySelector('table#m3')
-        tabela.style.display = 'block'
+        tabela3 = document.querySelector('table#m3')
+        tabela3.style.display = 'block'
+        export3.style.display = 'inline-block'
        
         
         if (alt3.value.includes(',')){alt3 = alt3.replace(",", ".")} //Troca virgula por ponto se tiver
@@ -529,34 +607,72 @@ temp2 = 0
         
         aream2 = alt3 * lar3
         area3 = alt3 * lar3 * pro3
+        temp3 += aream2
         temp2 += area3
         resM3.innerHTML += `<tr><td>${alt3.toLocaleString('pt-BR')}</td> <td>${lar3.toLocaleString('pt-BR')}</td><td>${pro3.toLocaleString('pt-BR')}</td><td>${aream2.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`
-        resS3.innerHTML = `<tr><th colspan="3">Soma:</th> <td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
+        resS3.innerHTML = `<tr><th colspan="3">Soma:</th><td>${temp3.toLocaleString('pt-BR')}</td><td>${temp2.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#profundidadem3').value = ''
         menosC3.style.display = 'inline-block'
+        resetC3.style.display = 'inline-block'
 }
 
     function resetarC3(){
         resM3.innerHTML = ''
         resS3.innerHTML = ''
         temp2 = 0
-        tabela.style.display = 'none'
+        temp3 = 0
+        tabela3.style.display = 'none'
         document.querySelector('#alturam3').value = ''
         document.querySelector('#larguram3').value = ''
         document.querySelector('#profundidadem3').value = ''
         menosC3.style.display = 'none'
+        resetC3.style.display = 'none'
     }
 
 function diminuirC3(){
     resM3 = document.querySelector('#resultadoM3')
     resS3 = document.querySelector('#resultadoS3')
-    tabela = document.querySelector('table#m3')
+    tabela3 = document.querySelector('table#m3')
     if (temp2 > 0){ // Verifica se a área total é maior que zero
+        temp3 -= aream2 // Subtrai a última área calculada
         temp2 -= area3 // Subtrai a última área calculada
-        resS3.innerHTML = `<tr><th colspan="3">Soma:</th> <td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
+        resS3.innerHTML = `<tr><th colspan="3">Soma:</th><td>${temp3.toLocaleString('pt-BR')}</td><td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
         resM3.deleteRow(resM3.rows.length - 1) // Remove a última linha da tabela
         menosC3.style.display = 'none'
     }
+}
+
+function exportar3(){
+   
+    var tabela3 = document.querySelector('table#m3');
+    var rodape = document.querySelector('#resultadoS3');
+    if (!tabela3) return;
+
+    // Cria uma cópia da tabela para não alterar a original na tela
+    var tabelaClone = tabela3.cloneNode(true);
+
+    // Adiciona o rodapé como última linha do tbody
+    if (rodape && rodape.innerHTML.trim() !== '') {
+        // Cria um elemento temporário para manipular as linhas do rodapé
+        var temp = document.createElement('tbody');
+        temp.innerHTML = rodape.innerHTML;
+        // Adiciona cada linha do rodapé ao tbody da tabela clonada
+        var tbody = tabelaClone.querySelector('tbody') || tabelaClone;
+        Array.from(temp.children).forEach(function(tr){
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Monta o HTML da tabela para exportação
+    var html = tabelaClone.outerHTML.replace(/ /g, '%20');
+
+    // Cria um link para download
+    var a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + html;
+    a.download = 'area3d.xls';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
         
 

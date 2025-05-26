@@ -13,6 +13,7 @@
     <main>
         <h2>⏲️ Contador Diario</h2>
         <section class="out">
+            <p  class="intro">Para usar o contador basta clicar no botão mais (+), após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem da semana, se isso não acontecer basta atualizar a página.</p>
                 <button id="menos"id="menos">-</button>
                 <section class="tela"></section>
                 <button id="mais"id="mais">+</button><br>
@@ -25,64 +26,76 @@
 
         <h2>💸 Compara Preço</h2>
         <section class="out" id="comparaPreco">
+            <p class="intro">Para comparar preço basta preencher os dois primeiros campos. Mas se quiser comparar com peso preencha também as duas medidas de baixo:</p>
             <p class="titulo">1º Preço</p><p class="titulo">2º Preço</p><br>
             <input type="number" name="valor1" id="valor1" placeholder="Digite o 1º preço:">
             <input type="number" name="valor2" id="valor2" placeholder="Digite o 2º preço:"><br>
-            <p class="titulo">1º Peso</p><p class="titulo">2º Peso</p><br>
-            <input type="number" name="peso1" id="peso1" placeholder="Digite o 1º peso:">
-            <input type="number" name="peso2" id="peso2" placeholder="Digite o 2º peso:"><br>
+            <p class="titulo">1º Unidade</p><p class="titulo">2º Unidade</p><br>
+            <input type="number" name="peso1" id="peso1" placeholder="Digite o 1º unidade:">
+            <input type="number" name="peso2" id="peso2" placeholder="Digite o 2º unidade:"><br>
+            <div class="containerMedida">
+            <p class="titulo">1º Medida</p><p class="titulo">2º Medida</p><br>
+                <input type="number" name="medida1" id="medidaU1" placeholder="Digite a 1º medida:">
+                <input type="number" name="medida2" id="medidaU2" placeholder="Digite a 2º medida:"><br>
+            </div>
             <select name="peso" id="peso"></select>
-            <button id="dif1" id="dif1">Verificar</button>
-            <select name="pes2" id="pes2"></select>
+            <button name="dif1" id="dif1">Verificar</button>
+            <select name="pes2" id="pes2"></select><br>
+            <button name="UNM" id="UNM">Modo Un/m</button>
+            <button name="UN" id="UN">Voltar</button>
             <section id="resultado1" class="in">
             <ul></ul>
             </section>
         </section>
 
         <h2>📏 Medição</h2>
-        <section class="out">
-            <p>Escolha que tipo de medição você quer fazer:</p>
-            <h3 id="tm2">Metros quadrados m²</h3>
+        <section class="out" id="medicao">
+            <p class="intro">Para somar basta preencher os 3 campos do tipo de medida que você gostaria de fazer, e clicar em somar:</p>
+            <h3 id="tm2">Medir Área Quadrada:</h3>
             
                 <section class="in" id="m2">
-                    <input type="text" name="nome2" id="nome2" value="Área">
-                    <input type="number" name="altura" id="altura" placeholder="Altura:">
-                    <input type="number" name="largura" id="largura" placeholder="Largura:">
-                    <button id="menosC2">Menos</button>
-                    <button id="resetC2">Reset</button>
-                    <button id="med2">Somar</button><br>
-                    <button id="export2">Salvar</button>
-                        <table id="m2">
-                            <thead>
-                                <tr><th>Altura</th><th>Largura</th><th>m²</th></tr>
-                            </thead>
-                            <tbody id="resultadoM2">
-                            </tbody>
-                            <tfoot id="resultadoS2">
-                            </tfoot>
-                        </table>
+                    <input type="text" name="nome2" id="nome2" value="Área" autocomplete="on" placeholder="Digite nome do Item:">
+                    <input type="number" name="altura" id="altura" placeholder="Digite a Altura:">
+                    <input type="number" name="largura" id="largura" placeholder="Digite a Largura:"><br>
+                    <button id="menosC2">Diminuir</button>
+                    <button id="med2">Somar</button>
+                    
+                        <div class="container">
+                            <table id="m2">
+                                <thead>
+                                    <tr><th>Item</th><th>Altura</th><th>Largura</th><th>m²</th></tr>
+                                </thead>
+                                <tbody id="resultadoM2">
+                                </tbody>
+                                <tfoot id="resultadoS2">
+                                </tfoot>
+                            </table>
+                        </div>
+                        <button id="resetC2">Reset</button>
+                        <button id="export2">Salvar</button>
             </section>
 
-            <h3 id="tm3">Metros quadrados m³</h3>
+            <h3 id="tm3">Medir Volume Cubico:</h3>
             
                 <section class="in" id="m3">
-                        <input type="number" name="altura" id="alturam3" placeholder="Altura:">
-                        <input type="number" name="largura" id="larguram3" placeholder="Largura:">
-                        <input type="number" name="profundidade" id="profundidadem3" placeholder="Profundidade:">
-                        <button id="menosC3">Menos</button>
-                        <button id="resetC3">Reset</button>
-                        <button id="med3">Somar</button><br>
-                        <button id="export3">Salvar</button>
+                        <input type="number" name="altura" id="alturam3" placeholder="Digite a Altura:">
+                        <input type="number" name="largura" id="larguram3" placeholder="Digite a Largura:">
+                        <input type="number" name="profundidade" id="profundidadem3" placeholder="Digite a Profundidade:"><br>
+                        <button id="menosC3">Diminuir</button>
+                        <button id="med3">Somar</button>
+                        
                         
                     
                         <div class="container">
                             <table id="m3">
-                                <thead><tr><th>Altura</th><th>Largura</th><th>Profundidade</th><th>m²</th><th>m³</th></tr></thead>
+                                <thead><tr><th>Altura</th><th>Largura</th><th>Profund.</th><th>m²</th><th>m³</th></tr></thead>
                                 <tbody id="resultadoM3"></tbody>
                                 <tfoot id="resultadoS3"></tfoot>
                             </table>
                         </div>
                         </section>
+                        <button id="resetC3">Reset</button>
+                        <button id="export3">Salvar</button>
         </section>
            
             

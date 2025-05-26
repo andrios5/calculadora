@@ -94,6 +94,11 @@ button{
     font-weight: bold;
 }
 
+button:hover {
+    cursor: pointer;
+    transform: scale3d(1.05, 1.05, 1);
+}
+
 input::-webkit-input-placeholder {
     font: bold 16px Arial;
 }
@@ -134,8 +139,15 @@ section.out {
     padding: 10px;
 }
 
-section.out > p {
+p.intro {
     text-align: center;
+    margin: 10px 10px 20px 10px;
+    font-size: 1.1em;
+}
+
+section#medicao > h3 {
+    padding: 0;
+    font-size: 1.3em;
 }
 
 section.in {
@@ -215,7 +227,7 @@ p.titulo {
 
 
 table {
-    width: 300px;
+    width: 425px;
     border-collapse: collapse;
     background-color: var(--cor1);
     border-radius: 15px;
@@ -225,12 +237,11 @@ table {
 }
 
 table#m3 {
-    width: 500px;
+    width: 550px;
 }
 
 tr {
     border-radius: 15px;
-    
 }
 
 th, td {
@@ -245,11 +256,18 @@ section#m2, section#m3 {
     display: block;
 }
 
-button#menosC2, button#menosC3, button#export2, button#export3 {
+button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida {
     display: none;
 }
 
+button#UNM{
+    padding: 0;
+}
 
+button#UN{
+    padding: 0;
+    display: none;
+}
 
 
  h3 {
@@ -396,6 +414,9 @@ div.container {
         font-size: 0.85em;
     }
 
+
+
+
     select {
         font-size: 0.8em;
     }
@@ -445,6 +466,12 @@ div.container {
     width: 150px;
     text-align: center;
     }
+
+    section#m2, section#m3{
+    padding: 5px;
+    margin: 5px;
+    width: 95%;
+}
 
     
 }
