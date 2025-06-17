@@ -100,7 +100,7 @@ function mais() {
         setCookie('valorDia', valorDia, 30) // Salva o valor do mês no cookie
         valorMes = valorMes + valorGasto
         valorMes1 = valorMes.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
-        telaV2.innerHTML = `Valor do mês: ${valorMes1}`
+        telaV2.innerHTML = `Valor gasto no mês: ${valorMes1}`
         setCookie('valorMes', valorMes, 90) // Salva o valor do mês no cookie
         diaInicial = diaDoMes
         setCookie('diaInicial', diaInicial, 60) // Salva o dia inicial no cookie
@@ -123,7 +123,7 @@ function menos() {
         setCookie('valorDia', valorDia, 30) // Salva o valor do mês no cookie
         valorMes = valorMes - valorGasto
         valorMes1 = valorMes.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
-        telaV2.innerHTML = `Valor do mês: ${valorMes1}`
+        telaV2.innerHTML = `Valor gasto no mês: ${valorMes1}`
         setCookie('valorMes', valorMes, 90) // Salva o valor do mês no cookie
         diaInicial = diaDoMes
         setCookie('diaInicial', diaInicial, 60)
