@@ -36,7 +36,6 @@ function diaDoAno(data) {
 }
 
 
-// Mostra o dia do mês atual no console
 
 document.querySelector('#mais').addEventListener('click', maisUm)
 document.querySelector('#menos').addEventListener('click', menosUm)
@@ -49,15 +48,22 @@ tela2 = document.querySelector('section.tela2')
 tela25 = document.querySelector('section.tela25')
 
 
+
 dataIni = getCookie('dataIn') //Verifica se a semana passou
-difDia = diaDoMes - dataIni
-if (difDia > 7){
+difdia = diaDoMes - dataIni
+if (difdia > 7){
     resetMes()
 }
 
 lerDia() // Chama a função para ler o cookie e exibir o valor na tela
 checarDataDia() // Chama a função para verificar se o dia do mês mudou e atualizar o cookie
 
+difdia = getCookie('difdia') /*Checa se o dia é maior que 0 para exibir o painel dias passados*/
+
+if (difdia >= 1){ // Mostra a data inicial na tela comos dias passados
+    tela15.innerHTML = `Dias Passados: ${difdia}`
+    tela15.style.display = 'block'
+}
 
 let contMes = getCookie('diaDia') // Lê o cookie Da contagem do mês
 numMes = Number(contMes) // Converte o valor do cookie para número
@@ -86,10 +92,10 @@ function checarDataDia(){
         tela25.innerHTML = `Dia anterior: ${diaAnterior}` // Mostra dia anterior na tela
         contDiario = `${numVal= 0}` // Incrementa o valor do cookie
         setCookie('conDia', contDiario, 1);
-        tela.innerHTML = `${contDiario}`}
-    antSem = getCookie('antSem')
-    
-    
+        tela.innerHTML = `${contDiario}`
+        window.location.reload() // Atualiza a página para mostrar o novo dia
+        }
+        antSem = getCookie('antSem')
 }
 
 
@@ -116,6 +122,7 @@ function maisUm(){
         difdia = diaDoMes - dataIni
         tela15.innerHTML = `Dias Passados: ${difdia}`
         tela15.style.display = 'block'
+        setCookie('difdia', difdia, 30) // Atualiza a página para mostrar os dias passados
     }else{ // Mostra a data inicial na tela sem os dias passados
     tela15.style.display = 'none'}
     tela2.innerHTML = `Semana: ${diario}` 
@@ -135,10 +142,10 @@ function reset(){
     contDiario = `${numVal= 0}` // Incrementa o valor do cookie
     setCookie('conDia', contDiario, 1);
     tela.innerHTML = `${contDiario}` // Mostra o valor do cookie na tela
+    window.location.reload()
 }
 
 function resetMes(){
-
     diario = `${numMes= 0}` // Incrementa o valor do cookie
     setCookie('diaDia', diario, 30);
     tela2.innerHTML = `Semana: ${diario}`
@@ -147,7 +154,7 @@ function resetMes(){
     tela15.style.display = 'none'
     tela25.style.display = 'none'
     difdia = 0
-    
+    setCookie('difdia', difdia)
 }
 
 // Compara preços

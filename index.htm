@@ -13,15 +13,32 @@
     <main>
         <h2>⏲️ Contador Diario</h2>
         <section class="out">
-            <p  class="intro">Para usar o contador basta clicar no botão mais (+), após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem da semana, se isso não acontecer basta atualizar a página.</p>
-                <button id="menos"id="menos">-</button>
+            <p  class="intro">Para usar o contador basta clicar no botão mais (+), após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem da semana por uma semana a partir da primeira contagem.</p>
+                <button id="menos">-</button>
                 <section class="tela"></section>
-                <button id="mais"id="mais">+</button><br>
+                <button id="mais">+</button><br>
                 <section class="tela15"></section>
-                <button id="reset"id="reset">Reset Dia</button>
+                <button id="reset">Reset Dia</button>
                 <section class="tela2"></section>
-                <button id="reset2"id="reset">Reset Sem</button>
+                <button id="reset2">Reset Sem</button>
                 <section class="tela25"></section>
+        </section>
+
+
+        <h2>💳 Dinheiro Gasto</h2>
+        <section class="out">
+            <p class="intro">Para adicionar dinheiro gasto basta clicar no botão mais (+) ou menos (-) para remover o valor, após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem do mês, para terminar o mês basta clicar no botão virar mês.</p>
+                <button id="menosV">-</button>
+                <input type="number" placeholder="Digite o valor gasto:" id="valorGasto" value="1">
+                <button id="maisV">+</button><br>
+                <section class="telaV1"></section> <!-- Tela oculta -->
+                <button id="resetV1">Reset Dia</button>
+                <section class="telaV0">0</section>
+                <button id="resetV2">Virar Mês</button><br>
+                <section class="telaV3"></section> <!-- Tela oculta -->
+                <section class="telaV2"></section><br>
+                <section class="telaV4"></section>
+                
         </section>
 
         <h2>💸 Compara Preço</h2>
@@ -142,6 +159,7 @@
 
     </main>
     <script src="script.js"></script>
+    <script src="dinheiroGasto.js"></script>
 
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
