@@ -95,7 +95,6 @@ function checarDataDia(){
         tela.innerHTML = `${contDiario}`
         window.location.reload() // Atualiza a página para mostrar o novo dia
         }
-        antSem = getCookie('antSem')
 }
 
 
@@ -107,7 +106,7 @@ function maisUm(){
 
     diaDiario = `${diaDoMes}` // Incrementa o valor do cookie
     setCookie('conMes', diaDiario, 30);
-
+    
     diario = getCookie('diaDia')
     let dataIni = 0
     if (diario == 0){
@@ -130,11 +129,12 @@ function maisUm(){
 
 function menosUm(){
     let contDiario = getCookie('conDia') // Lê o cookie
-    contDiario = `${numVal-= 1}` // Incrementa o valor do cookie
+    contDiario = `${numVal-= 1}` // Diminui o valor do cookie
     setCookie('conDia', contDiario, 1); // Salva o cookie por 1 dia
     tela.innerHTML = `${contDiario}` // Mostra o valor do cookie na tela
-    diario = `${numMes-= 1}` // Incrementa o valor do cookie
+    diario = `${numMes-= 1}` // Diminui o valor do cookie
     tela2.innerHTML = `Semana: ${diario}`
+    setCookie('diaDia', diario, 30);
 }
 
 function reset(){
@@ -142,7 +142,6 @@ function reset(){
     contDiario = `${numVal= 0}` // Incrementa o valor do cookie
     setCookie('conDia', contDiario, 1);
     tela.innerHTML = `${contDiario}` // Mostra o valor do cookie na tela
-    window.location.reload()
 }
 
 function resetMes(){
@@ -155,6 +154,7 @@ function resetMes(){
     tela25.style.display = 'none'
     difdia = 0
     setCookie('difdia', difdia)
+    reset()
 }
 
 // Compara preços
