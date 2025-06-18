@@ -162,7 +162,7 @@ section.in {
     box-shadow: inset 5px 5px 5px var(--cor6);
 }
 
-.tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4 {
+.tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
     width: 60%;
     margin: auto;
     margin-top: 20px;
@@ -174,9 +174,14 @@ section.in {
     max-width: 300px;
     max-height: 100px;
     background-color: var(--cor1);
-    font-size: 2em;
+    font-size: 1.75em;
     vertical-align: middle;
     font-weight: bold;
+}
+
+.telaV2 {
+    max-height: 200px;
+    overflow: auto;
 }
 
 .telaV0 {
@@ -194,6 +199,12 @@ section.in {
     font-size: 1.5em;
     display: none;
     max-width: 600px;
+}
+
+.telaV5 {
+    display: none;
+    font-size: 1.25em;
+    max-height: 250px;
 }
 
 .moeda2{
@@ -277,7 +288,7 @@ button#UN{
 }
 
 
- h3 {
+h3 {
         color: var(--cor3);
 }
 
@@ -289,6 +300,30 @@ input#valorGasto {
     text-align: center;
     font-size: 1.25em;
     font-weight: bold;
+}
+
+span {
+    color: var(--cor3);
+    cursor: pointer;
+}
+
+input#tetoGasto {
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: bold;
+    width: 300px;
+    padding: 15px 5px;
+    display: none;
+}
+
+button#definirTeto {
+    display: none;
+}
+
+p#teto {
+    font-size: 0.7em;
+    color: var(--cor0);
+    text-align: center;
 }
 
 
@@ -484,7 +519,7 @@ input#valorGasto {
 
     
 
-    .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4 {
+    .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
         font-size: 1.25em;
         margin-bottom: 10px;
         margin-top: 10px;
