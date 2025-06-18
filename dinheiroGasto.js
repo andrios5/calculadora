@@ -124,26 +124,31 @@ function verificaTeto() {
         else if (tetoGasto > 0) {
         porTeto = (valorMes / tetoGasto) * 100 // Calcula a porcentagem do teto de gastos
         porTeto = porTeto.toFixed(2) // Formata a porcentagem para duas casas decimais
+        valorFal = tetoGasto - valorMes // Calcula o valor que falta para atingir o teto de gastos
         if (porTeto <= 50) { // Verifica se o valor do mês ultrapassa o teto de gastos
             telaV5.innerHTML = `Você gastou ${porTeto}% do seu limite de gastos!` // Exibe a porcentagem do teto de gastos
             telaV5.innerHTML += `<p id="teto">Seu limite é de ${tetoGasto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o teto de gastos
+            telaV5.innerHTML += `<p id="teto">Sobra ${valorFal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o valor que falta para atingir o teto de gastos
             telaV5.style.display = 'block' // Exibe a tela da porcentagem do teto de gastos
             telaV5.style.backgroundColor = '#00FF00' // Define a cor de fundo como verde
             telaV5.style.color = '#363636' // Define a cor da fonte como preto
         } else if (porTeto > 50 && porTeto <= 75) {
             telaV5.innerHTML = `Você gastou ${porTeto}% do seu limite de gastos!` // Exibe a porcentagem do teto de gastos
             telaV5.innerHTML += `<p id="teto">Seu limite é de ${tetoGasto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o teto de gastos
+            telaV5.innerHTML += `<p id="teto">Sobra ${valorFal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o valor que falta para atingir o teto de gastos
             telaV5.style.display = 'block' // Exibe a tela da porcentagem do teto de gastos
             telaV5.style.backgroundColor = 'yellow' // Define a cor da fonte como amarelo
             telaV5.style.color = '#363636' // Define a cor da fonte como preto
         } else if (porTeto > 75 && porTeto < 100) {
             telaV5.innerHTML = `Você gastou ${porTeto}% do seu limite de gastos!` // Exibe a porcentagem do teto de gastos
             telaV5.innerHTML += `<p id="teto">Seu limite é de ${tetoGasto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o teto de gastos
+            telaV5.innerHTML += `<p id="teto">Sobra ${valorFal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o valor que falta para atingir o teto de gastos
             telaV5.style.display = 'block' // Exibe a tela da porcentagem do teto de gastos
             telaV5.style.backgroundColor = '#FFA500' // Define a cor da fonte como amarelo
         } else if (porTeto >= 100) {
             telaV5.innerHTML = `Você ultrapassou o teto de gastos em ${porTeto}%` // Exibe a mensagem de alerta
             telaV5.innerHTML += `<p id="teto">Seu limite é de ${tetoGasto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o teto de gastos
+            telaV5.innerHTML += `<p id="teto">Sobra ${valorFal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>` // Exibe o valor que falta para atingir o teto de gastos
             telaV5.style.display = 'block' // Exibe a tela da porcentagem do teto de gastos
             telaV5.style.backgroundColor = '#FF0000' // Define a cor da fonte como vermelho
             telaV5.style.color = '#FFFFFF' // Define a cor da fonte como branco
