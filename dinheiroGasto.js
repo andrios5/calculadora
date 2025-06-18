@@ -153,7 +153,7 @@ function verificaTeto() {
             telaV5.style.backgroundColor = '#FF0000' // Define a cor da fonte como vermelho
             telaV5.style.color = '#FFFFFF' // Define a cor da fonte como branco
         } else {
-            telaV5.style.display = 'none' // Esconde a tela da porcentagem do teto de gastos
+            telaV5.style.display = 'none'
         }
 
     }
