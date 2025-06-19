@@ -515,6 +515,7 @@ var tempNome2
         resM2.innerHTML += `<tr><th>${nome2}<td>${alt.toLocaleString('pt-BR')}</td> <td>${lar.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`
         resS2.innerHTML = `<tr><th colspan="3">Soma Total:</th> <td colspan="1">${temp1.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#largura').value = ''
+        document.querySelector('#largura').focus() // Coloca o foco no input novamente
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
         resetC2.style.display = 'inline-block'
@@ -619,6 +620,7 @@ temp3 = 0
         resM3.innerHTML += `<tr><td>${alt3.toLocaleString('pt-BR')}</td> <td>${lar3.toLocaleString('pt-BR')}</td><td>${pro3.toLocaleString('pt-BR')}</td><td>${aream2.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`
         resS3.innerHTML = `<tr><th colspan="3">Soma:</th><td>${temp3.toLocaleString('pt-BR')}</td><td>${temp2.toLocaleString('pt-BR')}</td></tr>`
         document.querySelector('#profundidadem3').value = ''
+        document.querySelector('#profundidadem3').focus() // Coloca o foco no input novamente
         menosC3.style.display = 'inline-block'
         resetC3.style.display = 'inline-block'
 }
