@@ -503,8 +503,9 @@ p#teto {
     }
 
     input#valorGasto {
-        max-width: 100px;
+        max-width: 125px;
         text-align: center;
+        font-size: 1.2em;
     }
 
     #resetV1, #resetV2 {
@@ -513,16 +514,18 @@ p#teto {
         font-size: 0.8em;
     }
 
-    .telaV0 {
-        max-width: 100px;
-    }
-
-    
 
     .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
         font-size: 1.25em;
         margin-bottom: 10px;
         margin-top: 10px;
+    }
+
+    .telaV0 {
+        max-width: 150px;
+        overflow: auto;
+        padding: 10px 3px;
+        font-size: 1.2em;
     }
 
     p.titulo {
@@ -579,6 +582,18 @@ p#teto {
 
     #medicao > input {
         max-width: 80px;
+    }
+
+    input#valorGasto {
+        max-width: 100px;
+        text-align: center;
+        font-size: 1.15em;
+    }
+
+    .telaV0 {
+        max-width: 125px;
+        overflow: auto;
+        font-size: 1.15em;
     }
 }
 
