@@ -1,8 +1,26 @@
+// Função para salvar cookies
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // 1 segundo
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+// Função para ler cookies
+function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.indexOf(name + "=") === 0) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return "";
+}
+
 // Compara preços
 
-diaAnterior = getCookie('diaAnterior')
-tela25.innerHTML = `Dia anterior: ${diaAnterior}`
-if (diaAnterior > 0){tela25.style.display = 'block'}else{tela25.style.display = 'none'}
 
 
 dif1.addEventListener('click', diferenca)
@@ -324,6 +342,7 @@ export2.addEventListener('click', exportar2)
 temp1 = 0
 temp21 = 0
 var tempNome2
+var temp02
 
     function calcularArea2(){
         alt = document.querySelector('#altura')
@@ -341,12 +360,15 @@ var tempNome2
             nome2 = 'Área'
         }
         if (nome2 != tempNome2){ // Verifica se o nome mudou
-            if (tempNome2 != '' && tempNome2 != null){ // Se não for a primeira vez, remove o nome antigo
+            if (tempNome2 != '' && tempNome2 != null && temp02 == true){ // Se não for a primeira vez, remove o nome antigo
                 resM2.innerHTML += `<tr><th colspan="3">Soma ${tempNome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
             }
             tempNome2 = nome2
             temp21 = 0
-        }
+            temp02 = false
+        } else {
+            temp02 = true // Se o nome não mudou, mantém a variável como true
+            }
 
         alt = Number(alt.value)
         lar = Number(lar.value)
@@ -360,6 +382,7 @@ var tempNome2
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
         resetC2.style.display = 'inline-block'
+        
 }
 
 function resetarC2(){
@@ -391,7 +414,9 @@ function diminuirC2(){
 }
 
 function exportar2(){
+    if(temp02 == true){
     resM2.innerHTML += `<tr><th colspan="3">Soma ${nome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
+    temp02 = false}
     var tabela = document.querySelector('table#m2');
     var rodape = document.querySelector('#resultadoS2');
     if (!tabela) return;
@@ -400,7 +425,7 @@ function exportar2(){
     var tabelaClone = tabela.cloneNode(true);
 
     // Adiciona o rodapé como última linha do tbody
-    if (rodape && rodape.innerHTML.trim() !== '') {
+    if (rodape.innerHTML.trim() !== '') {
         // Cria um elemento temporário para manipular as linhas do rodapé
         var temp = document.createElement('tbody');
         temp.innerHTML = rodape.innerHTML;
@@ -408,6 +433,7 @@ function exportar2(){
         var tbody = tabelaClone.querySelector('tbody') || tabelaClone;
         Array.from(temp.children).forEach(function(tr){
             tbody.appendChild(tr);
+     // Define como false para não adicionar novamente
         });
     }
 
