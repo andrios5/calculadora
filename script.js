@@ -414,6 +414,7 @@ function diminuirC2(){
 }
 
 function exportar2(){
+    nome2 = document.querySelector('#nome2').value
     if(temp02 == true){
     resM2.innerHTML += `<tr><th colspan="3">Soma ${nome2}:</th><td> ${temp21.toLocaleString('pt-BR')}</td></tr>`
     temp02 = false}
@@ -443,7 +444,7 @@ function exportar2(){
     // Cria um link para download
     var a = document.createElement('a');
     a.href = 'data:application/vnd.ms-excel,' + html;
-    a.download = 'area.xls';
+    a.download = `${nome2}.xls`; // Usa o nome fornecido pelo usuário
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
