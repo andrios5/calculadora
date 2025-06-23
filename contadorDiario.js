@@ -39,7 +39,7 @@ function diaDoAno(data) {
   return diaDoAno;
 }
 
-diaDaSem = dataAtual.getDay(); // Obtém o dia da semana (0 = Domingo, 1 = Segunda, ..., 6 = Sábado)
+diaSem = dataAtual.getDay(); // Obtém o dia da semana (0 = Domingo, 1 = Segunda, ..., 6 = Sábado)
 
 function maisUm() {
     let contador = parseInt(getCookie('contador')) || 0 // Lê o cookie "Contador" ou inicia em 0
@@ -83,9 +83,9 @@ function exibirContador() {
 
 function salvarDia(){
     let dia = diaDoAno; // Obtém o dia do ano atual
-    let sem = diaDaSem; // Obtém o dia da semana atual
+    let diaDaSem = diaSem; // Obtém o dia da semana atual
     setCookie('dia', dia, 365); // Salva o dia do ano no cookie por 365 dias
-    setCookie('sem', sem, 365); // Salva o dia da semana no cookie por 365 dias
+    setCookie('diaDaSem', diaDaSem, 365); // Salva o dia da semana no cookie por 365 dias
 
     let dataC = 0 // Exibe a data Inicial
     dataC = getCookie('data') // Lê o cookie da data
@@ -100,7 +100,6 @@ function virarDia(){
     if (dia < diaDoAno) {
         cont = getCookie('contador') // Lê o contador atualizado
         adicionarSemana(cont)
-        setCookie('dia', diaDoAno, 365); // Atualiza o cookie do dia para o dia atual
     }
 }
 
@@ -133,7 +132,15 @@ function resetSem() {
     reset(); // Reseta o contador
 }
 
+function limparContador () {
+    setCookie('dia', diaDoAno, 365); // Atualiza o cookie do dia para o dia atual
+    setCookie('contador', 0, 365); // Reseta o contador para 0 e salva por 365 dias
+    tela = document.querySelector('section.tela')
+    tela.innerText = `0`; // Exibe o contador na tela
+}
+
 function adicionarSemana(cont) {
+    let diaDaSem = parseInt(getCookie('diaDaSem')) || 0; // Lê o cookie do dia da semana ou inicia em 0
     if (diaDaSem == 0) {
         domingo = cont // Se for domingo, atribui o valor do contador
         setCookie('domingo', domingo, 365) // Salva o valor do domingo no cookie por 365 dias
@@ -156,6 +163,7 @@ function adicionarSemana(cont) {
         sabado = cont // Se for sábado, atribui o valor do contador
         setCookie('sabado', sabado, 365) // Salva o valor do sábado no cookie por 365 dias
     }
+    limparContador() // Limpa o contador para o próximo dia
     exibeSemana()
 }
 
