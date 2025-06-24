@@ -39,7 +39,9 @@ function diaDoAno(data) {
   return diaDoAno;
 }
 
+let diaAno = diaDoAno; // Obtém o dia do ano atual
 diaSem = dataAtual.getDay(); // Obtém o dia da semana (0 = Domingo, 1 = Segunda, ..., 6 = Sábado)
+
 
 function maisUm() {
     let contador = parseInt(getCookie('contador')) || 0 // Lê o cookie "Contador" ou inicia em 0
@@ -57,6 +59,7 @@ function menosUm() {
         contador--
 
         setCookie('contador', contador, 365); // Salva o cookie por 365 dias
+
         virarDia() // Verifica se é hora de virar o dia
         salvarDia() // Salva o dia atual
         exibirContador() // Exibe o contador atualizado
@@ -82,7 +85,7 @@ function exibirContador() {
 }
 
 function salvarDia(){
-    let dia = diaDoAno; // Obtém o dia do ano atual
+    let dia = diaAno; // Obtém o dia do ano atual
     let diaDaSem = diaSem; // Obtém o dia da semana atual
     setCookie('dia', dia, 365); // Salva o dia do ano no cookie por 365 dias
     setCookie('diaDaSem', diaDaSem, 365); // Salva o dia da semana no cookie por 365 dias
@@ -97,7 +100,7 @@ function salvarDia(){
 
 function virarDia(){
     let dia = parseInt(getCookie('dia')) || 0; // Lê o cookie do dia ou inicia em 0
-    if (dia < diaDoAno) {
+    if (dia < diaAno && dia != 0) {
         cont = getCookie('contador') // Lê o contador atualizado
         adicionarSemana(cont)
     }
@@ -112,6 +115,7 @@ function reset() {
 
 function resetSem() {
     setCookie('data', 0, 365); // Reseta o dia do ano para 0 e salva por 365 dias
+    setCookie('dia', 0, 365) // Reseta o dia do ano para 0 e salva por 365 dias
     tela2 = document.querySelector('section.tela2')
     tela15 = document.querySelector('section.tela15')
     tela25 = document.querySelector('section.tela25')
@@ -133,7 +137,7 @@ function resetSem() {
 }
 
 function limparContador () {
-    setCookie('dia', diaDoAno, 365); // Atualiza o cookie do dia para o dia atual
+    setCookie('dia', diaAno, 365); // Atualiza o cookie do dia para o dia atual
     setCookie('contador', 0, 365); // Reseta o contador para 0 e salva por 365 dias
     tela = document.querySelector('section.tela')
     tela.innerText = `0`; // Exibe o contador na tela
