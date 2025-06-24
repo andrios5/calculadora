@@ -24,7 +24,6 @@ let array1d = []
         resM2 = document.querySelector('#resultadoM2')
         resS2 = document.querySelector('#resultadoS2')
         tabela = document.querySelector('table#m2')
-        tabela.style.display = 'block'
 
         if (alt.value == '' || alt.value == null || lar.value == '' || lar.value == null) { // Verifica se os campos estão vazios
             alert('Por favor, preencha todos os campos.')
@@ -71,15 +70,15 @@ let array1d = []
         exibeArea2(array2d, array1d) // Chama a função para exibir os resultados
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
+        
 }
 
 function exibeArea2(array2d, array1d) {
     let soma2 = 0 // Inicializa a variável de soma
     resM2 = document.querySelector('#resultadoM2')
     resS2 = document.querySelector('#resultadoS2')
+    tabela = document.querySelector('table#m2')
+    
     resM2.innerHTML = '' // Limpa o conteúdo anterior
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
@@ -92,7 +91,20 @@ function exibeArea2(array2d, array1d) {
     for (let i = 0; i < array1d.length; i++) {
         soma2 += Number(array1d[i]);
     }
+    if (soma2 == 0) {
+    tabela.style.display = 'none'
+    menosC2.style.display = 'none'
+    export2.style.display = 'none'
+    resetC2.style.display = 'none'
+    }else{
+    tabela.style.display = 'block'
+    menosC2.style.display = 'inline-block'
+    export2.style.display = 'inline-block'
+    resetC2.style.display = 'inline-block'
     resS2.innerHTML = `<tr><th colspan="3">Soma Total:</th><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
+    }
+
+    
 }
 
 function resetarC2(){
