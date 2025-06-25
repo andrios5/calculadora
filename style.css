@@ -551,11 +551,11 @@ p#teto {
     padding: 5px;
     margin: 5px;
     width: 95%;
-}
+    }
 
-table {
-    max-width: 430px;
-}
+    table {
+        max-width: 415px;
+    }
 
     
 }
