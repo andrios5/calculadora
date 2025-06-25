@@ -336,6 +336,12 @@ p#teto {
     text-align: center;
 }
 
+#seletorDeArquivo {
+    background-color: #FFD416;
+    min-width: 400px;
+    height: 25px;
+    padding: 25px;
+}
 
     
 

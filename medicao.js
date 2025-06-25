@@ -4,6 +4,12 @@ resetC2 = document.querySelector('button#resetC2')
 menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
+const seletorDeArquivo = document.getElementById('seletorDeArquivo');
+seletorDeArquivo.addEventListener('change', function(e){
+    if (e.target.files.length) {
+        importarCSVparaArray2d(e.target.files[0]);
+    }
+});
 
 med2.addEventListener('click', calcularArea2)
 resetC2.addEventListener('click', resetarC2)
@@ -19,7 +25,6 @@ let array2d = []
 let array1d = []
 let arrayA = []
 let arrayL = []
-
 
 
     function calcularArea2(){
@@ -42,10 +47,12 @@ let arrayL = []
         
 
         checarNome()
-        
+        altP = alt.toString().split(/[.,]/)
+        larP = lar.toString().split(/[.,]/)
 
         alt = Number(alt.value)
         lar = Number(lar.value)
+
         area = alt * lar
 
         array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
@@ -95,12 +102,14 @@ function exibeArea2(array2d, array1d) {
     export2.style.display = 'none'
     resetC2.style.display = 'none'
     formatoEX.style.display = 'none'
+    seletorDeArquivo.style.display = 'inline-block'
     }else{
     tabela.style.display = 'block'
     menosC2.style.display = 'inline-block'
     export2.style.display = 'inline-block'
     resetC2.style.display = 'inline-block'
     formatoEX.style.display = 'inline-block'
+    seletorDeArquivo.style.display = 'none'
     resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
     }
 
@@ -151,6 +160,8 @@ function resetarC2(){
     menosC2.style.display = 'none'
     export2.style.display = 'none'
     resetC2.style.display = 'none'
+    formatoEX.style.display = 'none'
+    seletorDeArquivo.style.display = 'inline-block'
     array2d = [] // Limpa o array 2D
     array1d = [] // Limpa o array 1D
     arrayA = [] // Limpa o array de alturas
@@ -310,8 +321,62 @@ function exportar2(){
     a.click();
     document.body.removeChild(a);
 
-    
 }
+
+function importarCSVparaArray2d(file) {
+    const leitor = new FileReader();
+    leitor.onload = function(e) {
+        const conteudo = e.target.result;
+        const linhas = conteudo.split('\n');
+        // Remove cabeçalho
+        linhas.shift();
+        linhas.forEach(linha => {
+            if (linha.trim() !== '') {
+                const partes = linha.split(';');
+                if (partes.length >= 4) { // Verifica se há pelo menos 4 partes
+                    let nome = partes[0];
+                    let altura = Number(partes[1].replace(',', '.'));
+                    let largura = Number(partes[2].replace(',', '.'));
+                    let area = Number(partes[3].replace(',', '.'));
+                    array2d.push([nome, altura, largura, area]);
+                }
+            }
+        });
+        array2d.pop(); // Remove o último elemento do array2d após a importação
+        formataVetor(array2d); // Chama a função para calcular a soma das alturas e larguras
+    };
+    leitor.readAsText(file, 'utf-8');
+}
+
+function formataVetor(array2d) {
+    array1d.length = 0;
+    arrayA.length = 0;
+    arrayL.length = 0;
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area] = array2d[i];
+        if (largura == '' || largura == null && area == '' || area == null){   
+            let nome1 = nome.replace(/^Soma\s*/i, '').replace(/:$/, '').trim(); // Remove "Soma" e ":" do nome
+            let altura1 = altura
+            array2d.splice(i, 1);
+            array2d.splice(i, 0,[nome1, altura1, '', '']); // Adiciona o nome e a altura ao array2d
+        } else if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
+        if (altura !== '' && altura !== null) {
+                arrayA.push(altura); // Adiciona a altura ao array de alturas
+        }
+        if (largura !== '' && largura !== null) {
+                arrayL.push(largura); // Adiciona a largura ao array de larguras
+        }
+        if (area !== '' && area !== null) {
+                array1d.push(area); // Adiciona a área ao array 1D
+                tempNome2 = nome; // Atualiza o nome temporário
+        } 
+    }
+    temp02 = true; // Define a variável como true para indicar que o nome foi atualizado
+    exibeArea2(array2d, array1d); // Atualiza a tabela na tela
+}
+}
+
+
 
 // Medição 3D
 
