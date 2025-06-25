@@ -25,7 +25,7 @@ let arrayL = []
     function calcularArea2(){
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
-        nome2 = document.querySelector('#nome2').value
+        nome2 = document.querySelector('#nome2').value.trim() || 'Área'; // Define o nome, se estiver vazio usa 'Área'
         resM2 = document.querySelector('#resultadoM2')
         resS2 = document.querySelector('#resultadoS2')
         tabela = document.querySelector('table#m2')
@@ -38,9 +38,7 @@ let arrayL = []
         
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (nome2 == '' || nome2 == null){ // Se o nome estiver vazio, define como 'Área'
-            nome2 = 'Área'
-        }
+        
 
         checarNome()
         
@@ -173,10 +171,10 @@ function diminuirC2(){
 }
 
 function exportar() {
-        nome2 = '0'
+    nome2 = '0'
     temp02 = true; // Garante que o nome seja atualizado antes da exportação
     checarNome(); // Atualiza o nome temporário
-    nome2 = document.querySelector('#nome2').value || 'area2d';
+    nome2 = document.querySelector('#nome2').value.trim() || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
     if (!array2d.length) {
         alert('Não há dados para exportar!');
         return;
