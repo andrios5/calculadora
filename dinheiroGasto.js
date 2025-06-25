@@ -40,6 +40,7 @@ document.querySelector('#resetV1').addEventListener('click', resetvalor1)
 document.querySelector('#resetV2').addEventListener('click', resetvalor2)
 document.querySelector('#setaGasto').addEventListener('click', menuTeto)
 document.querySelector('button#definirTeto').addEventListener('click', defineTeto)
+window.addEventListener('scroll', checarDiaDG)
 
 telaV1 = document.querySelector('section.telaV1')
 telaV0 = document.querySelector('section.telaV0')
@@ -69,10 +70,11 @@ if (diaAnteriorV >= 1) { // Checa se o cookie do dia anterior existe
 
 //diaDoMes = 175
 
-diaInicial = getCookie('diaInicial')
+function checarDiaDG() {diaInicial = getCookie('diaInicial')
     if (diaDoMes > diaInicial){ // Checa se precisa atualizar o dia
         viraDia()
      }
+}
 
 dataV1 = getCookie('dataV1') // Lê a data inicial do cookie
 if (dataV1 != '') { // Se não houver data inicial salva

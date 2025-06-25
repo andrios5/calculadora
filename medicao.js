@@ -3,18 +3,23 @@ med2 = document.querySelector('button#med2')
 resetC2 = document.querySelector('button#resetC2')
 menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
+formatoEX = document.querySelector('#formatoEX')
 
 med2.addEventListener('click', calcularArea2)
 resetC2.addEventListener('click', resetarC2)
 menosC2.addEventListener('click', diminuirC2)
-export2.addEventListener('click', exportar2)
+export2.addEventListener('click', exportar)
 
-
+formatoEX.innerHTML = `<option value="0">CSV</option>`
+formatoEX.innerHTML += `<option value="1">XLS</option>`
 
 var tempNome2
 var temp02
 let array2d = []
 let array1d = []
+let arrayA = []
+let arrayL = []
+
 
 
     function calcularArea2(){
@@ -36,35 +41,17 @@ let array1d = []
         if (nome2 == '' || nome2 == null){ // Se o nome estiver vazio, define como 'Área'
             nome2 = 'Área'
         }
+
+        checarNome()
         
-        if (nome2 != tempNome2){ // Verifica se o nome mudou
-            if (tempNome2 != '' && tempNome2 != null && temp02 == true){ // Se não for a primeira vez, remove o nome antigo
-                let temp = 0
-                for (let i = 0; i < array2d.length; i++) {
-                    const [nome, altura, largura, area] = array2d[i];
-                    if (nome == tempNome2) { // Verifica se o nome é igual ao nome temporário
-                        if(largura == '' || largura == null || area == '' || area == null){
-                            array2d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array2d
-                            array1d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array1d
-                            i--;}
-                        else{temp += area;}
-                    }
-                }
-                array2d.push([tempNome2, temp])
-                array1d.push(0)
-            }
-            tempNome2 = nome2
-            arrayTemp = []
-            temp02 = false
-        } else {
-            temp02 = true // Se o nome não mudou, mantém a variável como true
-            }
 
         alt = Number(alt.value)
         lar = Number(lar.value)
         area = alt * lar
 
         array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
+        arrayA.push(alt) // Adiciona a altura ao array 1D
+        arrayL.push(lar) // Adiciona a largura ao array 1D
         array1d.push(area) // Adiciona a área ao array 1D
 
         exibeArea2(array2d, array1d) // Chama a função para exibir os resultados
@@ -75,6 +62,8 @@ let array1d = []
 
 function exibeArea2(array2d, array1d) {
     let soma2 = 0 // Inicializa a variável de soma
+    let somaA = 0 // Inicializa a variável de soma das alturas
+    let somaL = 0 // Inicializa a variável de soma das larguras
     resM2 = document.querySelector('#resultadoM2')
     resS2 = document.querySelector('#resultadoS2')
     tabela = document.querySelector('table#m2')
@@ -88,24 +77,68 @@ function exibeArea2(array2d, array1d) {
             resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
+
     for (let i = 0; i < array1d.length; i++) {
         soma2 += Number(array1d[i]);
     }
+
+    for (let i = 0; i < arrayA.length; i++) {
+        somaA += Number(arrayA[i]);
+    }
+
+    for (let i = 0; i < arrayL.length; i++) {
+        somaL += Number(arrayL[i]);
+    }
+    
     if (soma2 == 0) {
     tabela.style.display = 'none'
     menosC2.style.display = 'none'
     export2.style.display = 'none'
     resetC2.style.display = 'none'
+    formatoEX.style.display = 'none'
     }else{
     tabela.style.display = 'block'
     menosC2.style.display = 'inline-block'
     export2.style.display = 'inline-block'
     resetC2.style.display = 'inline-block'
-    resS2.innerHTML = `<tr><th colspan="3">Soma Total:</th><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
+    formatoEX.style.display = 'inline-block'
+    resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
     }
 
     
 }
+
+function checarNome(){
+    
+    if (nome2 != tempNome2){ // Verifica se o nome mudou
+            if (tempNome2 != '' && tempNome2 != null && temp02 == true){ // Se não for a primeira vez, remove o nome antigo
+                let temp = 0
+                for (let i = 0; i < array2d.length; i++) {
+                    const [nome, altura, largura, area] = array2d[i];
+                    if (nome == tempNome2) { // Verifica se o nome é igual ao nome temporário
+                        if(largura == '' || largura == null && area == '' || area == null){
+                            array2d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array2d
+                            array1d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array1d
+                            arrayA.splice(i, 1); // Apaga a altura da soma com o mesmo nome do arrayA
+                            arrayL.splice(i, 1); // Apaga a largura da soma com o mesmo nome do arrayL
+                            i--
+                        }
+                        else{temp += area;}
+                    }
+                }
+                array2d.push([tempNome2, temp])
+                array1d.push(0)
+                arrayA.push(0) // Adiciona a altura da soma ao arrayA
+                arrayL.push(0) // Adiciona a largura da soma ao arrayL
+            }
+            tempNome2 = nome2
+            arrayTemp = []
+            temp02 = false
+        } else {
+            temp02 = true // Se o nome não mudou, mantém a variável como true
+        }
+}
+
 
 function resetarC2(){
     resM2.innerHTML = ''
@@ -121,28 +154,112 @@ function resetarC2(){
     resetC2.style.display = 'none'
     array2d = [] // Limpa o array 2D
     array1d = [] // Limpa o array 1D
+    arrayA = [] // Limpa o array de alturas
+    arrayL = [] // Limpa o array de larguras
 }
 
 function diminuirC2(){
     array1d.pop() // Remove o último elemento do array 1D
     array2d.pop() // Remove o último elemento do array 2D
+    arrayA.pop() // Remove o último elemento do array de alturas
+    arrayL.pop() // Remove o último elemento do array de larguras
      for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
-        if(largura == '' || largura == null || area == '' || area == null){
-            temp02 = true
-            tempNome2 = nome
-        }
+        tempNome2 = nome
+        
      }
+    temp02 = true
     exibeArea2(array2d, array1d) // Atualiza a exibição
 }
 
-function exportar2(){
+function exportar() {
+        nome2 = '0'
+    temp02 = true; // Garante que o nome seja atualizado antes da exportação
+    checarNome(); // Atualiza o nome temporário
     nome2 = document.querySelector('#nome2').value || 'area2d';
-
     if (!array2d.length) {
         alert('Não há dados para exportar!');
         return;
     }
+
+    if (formatoEX.value == '0'){
+    exportar2()} else {
+        exportar1(); // Chama a função de exportação para XLS
+    }
+
+    diminuirC2(); // Chama a função para remover o último elemento após a exportação
+}
+
+function exportar1() {
+    let html = `
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #000; padding: 4px; text-align: center; }
+            th { background: #eee; }
+        </style>
+    </head>
+    <body>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Altura</th>
+            <th>Largura</th>
+            <th>Área</th>
+        </tr>
+    `;
+
+    // Adiciona as linhas do array2d
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area] = array2d[i];
+        if (largura == '' || largura == null || area == '' || area == null) {
+            html += `<tr>
+                <th colspan="3">Soma ${nome}:</th>
+                <td>${altura.toLocaleString('pt-BR')}</td>
+            </tr>`;
+        } else {
+            html += `<tr>
+                <td>${nome}</td>
+                <td>${altura.toLocaleString('pt-BR')}</td>
+                <td>${largura.toLocaleString('pt-BR')}</td>
+                <td>${area.toLocaleString('pt-BR')}</td>
+            </tr>`;
+        }
+    }
+
+    // Soma final
+    let soma2 = 0, somaA = 0, somaL = 0;
+    for (let i = 0; i < array1d.length; i++) soma2 += Number(array1d[i]);
+    for (let i = 0; i < arrayA.length; i++) somaA += Number(arrayA[i]);
+    for (let i = 0; i < arrayL.length; i++) somaL += Number(arrayL[i]);
+    html += `<tr>
+        <th>Soma:</th>
+        <td>${somaA.toLocaleString('pt-BR')}</td>
+        <td>${somaL.toLocaleString('pt-BR')}</td>
+        <td>${soma2.toLocaleString('pt-BR')}</td>
+    </tr>`;
+
+    html += `
+    </table>
+    </body>
+    </html>
+    `;
+
+    // Cria um link para download
+    let a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    a.download = `${nome2}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+}
+
+
+function exportar2(){
+
 
     // Monta o cabeçalho CSV
     let csv = 'Nome;Altura;Largura;Área\n';
@@ -158,11 +275,21 @@ function exportar2(){
         
     }
     }
-    let soma2 = 0; // Inicializa a variável de soma 
+
+    // Adiciona a soma final
+    let soma2 = 0; // Inicializa a variável de soma
+    let somaA = 0; // Inicializa a variável de soma das alturas
+    let somaL = 0; // Inicializa a variável de soma das larguras
     for (let i = 0; i < array1d.length; i++) {
         soma2 += Number(array1d[i]);
     }
-    arrayTemp.push(["Soma Total:", soma2.toLocaleString('pt-BR')]);
+    for (let i = 0; i < arrayA.length; i++) {
+        somaA += Number(arrayA[i]);
+    }
+    for (let i = 0; i < arrayL.length; i++) {
+        somaL += Number(arrayL[i]);
+    }
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR')]);
 
     arrayTemp.forEach(function(linha) {
         // Usa ; como separador para compatibilidade com o LibreOffice em pt-BR
@@ -182,6 +309,8 @@ function exportar2(){
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+
+    
 }
 
 // Medição 3D

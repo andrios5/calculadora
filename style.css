@@ -245,13 +245,21 @@ p.titulo {
 
 
 table {
-    width: 425px;
+    width: 600px;
     border-collapse: collapse;
     background-color: var(--cor1);
     border-radius: 15px;
     margin: auto;
     border: none;
     display: none;
+}
+
+tfoot {
+    font-size: 1.025em;
+}
+
+thead {
+    font-size: 1.025em;
 }
 
 table#m3 {
@@ -262,19 +270,24 @@ tr {
     border-radius: 15px;
 }
 
+tbody > tr > th {
+    font-size: 1.025em;
+}
+
 th, td {
-    border: 1px solid var(--cor2);
+    border: 1px solid var(--cor5);
     padding: 8px;
     text-align: center;
     margin: auto;
-    width: 100px;
+    width: 150px;
+    border-radius: 15px;
 }
 
 section#m2, section#m3 {
     display: block;
 }
 
-button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida {
+button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX {
     display: none;
 }
 
@@ -538,6 +551,10 @@ p#teto {
     padding: 5px;
     margin: 5px;
     width: 95%;
+}
+
+table {
+    max-width: 450px;
 }
 
     
