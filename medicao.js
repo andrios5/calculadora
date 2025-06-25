@@ -6,7 +6,7 @@ export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
 const seletorDeArquivo = document.getElementById('seletorDeArquivo');
 seletorDeArquivo.addEventListener('change', function(e){
-    if (e.target.files.length) {
+if (e.target.files.length) { // Verifica se algum arquivo foi selecionado
         importarCSVparaArray2d(e.target.files[0]);
     }
 });
@@ -324,28 +324,27 @@ function exportar2(){
 }
 
 function importarCSVparaArray2d(file) {
-    const leitor = new FileReader();
-    leitor.onload = function(e) {
-        const conteudo = e.target.result;
-        const linhas = conteudo.split('\n');
-        // Remove cabeçalho
-        linhas.shift();
-        linhas.forEach(linha => {
-            if (linha.trim() !== '') {
-                const partes = linha.split(';');
+    const leitor = new FileReader(); // Cria um novo FileReader
+    leitor.onload = function(e) { // Define o que fazer quando o arquivo for carregado
+        const conteudo = e.target.result; // Obtém o conteúdo do arquivo
+        const linhas = conteudo.split('\n'); // Divide o conteúdo em linhas
+        linhas.shift();  // Remove o cabeçalho do CSV
+        linhas.forEach(linha => { // Percorre cada linha do CSV
+            if (linha.trim() !== '') { // Verifica se a linha não está vazia
+                const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
                 if (partes.length >= 4) { // Verifica se há pelo menos 4 partes
-                    let nome = partes[0];
-                    let altura = Number(partes[1].replace(',', '.'));
-                    let largura = Number(partes[2].replace(',', '.'));
-                    let area = Number(partes[3].replace(',', '.'));
-                    array2d.push([nome, altura, largura, area]);
+                    let nome = partes[0]; // Obtém o nome da primeira parte
+                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
+                    array2d.push([nome, altura, largura, area]); // Adiciona os valores ao array 2D
                 }
             }
         });
         array2d.pop(); // Remove o último elemento do array2d após a importação
         formataVetor(array2d); // Chama a função para calcular a soma das alturas e larguras
     };
-    leitor.readAsText(file, 'utf-8');
+    leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
 }
 
 function formataVetor(array2d) {

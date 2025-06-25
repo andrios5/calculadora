@@ -564,6 +564,10 @@ p#teto {
     tfoot, tfoot {
     font-size: 1.03em;
     }
+
+    #seletorDeArquivo {
+        min-width: 300px;
+    }
     
 }
 
