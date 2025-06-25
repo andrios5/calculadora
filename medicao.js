@@ -26,6 +26,7 @@ let arrayL = []
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
         nome2 = document.querySelector('#nome2').value.trim() || 'Área'; // Define o nome, se estiver vazio usa 'Área'
+        nome2 = nome2.trim()
         resM2 = document.querySelector('#resultadoM2')
         resS2 = document.querySelector('#resultadoS2')
         tabela = document.querySelector('table#m2')
@@ -175,6 +176,7 @@ function exportar() {
     temp02 = true; // Garante que o nome seja atualizado antes da exportação
     checarNome(); // Atualiza o nome temporário
     nome2 = document.querySelector('#nome2').value.trim() || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
+    nome2 = nome2.trim()
     if (!array2d.length) {
         alert('Não há dados para exportar!');
         return;
