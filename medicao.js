@@ -26,6 +26,27 @@ let array1d = []
 let arrayA = []
 let arrayL = []
 
+function obterDataHoraFormatada() {
+  const data = new Date();
+
+  // Garante que números menores que 10 tenham um zero à esquerda
+  const padZero = (numero) => String(numero).padStart(2, '0');
+
+  // Extrai as partes da data
+  const dia = padZero(data.getDate());
+  const mes = padZero(data.getMonth() + 1); // getMonth() retorna de 0-11
+  const ano = data.getFullYear();
+
+  // Extrai as partes da hora
+  const horas = padZero(data.getHours());
+  const minutos = padZero(data.getMinutes());
+  const segundos = padZero(data.getSeconds());
+
+  return `${horas}${dia}${mes}${ano}`;
+}
+
+
+    
 
     function calcularArea2(){
         alt = document.querySelector('#altura')
@@ -73,6 +94,8 @@ function exibeArea2(array2d, array1d) {
     resM2 = document.querySelector('#resultadoM2')
     resS2 = document.querySelector('#resultadoS2')
     tabela = document.querySelector('table#m2')
+
+
     
     resM2.innerHTML = '' // Limpa o conteúdo anterior
         for (let i = 0; i < array2d.length; i++) {
@@ -83,6 +106,8 @@ function exibeArea2(array2d, array1d) {
             resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
+
+    
 
     for (let i = 0; i < array1d.length; i++) {
         soma2 += Number(array1d[i]);
@@ -109,7 +134,7 @@ function exibeArea2(array2d, array1d) {
     export2.style.display = 'inline-block'
     resetC2.style.display = 'inline-block'
     formatoEX.style.display = 'inline-block'
-    seletorDeArquivo.style.display = 'none'
+    
     resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
     }
 
@@ -117,9 +142,10 @@ function exibeArea2(array2d, array1d) {
 }
 
 function checarNome(){
-    
+    // Temp02 não está sendo usado para nada, mas pode ser útil para futuras implementações
+
     if (nome2 != tempNome2){ // Verifica se o nome mudou
-            if (tempNome2 != '' && tempNome2 != null && temp02 == true){ // Se não for a primeira vez, remove o nome antigo
+            if (tempNome2 != '' && tempNome2 != null){ // Se não for a primeira vez, remove o nome antigo
                 let temp = 0
                 for (let i = 0; i < array2d.length; i++) { // Percorre o array2d
                     const [nome, altura, largura, area] = array2d[i]; // Desestrutura o array2d
@@ -185,9 +211,11 @@ function diminuirC2(){
 function exportar() {
     nome2 = '0'
     temp02 = true; // Garante que o nome seja atualizado antes da exportação
+    let nome1 = ''
     checarNome(); // Atualiza o nome temporário
-    nome2 = document.querySelector('#nome2').value || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
-    nome2 = nome2.trim() // Remove espaços em branco no início e no final do nome
+    nome1 = document.querySelector('#nome2').value || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
+    nome1 = nome1.trim() // Remove espaços em branco no início e no final do nome
+    nome2 = nome1 + obterDataHoraFormatada(); // Define o nome do arquivo com data e hora
     if (!array2d.length) {
         alert('Não há dados para exportar!');
         return;
@@ -361,6 +389,7 @@ function formataVetor(array2d) {
         } else if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
         if (altura !== '' && altura !== null) {
                 arrayA.push(altura); // Adiciona a altura ao array de alturas
+                tempAltura = altura; // Atualiza a altura temporária
         }
         if (largura !== '' && largura !== null) {
                 arrayL.push(largura); // Adiciona a largura ao array de larguras
@@ -372,6 +401,8 @@ function formataVetor(array2d) {
     }
     temp02 = true; // Define a variável como true para indicar que o nome foi atualizado
     exibeArea2(array2d, array1d); // Atualiza a tabela na tela
+    document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
+    document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
 }
 }
 
