@@ -254,13 +254,10 @@ table {
     display: none;
 }
 
-tfoot {
+tfoot, tfoot {
     font-size: 1.025em;
 }
 
-thead {
-    font-size: 1.025em;
-}
 
 table#m3 {
     width: 550px;
@@ -554,10 +551,13 @@ p#teto {
     }
 
     table {
-        font-size: 0.9em;
-        max-width: 400px;
+        font-size: 0.95em;
+        max-width: 410px;
     }
 
+    tfoot, tfoot {
+    font-size: 1.03em;
+    }
     
 }
 
@@ -612,6 +612,15 @@ p#teto {
         max-width: 125px;
         overflow: auto;
         font-size: 1.15em;
+    }
+
+    table {
+        font-size: 0.9em;
+        max-width: 380px;
+    }
+
+    tfoot, tfoot {
+    font-size: 1.05em;
     }
 }
 
