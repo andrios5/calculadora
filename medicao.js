@@ -112,17 +112,17 @@ function checarNome(){
     if (nome2 != tempNome2){ // Verifica se o nome mudou
             if (tempNome2 != '' && tempNome2 != null && temp02 == true){ // Se não for a primeira vez, remove o nome antigo
                 let temp = 0
-                for (let i = 0; i < array2d.length; i++) {
-                    const [nome, altura, largura, area] = array2d[i];
+                for (let i = 0; i < array2d.length; i++) { // Percorre o array2d
+                    const [nome, altura, largura, area] = array2d[i]; // Desestrutura o array2d
                     if (nome == tempNome2) { // Verifica se o nome é igual ao nome temporário
-                        if(largura == '' || largura == null && area == '' || area == null){
+                        if(largura == '' || largura == null && area == '' || area == null){ // Se a largura e a área forem vazias ou nulas
                             array2d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array2d
                             array1d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array1d
                             arrayA.splice(i, 1); // Apaga a altura da soma com o mesmo nome do arrayA
                             arrayL.splice(i, 1); // Apaga a largura da soma com o mesmo nome do arrayL
-                            i--
+                            i-- // Decrementa o índice para não pular o próximo elemento
                         }
-                        else{temp += area;}
+                        else{temp += area;} // Soma a área se a largura e a área não forem vazias ou nulas
                     }
                 }
                 array2d.push([tempNome2, temp])
