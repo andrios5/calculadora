@@ -162,7 +162,7 @@ section.in {
     box-shadow: inset 5px 5px 5px var(--cor6);
 }
 
-.tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
+.tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5, #tela35{
     width: 60%;
     margin: auto;
     margin-top: 20px;
@@ -191,7 +191,7 @@ section.in {
     font-size: 1.5em;
 }
 
-.tela15, .tela25, .telaV1, .telaV3, .telaV4 {
+.tela15, .tela25, .telaV1, .telaV3, .telaV4, #tela35 {
     background-color: var(--cor3);
     color: var(--cor2);
     border-radius: 50px;
