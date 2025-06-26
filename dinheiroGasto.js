@@ -42,6 +42,12 @@ document.querySelector('#setaGasto').addEventListener('click', menuTeto)
 document.querySelector('button#definirTeto').addEventListener('click', defineTeto)
 window.addEventListener('scroll', checarDiaDG)
 
+document.querySelector('#valorGasto').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+        mais();
+    }
+});
+
 telaV1 = document.querySelector('section.telaV1')
 telaV0 = document.querySelector('section.telaV0')
 telaV2 = document.querySelector('section.telaV2')

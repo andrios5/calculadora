@@ -363,6 +363,11 @@ p#teto {
     padding: 25px;
 }
 
+button#virarDia {
+    display: none;
+    margin: auto;
+}
+
 
     
 

@@ -27,7 +27,8 @@ document.querySelector('#mais').addEventListener('click', maisUm)
 document.querySelector('#menos').addEventListener('click', menosUm)
 document.querySelector('#reset').addEventListener('click', reset)
 document.querySelector('#reset2').addEventListener('click', resetSem)
-//document.querySelector('#virarDia').addEventListener('click', virarD)
+document.querySelector('span.aut').addEventListener('click', autoCont)
+document.querySelector('#virarDia').addEventListener('click', virarD)
 
 const dataAtual = new Date(); // Cria um objeto Date com a data atual
 
@@ -36,20 +37,51 @@ function diaDoAno(data) {
   const primeiroDoAno = new Date(data.getFullYear(), 0, 1);
   const milissegundosNoAno = data - primeiroDoAno;
   const milissegundosEmUmDia = 1000 * 60 * 60 * 24;
-  const diaDoAno = Math.floor(milissegundosNoAno / milissegundosEmUmDia) + 1;
+  const diaDoAno = Math.floor(milissegundosNoAno / milissegundosEmUmDia);
   return diaDoAno;
 }
 
 let tempDiaSem = 0;
 let tempSetar = 0; // Variável para controlar se o dia da semana deve ser atualizado
+let tempAut = 0
 
 let diaAno = diaDoAno; // Obtém o dia do ano atual
+let diaAnoTemp = diaDoAno
 diaSem = dataAtual.getDay(); // Obtém o dia da semana (0 = Domingo, 1 = Segunda, ..., 6 = Sábado)
+
+function autoCont() {
+    tempAut = parseInt(getCookie('tempAut')) || 0; // Lê o cookie "tempAut" ou inicia em 0
+    if (tempAut == 0) { // Se o contador automático não estiver ativado
+        tempAut = 1; // Reseta a variável de controle para o contador automático
+        setCookie('tempAut', tempAut, 365); // Salva a variável de controle no cookie por 365 dias
+        alert('Contador automático desativado! Para virar o dia precionar Virar Dia. Se você ativar o contador automatico novamente o contador vai zerar.');
+    } else {
+        tempAut = 0; // Reseta a variável de controle para o contador automático
+        setCookie('tempAut', tempAut, 365); // Salva a variável de controle no cookie por 365 diasautomático foi desativado
+        diaAno = parseInt(getCookie('diaAnoC')) || diaAno;
+        if (diaAno > diaAnoTemp){
+            resetSem() // Se o dia do ano atual for maior que o dia do ano inicial, reseta a semana
+            alert('Contador automático ativado! Contador zerado.');
+        } else { alert('Contador automático ativado!');}
+    }
+    autoContador() // Chama a função para atualizar a exibição do contador automático
+}
+
+autoContador()
+function autoContador() {
+    tempAut = parseInt(getCookie('tempAut')) || 0; // Lê o cookie "tempAut" ou inicia em 0
+    if (tempAut == 1) { // Se o contador automático estiver ativado
+        document.querySelector('#virarDia').style.display = 'block'
+    } else {
+        document.querySelector('#virarDia').style.display = 'none'
+    }
+}
 
 function virarD() {
     diaAno = parseInt(getCookie('diaAnoC')) || diaAno; // Lê o cookie "diaAnoC" ou usa o dia do ano atual
     diaSem = parseInt(getCookie('diaSemC')) || diaSem; // L
     diaAno++
+    
     setCookie('diaAnoC', diaAno, 365) // Salva o dia do ano no cookie por 365 dias
     if (diaSem >= 6) { // Se for sábado, volta para domingo
         diaSem = 0; // Reseta o dia da semana para domingo
@@ -128,7 +160,7 @@ function virarDia(){
         }
         if (tempS == 1) {
             limparSemana() // Chama a função para limpar o contador da semana
-            alert('Contador da semana virado!') // Exibe um alerta informando que o contador da semana foi virado
+            alert('Contador da semana zero!') // Exibe um alerta informando que o contador da semana foi virado
         }
     }
 }
@@ -175,7 +207,6 @@ function limparSemana() {
 
 function reset() {
     setCookie('contador', 0, 365); // Reseta o contador para 0 e salva por 365 dias
-    setCookie('data', 0, 365) // Reseta o dia do ano para 0 e salva por 365 dias
     setCookie('diaAnoC', 0, 365) // Reseta o dia do ano para 0 e salva por 365 dias
     setCookie('diaSemC', 0, 365) // Reseta o dia da semana para 0 e salva por 365 dias
     exibirContador() // Atualiza a exibição da data inicial
@@ -207,6 +238,8 @@ function resetSem() {
     setCookie('virarSem', 0, 365); // Reseta a função de limpar o contador para false
     setCookie('SemanaAnterior', 0, 365); // Reseta o total da semana para 0 e salva por 365 dias
     setCookie('tempSetar', 0, 365); // Reseta a variável de controle para false
+
+    setCookie('tempAut', 0, 365); // Reseta a variável de controle do contador automático para false
 
     reset(); // Reseta o contador
 
