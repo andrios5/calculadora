@@ -29,12 +29,8 @@ formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
 
 var tempNome2
-var temp02
 let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
 let array2d = []
-let array1d = []
-let arrayA = []
-let arrayL = []
 let arrayM1 = []; // Array para armazenar os nomes únicos
 
 function obterDataHoraFormatada() {
@@ -62,7 +58,7 @@ function ordenarVetor() {
     ordenar.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ordenando
     ordenar.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
     ordenarArray2dPorNome(); // Chama a função para ordenar o array2d por nome
-    exibeArea2(array2d, array1d); // Atualiza a exibição após ordenar
+    exibeArea2(array2d); // Atualiza a exibição após ordenar
     } else {
     vetorOrdenando = false
     ordenar.style.backgroundColor = ''; // Restaura a cor original do botão
@@ -79,18 +75,6 @@ function ordenarArray2dPorNome() {
                 let temp = array2d[j];
                 array2d[j] = array2d[j + 1];
                 array2d[j + 1] = temp;
-
-                let temp1 = array1d[j];
-                array1d[j] = array1d[j + 1];
-                array1d[j + 1] = temp1;
-
-                let tempA = arrayA[j];
-                arrayA[j] = arrayA[j + 1];
-                arrayA[j + 1] = tempA;
-
-                let tempL = arrayL[j];
-                arrayL[j] = arrayL[j + 1];
-                arrayL[j + 1] = tempL;
             }
         }
     }
@@ -133,17 +117,14 @@ function ordenarArray2dPorNome() {
         area = alt * lar
 
         array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
-        arrayA.push(alt) // Adiciona a altura ao array 1D
-        arrayL.push(lar) // Adiciona a largura ao array 1D
-        array1d.push(area) // Adiciona a área ao array 1D
 
-        exibeArea2(array2d, array1d) // Chama a função para exibir os resultados
+        exibeArea2(array2d) // Chama a função para exibir os resultados
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
         
 }
 
-function exibeArea2(array2d, array1d) {
+function exibeArea2(array2d) {
     let soma2 = 0 // Inicializa a variável de soma
     let somaA = 0 // Inicializa a variável de soma das alturas
     let somaL = 0 // Inicializa a variável de soma das larguras
@@ -167,19 +148,19 @@ function exibeArea2(array2d, array1d) {
 
     
 
-    for (let i = 0; i < array1d.length; i++) {
-        soma2 += Number(array1d[i]);
+    for (let i = 0; i < array2d.length; i++) {
+        soma2 += Number(array2d[i][3]);
     }
 
-    for (let i = 0; i < arrayA.length; i++) {
-        somaA += Number(arrayA[i]);
+    for (let i = 0; i < array2d.length; i++) {
+        somaA += Number(array2d[i][1]);
     }
 
-    for (let i = 0; i < arrayL.length; i++) {
-        somaL += Number(arrayL[i]);
+    for (let i = 0; i < array2d.length; i++) {
+        somaL += Number(array2d[i][2]);
     }
     
-    if (array1d.length == 0) { // Verifica se o array1d está vazio
+    if (array2d.length == 0) { // Verifica se o array2d está vazio
     tabela.style.display = 'none'
     menosC2.style.display = 'none'
     export2.style.display = 'none'
@@ -253,28 +234,21 @@ function resetarC2(){
     ordenar.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     array2d = [] // Limpa o array 2D
-    array1d = [] // Limpa o array 1D
-    arrayA = [] // Limpa o array de alturas
-    arrayL = [] // Limpa o array de larguras
 }
 
 function diminuirC2(){
-    array1d.pop() // Remove o último elemento do array 1D
     array2d.pop() // Remove o último elemento do array 2D
-    arrayA.pop() // Remove o último elemento do array de alturas
-    arrayL.pop() // Remove o último elemento do array de larguras
+
      for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
         tempNome2 = nome
         
      }
-    temp02 = true
-    exibeArea2(array2d, array1d) // Atualiza a exibição
+    exibeArea2(array2d) // Atualiza a exibição
 }
 
 function exportar() {
     nome2 = '0'
-    temp02 = true; // Garante que o nome seja atualizado antes da exportação
     let nome1 = ''
     checarNome(); // Atualiza o nome temporário
     nome1 = document.querySelector('#nome2').value || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
@@ -290,7 +264,6 @@ function exportar() {
         exportar1(); // Chama a função de exportação para XLS
     }
 
-    diminuirC2(); // Chama a função para remover o último elemento após a exportação
 }
 
 function exportar1() {
@@ -329,9 +302,9 @@ function exportar1() {
 
     // Soma final
     let soma2 = 0, somaA = 0, somaL = 0;
-    for (let i = 0; i < array1d.length; i++) soma2 += Number(array1d[i]);
-    for (let i = 0; i < arrayA.length; i++) somaA += Number(arrayA[i]);
-    for (let i = 0; i < arrayL.length; i++) somaL += Number(arrayL[i]);
+    for (let i = 0; i < array2d.length; i++) soma2 += Number(array2d[i][3]);
+    for (let i = 0; i < array2d.length; i++) somaA += Number(array2d[i][1]);
+    for (let i = 0; i < array2d.length; i++) somaL += Number(array2d[i][2]);
     html += `<tr>
         <th>Soma:</th>
         <td>${somaA.toLocaleString('pt-BR')}</td>
@@ -384,14 +357,14 @@ function exportar2(){
     let soma2 = 0; // Inicializa a variável de soma
     let somaA = 0; // Inicializa a variável de soma das alturas
     let somaL = 0; // Inicializa a variável de soma das larguras
-    for (let i = 0; i < array1d.length; i++) {
-        soma2 += Number(array1d[i]);
+    for (let i = 0; i < array2d.length; i++) {
+        soma2 += Number(array2d[i][3]);
     }
-    for (let i = 0; i < arrayA.length; i++) {
-        somaA += Number(arrayA[i]);
+    for (let i = 0; i < array2d.length; i++) {
+        somaA += Number(array2d[i][1]);
     }
-    for (let i = 0; i < arrayL.length; i++) {
-        somaL += Number(arrayL[i]);
+    for (let i = 0; i < array2d.length; i++) {
+        somaL += Number(array2d[i][2]);
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
@@ -448,9 +421,6 @@ function importarCSVparaArray2d(file) {
 }
 
 function formataVetor(array2d) {
-    array1d.length = 0;
-    arrayA.length = 0;
-    arrayL.length = 0;
 
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
@@ -464,29 +434,19 @@ function formataVetor(array2d) {
 
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
-         if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
-        if (altura !== '' && altura !== null) {
-                arrayA.push(altura); // Adiciona a altura ao array de alturas
-                tempAltura = altura; // Atualiza a altura temporária
-        }
-        if (largura !== '' && largura !== null) {
-                arrayL.push(largura); // Adiciona a largura ao array de larguras
-        }
-        if (area !== '' && area !== null) {
-                array1d.push(area); // Adiciona a área ao array 1D
-                
-        }
-        if (nome !== '' && nome !== null && nome != 'Soma:') {
-                tempNome2 = nome; // Atualiza o nome temporário
-        } else {
-            tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
-        }
+        if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
+            if (nome !== '' && nome !== null && nome != 'Soma:') {
+                    tempNome2 = nome; // Atualiza o nome temporário
+            } else {
+                tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
+            }
+            tempAltura = altura; // Atualiza a altura temporária
     }
     
     
 }
 
-exibeArea2(array2d, array1d); // Atualiza a tabela na tela
+exibeArea2(array2d); // Atualiza a tabela na tela
 document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
 document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
 seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
