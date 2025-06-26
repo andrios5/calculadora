@@ -43,7 +43,8 @@ function diaDoAno(data) {
 
 let tempDiaSem = 0;
 let tempSetar = 0; // Variável para controlar se o dia da semana deve ser atualizado
-let tempAut = 0
+let tempAut = 0;
+
 
 let diaAno = diaDoAno; // Obtém o dia do ano atual
 let diaAnoTemp = diaDoAno
@@ -54,14 +55,14 @@ function autoCont() {
     if (tempAut == 0) { // Se o contador automático não estiver ativado
         tempAut = 1; // Reseta a variável de controle para o contador automático
         setCookie('tempAut', tempAut, 365); // Salva a variável de controle no cookie por 365 dias
-        alert('Contador automático desativado! Para virar o dia precionar Virar Dia. Se você ativar o contador automatico novamente o contador vai zerar.');
+        alert('Contador automático desativado!\nPara virar o dia precionar Virar Dia.\nSe você ativar o contador automatico novamente o contador pode zerar.');
     } else {
         tempAut = 0; // Reseta a variável de controle para o contador automático
         setCookie('tempAut', tempAut, 365); // Salva a variável de controle no cookie por 365 diasautomático foi desativado
         diaAno = parseInt(getCookie('diaAnoC')) || diaAno;
         if (diaAno > diaAnoTemp){
             resetSem() // Se o dia do ano atual for maior que o dia do ano inicial, reseta a semana
-            alert('Contador automático ativado! Contador zerado.');
+            alert('Contador automático ativado!\nContador zerado.');
         } else { alert('Contador automático ativado!');}
     }
     autoContador() // Chama a função para atualizar a exibição do contador automático
@@ -261,24 +262,38 @@ function adicionarSemana(cont) {
     if (diaDaSem == 0) {
         domingo = cont // Se for domingo, atribui o valor do contador
         setCookie('domingo', domingo, 365) // Salva o valor do domingo no cookie por 365 dias
+        domingoD = diaAno // Atualiza o dia do ano para o domingo
+        setCookie('domingoD', domingoD, 365) // Salva o
     } else if (diaDaSem == 1) {
         segunda = cont // Se for segunda, atribui o valor do contador
         setCookie('segunda', segunda, 365) // Salva o valor da segunda no cookie por 365 dias
+        segundaD = diaAno // Atualiza o dia do ano para a segunda
+        setCookie('segundaD', segundaD, 365) // Salva
     } else if (diaDaSem == 2) {
         terca = cont // Se for terça, atribui o valor do contador
         setCookie('terca', terca, 365) // Salva o valor da terça no cookie por 365 dias
+        tercaD = diaAno // Atualiza o dia do ano para a terça
+        setCookie('tercaD', tercaD, 365) // Salva o
     } else if (diaDaSem == 3) {
         quarta = cont // Se for quarta, atribui o valor do contador
         setCookie('quarta', quarta, 365) // Salva o valor da quarta no cookie por 365 dias
+        quartaD = diaAno // Atualiza o dia do ano para a quarta
+        setCookie('quartaD', quartaD, 365) // Salva o
     } else if (diaDaSem == 4) {
         quinta = cont // Se for quinta, atribui o valor do contador
         setCookie('quinta', quinta, 365) // Salva o valor da quinta no cookie por 365 dias
+        quintaD = diaAno // Atualiza o dia do ano para a quinta
+        setCookie('quintaD', quintaD, 365) // Salva o
     } else if (diaDaSem == 5) {
         sexta = cont // Se for sexta, atribui o valor do contador
         setCookie('sexta', sexta, 365) // Salva o valor da sexta no cookie por 365 dias
+        sextaD = diaAno // Atualiza o dia do ano para a sexta
+        setCookie('sextaD', sextaD, 365) // Salva o
     } else if (diaDaSem == 6) {
         sabado = cont // Se for sábado, atribui o valor do contador
         setCookie('sabado', sabado, 365) // Salva o valor do sábado no cookie por 365 dias
+        sabadoD = diaAno // Atualiza o dia do ano para o sábado
+        setCookie('sabadoD', sabadoD, 365) // Salva o
     }
     limparContador() // Limpa o contador para o próximo dia
     exibeSemana()
@@ -287,15 +302,8 @@ function adicionarSemana(cont) {
 function exibeSemana() {
     tela25 = document.querySelector('section.tela25')
     tabelaSemana = document.querySelector('#contSem')
-    tr0 = document.querySelector('#trdom')
-    tr1 = document.querySelector('#trseg')
-    tr2 = document.querySelector('#trter')
-    tr3 = document.querySelector('#trqua')
-    tr4 = document.querySelector('#trqui')
-    tr5 = document.querySelector('#trsex')
-    tr6 = document.querySelector('#trsab')
+    bodySem = document.querySelector('#bodySem')
     rodape = document.querySelector('#rodSem')
-
     tela35 = document.querySelector('#tela35')
     
 
@@ -307,7 +315,17 @@ function exibeSemana() {
     sexta = parseInt(getCookie('sexta')) || false; // Lê o cookie do sexta ou inicia em 0
     sabado = parseInt(getCookie('sabado')) || false; // Lê o cookie do sabado ou inicia em 0
 
-    
+    domingoD = parseInt(getCookie('domingoD')) || 0; // Lê o cookie do dia do domingo ou inicia em 0
+    segundaD = parseInt(getCookie('segundaD')) || 0; // Lê o cookie do dia da segunda ou inicia em 0
+    tercaD = parseInt(getCookie('tercaD')) || 0; // Lê o cookie do dia da terça ou inicia em 0
+    quartaD = parseInt(getCookie('quartaD')) || 0; // Lê o cookie do dia da quarta ou inicia em 0
+    quintaD = parseInt(getCookie('quintaD')) || 0; // Lê o cookie do dia da quinta ou inicia em 0
+    sextaD = parseInt(getCookie('sextaD')) || 0; // Lê o cookie do dia da sexta ou inicia em 0
+    sabadoD = parseInt(getCookie('sabadoD')) || 0; // Lê o cookie do dia do sábado ou inicia em 0
+
+    let arrayCont = [];
+    arrayCont.length = 0;
+
 
     if (domingo == false && segunda == false && terca == false && quarta == false && quinta == false && sexta == false && sabado == false) {
         tabelaSemana.style.display = 'none'; // Oculta a tabela da semana se todos os valores forem 0
@@ -315,72 +333,76 @@ function exibeSemana() {
     if (domingo != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr0.innerHTML = `<th colspan="2">Domingo: </th><td colspan="2">${domingo}</td>`; // Atualiza a linha do domingo na tabela
-        tr0.style.display = 'table-row'; // Exibe a linha da tabela
+
+        arrayCont.push([domingoD, 'Domingo:', domingo])
+
     } else {
         domingo = 0
-        tr0.style.display = 'none'; // Oculta a linha do domingo se o valor for 0
     }
 
     if (segunda != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr1.innerHTML = `<th colspan="2">Segunda: </th><td colspan="2">${segunda}</td>`; // Atualiza a linha da segunda na tabela
-        tr1.style.display = 'table-row'; // Exibe a linha da tabela
+        
+        arrayCont.push([segundaD, 'Segunda:', segunda])
     } else {
         segunda = 0
-        tr1.style.display = 'none'; // Oculta a linha da segunda se o valor for 0
     }
 
     if (terca != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr2.innerHTML = `<th colspan="2">Terça: </th><td colspan="2">${terca}</td>`; // Atualiza a linha da terça na tabela
-        tr2.style.display = 'table-row'; // Exibe a linha da tabela
+        
+        arrayCont.push([tercaD, 'Terça:', terca])
     } else {
         terca = 0
-        tr2.style.display = 'none'; // Oculta a linha da terça se o valor for 0
     }
 
     if (quarta != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr3.innerHTML = `<th colspan="2">Quarta: </th><td colspan="2">${quarta}</td>`; // Atualiza a linha da quarta na tabela
-        tr3.style.display = 'table-row'; // Exibe a linha da tabela
+        
+        arrayCont.push([quartaD, 'Quarta:', quarta])
     } else {
         quarta = 0
-        tr3.style.display = 'none'; // Oculta a linha da quarta se o valor for 0
     }
 
     if (quinta != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr4.innerHTML = `<th colspan="2">Quinta: </th><td colspan="2">${quinta}</td>`; // Atualiza a linha da quinta na tabela
-        tr4.style.display = 'table-row'; // Exibe a linha da tabela
+        
+        arrayCont.push([quintaD, 'Quinta:', quinta])
     } else {
         quinta = 0
-        tr4.style.display = 'none'; // Oculta a linha da quinta se o valor for 0
     }
     
 
     if (sexta != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr5.innerHTML = `<th colspan="2">Sexta: </th><td colspan="2">${sexta}</td>`; // Atualiza a linha da sexta na tabela
-        tr5.style.display = 'table-row'; // Exibe a linha da tabela
+        
+        arrayCont.push([sextaD, 'Sexta:', sexta])
     } else {
         sexta = 0
-        tr5.style.display = 'none'; // Oculta a linha da sexta se o valor for 0
+        
     }
 
     if (sabado != false){
         tela25.style.display = 'block'; // Exibe a seção da semana
         tabelaSemana.style.display = 'table'; // Exibe a tabela da semana
-        tr6.innerHTML = `<th colspan="2">Sábado: </th><td colspan="2">${sabado}</td>`; // Atualiza a linha do sábado na tabela
-        tr6.style.display = 'table-row'; // Exibe a linha da tabela
+        
+        arrayCont.push([sabadoD, 'Sabado:', sabado])
     } else {
         sabado = 0
-        tr6.style.display = 'none'; // Oculta a linha do sábado se o valor for 0
+        
+    }
+
+    
+
+    arrayCont = arrayCont.sort((a, b) => a[0] - b[0]); // Ordena o array de contadores pelo dia do ano
+    bodySem.innerHTML = ""
+    for (let i = 0; i < arrayCont.length; i++) {
+        bodySem.innerHTML += `<tr><th colspan="2">${arrayCont[i][1]}</th><td colspan="2">${arrayCont[i][2]}</td></tr>`; // Define o conteúdo da linha 
     }
 
     let totalSemana = 0; // Inicializa o total da semana
