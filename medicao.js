@@ -5,6 +5,11 @@ menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
 const seletorDeArquivo = document.getElementById('seletorDeArquivo');
+document.querySelector('#largura').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        calcularArea2();
+    }
+});
 seletorDeArquivo.addEventListener('change', function(e){
 if (e.target.files.length) { // Verifica se algum arquivo foi selecionado
         importarCSVparaArray2d(e.target.files[0]);
@@ -25,6 +30,7 @@ let array2d = []
 let array1d = []
 let arrayA = []
 let arrayL = []
+let arrayM1 = []; // Array para armazenar os nomes únicos
 
 function obterDataHoraFormatada() {
   const data = new Date();
@@ -56,18 +62,21 @@ function obterDataHoraFormatada() {
         resM2 = document.querySelector('#resultadoM2')
         resS2 = document.querySelector('#resultadoS2')
         tabela = document.querySelector('table#m2')
+        tabela1 = document.querySelector('table#m1')
 
-        if (alt.value == '' || alt.value == null || lar.value == '' || lar.value == null) { // Verifica se os campos estão vazios
-            alert('Por favor, preencha todos os campos.')
-            return;
-        }
-        
+        tempNome2 = nome2 // Armazena o nome temporário
+
         
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
         
-
-        checarNome()
+        /*if (alt.value == '' || alt.value == null || alt.value == '0') { // Verifica se os campos estão vazios
+            alt.value = `1`;
+        }
+        if (lar.value == '' || lar.value == null || lar.value == '0') { // Verifica se os campos estão vazios
+            lar.value = `1`;
+        }*/
+        
         altP = alt.toString().split(/[.,]/)
         larP = lar.toString().split(/[.,]/)
 
@@ -100,12 +109,10 @@ function exibeArea2(array2d, array1d) {
     resM2.innerHTML = '' // Limpa o conteúdo anterior
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
-            if(largura == '' || largura == null || area == '' || area == null){
-                resM2.innerHTML += `<tr><th colspan="3">Soma ${nome}:</th><td> ${altura.toLocaleString('pt-BR')}</td></tr>`
-            } else {
+            
             resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`;
         }
-    }
+    
 
     
 
@@ -121,12 +128,13 @@ function exibeArea2(array2d, array1d) {
         somaL += Number(arrayL[i]);
     }
     
-    if (soma2 == 0) {
+    if (array1d.length == 0) { // Verifica se o array1d está vazio
     tabela.style.display = 'none'
     menosC2.style.display = 'none'
     export2.style.display = 'none'
     resetC2.style.display = 'none'
     formatoEX.style.display = 'none'
+    tabela1.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     }else{
     tabela.style.display = 'block'
@@ -134,43 +142,46 @@ function exibeArea2(array2d, array1d) {
     export2.style.display = 'inline-block'
     resetC2.style.display = 'inline-block'
     formatoEX.style.display = 'inline-block'
-    
-    resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
+    resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1' id="m121">${soma2.toLocaleString('pt-BR')}</td></tr>`;
+    mudouNome()
     }
-
+    checarNome() // Chama a função para verificar o nome e exibir a soma por nome
     
 }
 
-function checarNome(){
-    // Temp02 não está sendo usado para nada, mas pode ser útil para futuras implementações
+function mudouNome() {
+    tabela1 = document.querySelector('table#m1')
+    if (tempNome2 != document.querySelector('#nome2').value) {
+    tabela1.style.display = 'block'
+    }
+}
 
-    if (nome2 != tempNome2){ // Verifica se o nome mudou
-            if (tempNome2 != '' && tempNome2 != null){ // Se não for a primeira vez, remove o nome antigo
-                let temp = 0
-                for (let i = 0; i < array2d.length; i++) { // Percorre o array2d
-                    const [nome, altura, largura, area] = array2d[i]; // Desestrutura o array2d
-                    if (nome == tempNome2) { // Verifica se o nome é igual ao nome temporário
-                        if(largura == '' || largura == null && area == '' || area == null){ // Se a largura e a área forem vazias ou nulas
-                            array2d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array2d
-                            array1d.splice(i, 1); // Apaga o elemento soma com o mesmo nome do array1d
-                            arrayA.splice(i, 1); // Apaga a altura da soma com o mesmo nome do arrayA
-                            arrayL.splice(i, 1); // Apaga a largura da soma com o mesmo nome do arrayL
-                            i-- // Decrementa o índice para não pular o próximo elemento
-                        }
-                        else{temp += area;} // Soma a área se a largura e a área não forem vazias ou nulas
-                    }
-                }
-                array2d.push([tempNome2, temp])
-                array1d.push(0)
-                arrayA.push(0) // Adiciona a altura da soma ao arrayA
-                arrayL.push(0) // Adiciona a largura da soma ao arrayL
+function checarNome(){
+    
+        resM1 = document.querySelector('#resultadoM1')
+        resM1.innerHTML = ''
+        
+        let somaPorNome = {}; // Objeto para armazenar a soma por nome
+        arrayM1.length = 0; // Array para armazenar os nomes únicos
+
+        for (let i = 0; i < array2d.length; i++) {
+            const [nome, , , area] = array2d[i];
+
+            let nomeLimpo = nome
+
+            if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
+                somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
             }
-            tempNome2 = nome2
-            arrayTemp = []
-            temp02 = false
-        } else {
-            temp02 = true // Se o nome não mudou, mantém a variável como true
+            somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
         }
+        
+        // Exemplo de exibição no console:
+        for (let nome in somaPorNome) {
+            resM1.innerHTML += `<tr><th colspan="1">Soma ${nome}:</th><td>${somaPorNome[nome]}</td></tr>`; // Exibe a soma por nome na tabela
+            arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
+        }
+
+    
 }
 
 
@@ -187,6 +198,7 @@ function resetarC2(){
     export2.style.display = 'none'
     resetC2.style.display = 'none'
     formatoEX.style.display = 'none'
+    tabela1.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     array2d = [] // Limpa o array 2D
     array1d = [] // Limpa o array 1D
@@ -253,19 +265,14 @@ function exportar1() {
     // Adiciona as linhas do array2d
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
-        if (largura == '' || largura == null || area == '' || area == null) {
-            html += `<tr>
-                <th colspan="3">Soma ${nome}:</th>
-                <td>${altura.toLocaleString('pt-BR')}</td>
-            </tr>`;
-        } else {
+        
             html += `<tr>
                 <td>${nome}</td>
                 <td>${altura.toLocaleString('pt-BR')}</td>
                 <td>${largura.toLocaleString('pt-BR')}</td>
                 <td>${area.toLocaleString('pt-BR')}</td>
             </tr>`;
-        }
+        
     }
 
     // Soma final
@@ -280,6 +287,17 @@ function exportar1() {
         <td>${soma2.toLocaleString('pt-BR')}</td>
     </tr>`;
 
+    html += `<tr></tr>`
+
+    html += `<tr><th colspan="4">Soma Parcial dos Itens</th></tr>`
+
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area] = arrayM1[i];
+        html += `<tr>
+            <th colspan="3">Soma ${nome}:</th>
+            <td colspan="1">${area.toLocaleString('pt-BR')}</td>
+        </tr>`;
+    }
     html += `
     </table>
     </body>
@@ -307,12 +325,7 @@ function exportar2(){
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
-            if(largura == '' || largura == null || area == '' || area == null){
-                arrayTemp.push([`Soma ${nome}:`, altura.toLocaleString('pt-BR')])
-            } else {
             arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR')]);
-        
-    }
     }
 
     // Adiciona a soma final
@@ -329,6 +342,13 @@ function exportar2(){
         somaL += Number(arrayL[i]);
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR')]);
+    arrayTemp.push([]); // Adiciona uma linha vazia para separação
+    arrayTemp.push(["Soma Parcial dos Itens"]);
+    
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area] = arrayM1[i];
+        arrayTemp.push([`Soma ${nome}:`, '', '', area.toLocaleString('pt-BR')]);
+    }
 
     arrayTemp.forEach(function(linha) {
         // Usa ; como separador para compatibilidade com o LibreOffice em pt-BR
@@ -369,8 +389,8 @@ function importarCSVparaArray2d(file) {
                 }
             }
         });
-        array2d.pop(); // Remove o último elemento do array2d após a importação
         formataVetor(array2d); // Chama a função para calcular a soma das alturas e larguras
+        
     };
     leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
 }
@@ -379,14 +399,20 @@ function formataVetor(array2d) {
     array1d.length = 0;
     arrayA.length = 0;
     arrayL.length = 0;
+
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
         if (largura == '' || largura == null && area == '' || area == null){   
-            let nome1 = nome.replace(/^Soma\s*/i, '').replace(/:$/, '').trim(); // Remove "Soma" e ":" do nome
-            let altura1 = altura
-            array2d.splice(i, 1);
-            array2d.splice(i, 0,[nome1, altura1, '', '']); // Adiciona o nome e a altura ao array2d
-        } else if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
+                array2d.splice(i, 1); // Remove o elemento Soma(paralela) do array2d
+                i--; // Decrementa o índice para não pular o próximo elemento
+            }
+            
+        }
+    array2d.pop(); // Remove o último elemento do array2d após a importação
+
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area] = array2d[i];
+         if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
         if (altura !== '' && altura !== null) {
                 arrayA.push(altura); // Adiciona a altura ao array de alturas
                 tempAltura = altura; // Atualiza a altura temporária
@@ -396,14 +422,23 @@ function formataVetor(array2d) {
         }
         if (area !== '' && area !== null) {
                 array1d.push(area); // Adiciona a área ao array 1D
+                
+        }
+        if (nome !== '' && nome !== null && nome != 'Soma:') {
                 tempNome2 = nome; // Atualiza o nome temporário
-        } 
+        } else {
+            tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
+        }
     }
-    temp02 = true; // Define a variável como true para indicar que o nome foi atualizado
-    exibeArea2(array2d, array1d); // Atualiza a tabela na tela
-    document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
-    document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
+    
+    
 }
+
+exibeArea2(array2d, array1d); // Atualiza a tabela na tela
+document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
+document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
+seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
+checarNome()
 }
 
 
