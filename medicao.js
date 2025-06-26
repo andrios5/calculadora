@@ -62,6 +62,7 @@ function ordenarVetor() {
     ordenar.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ordenando
     ordenar.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
     ordenarArray2dPorNome(); // Chama a função para ordenar o array2d por nome
+    exibeArea2(array2d, array1d); // Atualiza a exibição após ordenar
     } else {
     vetorOrdenando = false
     ordenar.style.backgroundColor = ''; // Restaura a cor original do botão
@@ -93,6 +94,7 @@ function ordenarArray2dPorNome() {
             }
         }
     }
+    
 }
 
 
