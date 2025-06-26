@@ -4,12 +4,15 @@ resetC2 = document.querySelector('button#resetC2')
 menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
+ordenar = document.querySelector('#ordenarM2')
 const seletorDeArquivo = document.getElementById('seletorDeArquivo');
+
 document.querySelector('#largura').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
         calcularArea2();
     }
 });
+
 seletorDeArquivo.addEventListener('change', function(e){
 if (e.target.files.length) { // Verifica se algum arquivo foi selecionado
         importarCSVparaArray2d(e.target.files[0]);
@@ -20,12 +23,14 @@ med2.addEventListener('click', calcularArea2)
 resetC2.addEventListener('click', resetarC2)
 menosC2.addEventListener('click', diminuirC2)
 export2.addEventListener('click', exportar)
+ordenar.addEventListener('click', ordenarVetor)
 
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
 
 var tempNome2
 var temp02
+let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
 let array2d = []
 let array1d = []
 let arrayA = []
@@ -51,6 +56,45 @@ function obterDataHoraFormatada() {
   return `${horas}${dia}${mes}${ano}`;
 }
 
+function ordenarVetor() {
+    if (vetorOrdenando === false) { // Verifica se o vetor já está sendo ordenado
+    vetorOrdenando = true
+    ordenar.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ordenando
+    ordenar.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
+    ordenarArray2dPorNome(); // Chama a função para ordenar o array2d por nome
+    } else {
+    vetorOrdenando = false
+    ordenar.style.backgroundColor = ''; // Restaura a cor original do botão
+    ordenar.style.boxShadow = ''; // Remove a sombra do botão
+    }
+}
+
+function ordenarArray2dPorNome() {
+        for (let i = 0; i < array2d.length - 1; i++) {
+        for (let j = 0; j < array2d.length - 1 - i; j++) {
+            // Comparação ignorando maiúsculas/minúsculas
+            if (array2d[j][0].toLowerCase() > array2d[j + 1][0].toLowerCase()) {
+                // Troca as posições
+                let temp = array2d[j];
+                array2d[j] = array2d[j + 1];
+                array2d[j + 1] = temp;
+
+                let temp1 = array1d[j];
+                array1d[j] = array1d[j + 1];
+                array1d[j + 1] = temp1;
+
+                let tempA = arrayA[j];
+                arrayA[j] = arrayA[j + 1];
+                arrayA[j + 1] = tempA;
+
+                let tempL = arrayL[j];
+                arrayL[j] = arrayL[j + 1];
+                arrayL[j + 1] = tempL;
+            }
+        }
+    }
+}
+
 
     
 
@@ -65,6 +109,7 @@ function obterDataHoraFormatada() {
         tabela1 = document.querySelector('table#m1')
 
         tempNome2 = nome2 // Armazena o nome temporário
+        
 
         
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
@@ -104,6 +149,10 @@ function exibeArea2(array2d, array1d) {
     resS2 = document.querySelector('#resultadoS2')
     tabela = document.querySelector('table#m2')
 
+    if (vetorOrdenando === true) { // Verifica se o vetor está sendo ordenado
+        ordenarArray2dPorNome(); // Ordena o array2d por nome
+    }
+
 
     
     resM2.innerHTML = '' // Limpa o conteúdo anterior
@@ -135,6 +184,7 @@ function exibeArea2(array2d, array1d) {
     resetC2.style.display = 'none'
     formatoEX.style.display = 'none'
     tabela1.style.display = 'none'
+    ordenar.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     }else{
     tabela.style.display = 'block'
@@ -142,16 +192,16 @@ function exibeArea2(array2d, array1d) {
     export2.style.display = 'inline-block'
     resetC2.style.display = 'inline-block'
     formatoEX.style.display = 'inline-block'
+    ordenar.style.display = 'inline-block'
     resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1' id="m121">${soma2.toLocaleString('pt-BR')}</td></tr>`;
-    mudouNome()
     }
-    checarNome() // Chama a função para verificar o nome e exibir a soma por nome
-    
+
+    checarNome() // Chama a função para verificar o nome e exibir a soma por nome // Ordena o array2d por nome
 }
 
 function mudouNome() {
     tabela1 = document.querySelector('table#m1')
-    if (tempNome2 != document.querySelector('#nome2').value) {
+    if (arrayM1.length >= 2) { // Verifica se o nome foi alterado
     tabela1.style.display = 'block'
     }
 }
@@ -177,11 +227,10 @@ function checarNome(){
         
         // Exemplo de exibição no console:
         for (let nome in somaPorNome) {
-            resM1.innerHTML += `<tr><th colspan="1">Soma ${nome}:</th><td>${somaPorNome[nome]}</td></tr>`; // Exibe a soma por nome na tabela
+            resM1.innerHTML += `<tr><th colspan="1">Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
             arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
         }
-
-    
+        mudouNome()
 }
 
 

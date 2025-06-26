@@ -104,8 +104,8 @@ input::-webkit-input-placeholder {
 }
 
 button:active{
-    background-color: rgb(143, 117, 1);
-    box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.5);
+    background-color: #8f7501;
+    box-shadow: inset 0px 0px 15px #00000080;
 }
 
 strong{
@@ -304,7 +304,7 @@ section#m2, section#m3 {
     display: block;
 }
 
-button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX {
+button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX, #ordenarM2 {
     display: none;
 }
 
