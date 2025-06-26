@@ -248,6 +248,7 @@ function resetarC2(){
     resetC2.style.display = 'none'
     formatoEX.style.display = 'none'
     tabela1.style.display = 'none'
+    ordenar.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     array2d = [] // Limpa o array 2D
     array1d = [] // Limpa o array 1D
