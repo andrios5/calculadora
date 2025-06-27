@@ -5,6 +5,11 @@ menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
 ordenar = document.querySelector('#ordenarM2')
+profund = document.querySelector('#profund')
+document.querySelector('#medType').addEventListener('change', function() {
+    tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
+    typeMed(); // Chama a função para atualizar o tipo de medição
+});
 const seletorDeArquivo = document.getElementById('seletorDeArquivo');
 
 document.querySelector('#largura').addEventListener('keydown', function(e) {
@@ -25,6 +30,8 @@ menosC2.addEventListener('click', diminuirC2)
 export2.addEventListener('click', exportar)
 ordenar.addEventListener('click', ordenarVetor)
 
+
+
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
 
@@ -32,6 +39,9 @@ var tempNome2
 let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
 let array2d = []
 let arrayM1 = []; // Array para armazenar os nomes únicos
+let tempTypeMed = 0 // Variável para armazenar o tipo de medição selecionado
+
+typeMed()
 
 function obterDataHoraFormatada() {
   const data = new Date();
@@ -50,6 +60,23 @@ function obterDataHoraFormatada() {
   const segundos = padZero(data.getSeconds());
 
   return `${horas}${dia}${mes}${ano}`;
+}
+
+function typeMed() {
+    medType = document.querySelector('#medType')
+    if (tempTypeMed == 1) {
+    profund.style.display = 'inline-block' // Exibe o campo de profundidade
+    profund.placeholder = 'Digite a profundidade:'
+    }
+    else if (tempTypeMed == 2) {
+    profund.style.display = 'inline-block' // Exibe o campo de profundidade
+    profund.placeholder = 'Digite o preço:'}
+    else {
+    profund.style.display = 'none' // Esconde o campo de profundidade
+    medType.innerHTML = `<option value="0">M² (Medição Quadrada)</option>`
+    medType.innerHTML += `<option value="1">M³ (Medição Cubica)</option>`
+    medType.innerHTML += `<option value="2">R$ (Medição com Valor)</option>`
+    }
 }
 
 function ordenarVetor() {
@@ -81,9 +108,6 @@ function ordenarArray2dPorNome() {
     
 }
 
-
-    
-
     function calcularArea2(){
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
@@ -93,6 +117,7 @@ function ordenarArray2dPorNome() {
         resS2 = document.querySelector('#resultadoS2')
         tabela = document.querySelector('table#m2')
         tabela1 = document.querySelector('table#m1')
+
 
         tempNome2 = nome2 // Armazena o nome temporário
         
@@ -107,9 +132,6 @@ function ordenarArray2dPorNome() {
         if (lar.value == '' || lar.value == null || lar.value == '0') { // Verifica se os campos estão vazios
             lar.value = `1`;
         }*/
-        
-        altP = alt.toString().split(/[.,]/)
-        larP = lar.toString().split(/[.,]/)
 
         alt = Number(alt.value)
         lar = Number(lar.value)
@@ -119,6 +141,7 @@ function ordenarArray2dPorNome() {
         array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
 
         exibeArea2(array2d) // Chama a função para exibir os resultados
+        typeMed()
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
         
@@ -234,6 +257,11 @@ function resetarC2(){
     ordenar.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     array2d = [] // Limpa o array 2D
+    tempTypeMed = 0
+    profund.value = 'none' // Esconde o campo de profundidade
+    profund.style.display = 'none' // Esconde o campo de profundidade
+    typeMed()
+
 }
 
 function diminuirC2(){
