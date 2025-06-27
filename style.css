@@ -163,7 +163,7 @@ section.in {
 }
 
 .tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5, #tela35{
-    width: 60%;
+    width: 70%;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -171,16 +171,18 @@ section.in {
     padding: 20px;
     box-shadow: 5px 5px 5px var(--cor6);
     display: inline-block;
-    max-width: 300px;
-    max-height: 100px;
+    max-width: 575px;
     background-color: var(--cor1);
     font-size: 1.75em;
     vertical-align: middle;
     font-weight: bold;
 }
 
+.telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
+    width: 80%;
+}
+
 .telaV2 {
-    max-height: 200px;
     overflow: auto;
 }
 
@@ -319,7 +321,7 @@ button#UN{
 
 
 h3 {
-        color: var(--cor3);
+    color: var(--cor3);
 }
 
 div.container {
@@ -369,8 +371,13 @@ button#virarDia {
 }
 
 div.labelB{
+    width: 95%;
+    margin: auto;
     display: flex;
     align-items: center;
+    background-color: var(--cor3);
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px var(--cor6);
 }
 
 label.med {
@@ -379,8 +386,7 @@ label.med {
     background-color: var(--cor3);
     color: var(--cor2);
     border-radius: 15px 0 0 15px;
-    box-shadow: 5px 2.5px 5px 0 var(--cor6);
-    font-size: 1.25em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 
@@ -390,7 +396,7 @@ select.med {
     background-color: var(--cor3);
     color: var(--cor2);
     border-radius: 0 15px 15px 0;
-    box-shadow: 5px 2.5px 5px 0 var(--cor6);
+    box-shadow: 1px 1px 2.5px rgba(0, 0, 0, 0.15);
     font-size: 1.25em;
     font-weight: normal;
 }
@@ -598,11 +604,24 @@ select#formatoEX {
     }
 
 
-    .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
-        font-size: 1.25em;
+    .tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, #tela35 {
         margin-bottom: 10px;
         margin-top: 10px;
     }
+
+    .tela15, .tela25 {
+        width: 60%;
+    }
+
+    .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
+        width: 85%;
+        font-size: 1.5em;
+    }
+
+    .telaV2, .telaV5 {
+        max-width: 365px;
+    }
+
 
     .telaV0 {
         max-width: 150px;
@@ -635,14 +654,7 @@ select#formatoEX {
     #seletorDeArquivo {
         min-width: 300px;
     }
-
-    label.med {
-    font-size: 1.15em;
-    }
-
-    select.med {
-    font-size: 1.15em;
-    }
+    
 
     #export2 {
         height: 45px;
@@ -660,6 +672,10 @@ select#formatoEX {
     #menosC2, #med2 {
         width: 90px;
         padding: 20px 10px;
+    }
+
+    div.labelB {
+        height: 55px;
     }
 
 }
@@ -729,12 +745,17 @@ select#formatoEX {
     }
 
     label.med {
-    font-size: 1em;
+    font-size: 1.25em;
     }
 
     select.med {
     font-size: 1em;
     }
+
+    div.labelB {
+        height: 50px;
+    }
+
 
     select#formatoEX {
         padding: 0 10px;
@@ -758,15 +779,40 @@ select#formatoEX {
     #seletorDeArquivo {
         min-width: 250px;
     }
+
+    .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
+        width: 90%;
+        font-size: 1.25em;
+    }
+
+    .telaV2, .telaV5 {
+        max-width: 330px;
+    }
 }
 
 @media screen and (max-width: 370px) {
     label.med {
-    font-size: 0.9em;
+    font-size: 1.1em;
     }
 
     select.med {
     font-size: 0.9em;
+    }
+
+    div.labelB {
+        height: 45px;
+    }
+
+    .telaV2, .telaV5 {
+        max-width: 270px;
+    }
+
+    table {
+        width: 340px;
+    }
+
+    table#m2, table#m1 {
+        width: 370px;
     }
 }
 
