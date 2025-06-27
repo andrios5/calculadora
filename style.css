@@ -394,7 +394,7 @@ select.med {
     color: var(--cor2);
     border-radius: 0 15px 15px 0;
     box-shadow: 5px 2.5px 5px 0 var(--cor6);
-    font-size: 1.24em;
+    font-size: 1.25em;
     font-weight: normal;
 }
 
@@ -426,14 +426,6 @@ select#formatoEX {
         vertical-align: -0.7vw;
     }
 
-    label.med {
-    transform: translateY(1px);
-    }
-
-    select.med {
-        
-        transform: translateY(1px);
-    }
     
 }
 
@@ -447,13 +439,6 @@ select#formatoEX {
         vertical-align: -0.8vw;
     }
 
-    label.med {
-    transform: translateX(1px);
-    }
-
-    select.med {
-        transform: translateY(1px);
-    }
     
 }
 
@@ -656,14 +641,17 @@ select#formatoEX {
 
     label.med {
     width: 45%;
-    font-size: 1.2em;
-    transform: translateY(-1px);
+    height: 19px;
+    font-size: 1.15em;
     }
 
     select.med {
     width: 45%;
-    font-size: 1.25em;
-    transform: translateX(-0.5px);
+    height: 40px;
+    font-size: 1.15em;
+    position: relative;
+    top: 0.7px;
+    left: -0.2px;
     }
 
     #export2 {
@@ -751,26 +739,17 @@ select#formatoEX {
     }
 
     label.med {
-    width: 40%;
-    max-width: 300px;
-    margin-bottom: 10px;
-    padding: 10.5px 2.6px;
+    width: 45%;
     border-radius: 15px 0 0 15px;
-    box-shadow: 5px 2.5px 5px 0 var(--cor6);
     font-size: 1em;
-    transform: translateX(0.7px);
     }
 
     select.med {
-    display: inline-block;
-    width: 40%;
-    max-width: 300px;
-    margin-bottom: 10px;
-    padding: 10px 2.5px;
+    width: 45%;
     border-radius: 0 15px 15px 0;
-    box-shadow: 5px 2.5px 5px 0 var(--cor6);
     font-size: 1em;
-    transform: translateY(0px);
+    position: relative;
+    top: 0px;
     }
 
     select#formatoEX {
@@ -799,26 +778,22 @@ select#formatoEX {
 
 @media screen and (max-width: 370px) {
     label.med {
-    width: 37.5%;
-    max-width: 300px;
+    width: 45%;
     margin-bottom: 10px;
     padding: 10.5px 2.6px;
-    border-radius: 15px 0 0 15px;
     box-shadow: 5px 2.5px 5px 0 var(--cor6);
     font-size: 0.9em;
-    transform: translateX(0.7px);
     }
 
     select.med {
     display: inline-block;
-    width: 37.5%;
-    max-width: 300px;
+    width: 45%;
     margin-bottom: 10px;
     padding: 10px 2.5px;
-    border-radius: 0 15px 15px 0;
     box-shadow: 5px 2.5px 5px 0 var(--cor6);
     font-size: 0.9em;
-    transform: translateY(2px);
+    position: relative;
+    top: 2px;
     }
 }
 
