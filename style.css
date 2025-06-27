@@ -655,10 +655,13 @@ select#formatoEX {
     }
 
     label.med {
-        transform: translateY(-1px);
+    width: 45%;
+    font-size: 1.2em;
+    transform: translateY(-1px);
     }
 
     select.med {
+    width: 45%;
     font-size: 1.25em;
     transform: translateX(-0.5px);
     }
