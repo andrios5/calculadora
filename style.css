@@ -368,7 +368,7 @@ button#virarDia {
     margin: auto;
 }
 
-    label.med {
+label.med {
     display: inline-block;
     width: 42%;
     max-width: 500px;
@@ -381,7 +381,7 @@ button#virarDia {
     box-shadow: 5px 2.5px 5px 0 var(--cor6);
     font-size: 1.25em;
     font-weight: bold;
-    }
+}
 
 select.med {
     display: inline-block;
@@ -399,6 +399,18 @@ select.med {
 }
 
 
+#export2 {
+    padding: 12.5px 15px;
+    margin-top: 0;
+    margin-bottom: 0px;
+    
+}
+
+select#formatoEX {
+    padding: 0 10px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
     
 
 
@@ -646,11 +658,29 @@ select.med {
         transform: translateY(-1px);
     }
 
-
     select.med {
     font-size: 1.25em;
     transform: translateX(-0.5px);
     }
+
+    #export2 {
+        height: 45px;
+    }
+
+    #formatoEX {
+        height: 18px;
+    }
+
+    #resetC2, #ordenarM2{
+        width: 75px;
+        padding: 5px;
+    }
+
+    #menosC2, #med2 {
+        width: 90px;
+        padding: 20px 10px;
+    }
+
 }
     
 
@@ -738,6 +768,29 @@ select.med {
     box-shadow: 5px 2.5px 5px 0 var(--cor6);
     font-size: 1em;
     transform: translateY(0px);
+    }
+
+    select#formatoEX {
+        padding: 0 10px;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #comparaPreco input {
+        max-width: 120px;
+    }
+
+    #tax_info {
+        font-size: 1.1em;
+        max-width: 180px;
+    }
+
+    input#tetoGasto {
+        max-width: 200px;
+   }
+
+    #seletorDeArquivo {
+        min-width: 250px;
     }
 }
 
