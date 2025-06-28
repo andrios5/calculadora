@@ -399,14 +399,13 @@ function checarNome(){
 
 
 function resetarC2(){
+    tempNome2 = getCookie('tempNome3') || 'Área'; // Obtém o nome temporário do cookie
     resM2.innerHTML = ''
     resS2.innerHTML = ''
     tabela.style.display = 'none'
     document.querySelector('#altura').value = ''
     document.querySelector('#largura').value = ''
-    document.querySelector('#nome2').value = 'Área'
-    nome2 = 'Área'
-    tempNome2 = ''
+    document.querySelector('#nome2').value = tempNome2 // Reseta o campo de nome para o valor temporário
     menosC2.style.display = 'none'
     export2.style.display = 'none'
     resetC2.style.display = 'none'
