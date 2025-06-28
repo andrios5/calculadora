@@ -279,13 +279,29 @@ table {
     background-color: white;
 }
 
-table td {
-    min-width: 75px;
-    border: var(--cor2) solid 1px;
+table#m2 {
+    border-collapse: separate;
+    border-spacing: 1px 1px;
 }
 
-table#m1 td {
-    border: var(--cor5) solid 1px;
+th, td {
+    padding: 8px;
+    text-align: center;
+    min-width: 75px;
+    border: var(--cor2) 1px solid;
+}
+
+table#m1 th, table#m1 td {
+    border: var(--cor5) 1px solid;
+}
+
+table#m2 th, table#m2 td {
+    border: none;
+    background-color: white;
+}
+
+tbody > tr > th {
+    font-size: 1.025em;
 }
 
 table#m2 {
@@ -294,13 +310,10 @@ table#m2 {
 
 table#m2 > tbody > tr > td {
     min-width: 75px;
+    border: none;
 }
 
-table#m2 > tbody td, table#m2 > tbody th {
-    background-color: white;
-}
-
-table#m2 > thead {
+table#m2 > thead > tr > th {
     background-color: var(--cor2);
     color: white;
 }
@@ -314,17 +327,13 @@ table > tfoot#resultadoS2 > tr > th {
     background-color: var(--cor2);
     border-radius: 0 0 10px 10px;
     color: var(--cor1);
-    border: var(--cor5) solid 1px;
 }
 
 table > tfoot#resultadoS2 > tr > td {
     background-color: var(--cor2);
     color: var(--cor1);
-    border: var(--cor5) solid 1px;
     border-radius: 0 0 10px 10px;
 }
-
-
 
 table#m1 {
     width: 100%;
@@ -333,7 +342,6 @@ table#m1 {
 table#m1 tbody th {
     width: 100%;
 }
-
 
 table#m1 td {
     min-width: 100px;
@@ -346,18 +354,6 @@ div.container {
 
 div.container2 {
     overflow: auto;
-}
-
-
-tbody > tr > th {
-    font-size: 1.025em;
-}
-
-th, td {
-    border: 1px solid var(--cor5);
-    padding: 8px;
-    text-align: center;
-    margin: auto;
 }
 
 section#m2, section#m3 {

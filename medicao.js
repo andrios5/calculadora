@@ -102,19 +102,41 @@ function ordenarVetor() {
 }
 
 function ordenarArray2dPorNome() {
-        for (let i = 0; i < array2d.length - 1; i++) {
-        for (let j = 0; j < array2d.length - 1 - i; j++) {
+    if (tempTypeMed == 1 || tempTypeMed == 2) {
+        for (let i = 0; i < array3d.length - 1; i++) {
+        for (let j = 0; j < array3d.length - 1 - i; j++) {
             // Comparação ignorando maiúsculas/minúsculas
-            if (array2d[j][0].toLowerCase() > array2d[j + 1][0].toLowerCase()) {
+            if (array3d[j][0].toLowerCase() > array3d[j + 1][0].toLowerCase()) {
                 // Troca as posições
-                let temp = array2d[j];
+                let temp = array3d[j];
+                array3d[j] = array3d[j + 1];
+                array3d[j + 1] = temp;
+
+                let temp2 = array2d[j];
                 array2d[j] = array2d[j + 1];
-                array2d[j + 1] = temp;
+                array2d[j + 1] = temp2;
+                    }
+                }
+            } 
+        } else {
+        for (let i = 0; i < array2d.length - 1; i++) {
+            for (let j = 0; j < array2d.length - 1 - i; j++) {
+                // Comparação ignorando maiúsculas/minúsculas
+                if (array2d[j][0].toLowerCase() > array2d[j + 1][0].toLowerCase()) {
+                    // Troca as posições
+                    let temp = array2d[j];
+                    array2d[j] = array2d[j + 1];
+                    array2d[j + 1] = temp;
+
+                    let temp2 = array3d[j];
+                    array3d[j] = array3d[j + 1];
+                    array3d[j + 1] = temp2;
+                }
             }
         }
     }
-    
 }
+
 
     function calcularArea2(){
         alt = document.querySelector('#altura')
@@ -183,7 +205,6 @@ function exibeArea2() {
 
     resM2.innerHTML = '' // Limpa o conteúdo anterior
 
-
     if (tempTypeMed == 2) {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/m²</th><th>Preço</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array3d.length; i++) {
@@ -195,7 +216,7 @@ function exibeArea2() {
             somaP += Number(array3d[i][4]);
             soma3 += Number(array3d[i][5]);
         }
-        if (array2d.length == 0) { // Verifica se o array2d está vazio
+        if (array3d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
@@ -224,7 +245,7 @@ function exibeArea2() {
             somaP += Number(array3d[i][4]);
             soma3 += Number(array3d[i][5]);
         }
-        if (array2d.length == 0) { // Verifica se o array2d está vazio
+        if (array3d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
@@ -270,8 +291,6 @@ function exibeArea2() {
             resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
-    
-
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome // Ordena o array2d por nome
 }
 
@@ -338,16 +357,7 @@ function checarNome(){
             }
             somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
             }
-            for (let i = 0; i < array2d.length; i++) {
-            const [nome, , , area] = array2d[i];
-
-            let nomeLimpo = nome
-
-            if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
-                somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
-            }
-            somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
-            }   
+  
             for (let nome in somaPorNome) {
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
@@ -378,7 +388,6 @@ function resetarC2(){
     tempTypeMed = 0
     profund.value = '' // Esconde o campo de profundidade
     typeMed()
-
 }
 
 function diminuirC2(){
@@ -406,9 +415,9 @@ function exportar() {
 
     if (formatoEX.value == '0'){
         if (tempTypeMed == 1){
-            alert('Exportação em m³')
+            exportar21()
         } else if (tempTypeMed == 2) {
-            alert('Exportação em R$')
+            exportar22()
         } else {
             exportar2()
         }
@@ -529,7 +538,6 @@ function exportar11() {
                 <td>${area.toLocaleString('pt-BR')}</td>
                 <td>${area3.toLocaleString('pt-BR')}</td>
             </tr>`;
-        
     }
     // Soma final
     html += `<tr>
@@ -541,11 +549,12 @@ function exportar11() {
         <td>${soma3.toLocaleString('pt-BR')}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`
+    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th></th><th>Área(m²)</th><th>Área(m³)</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
             <th colspan="3">Soma ${nome}:</th>
+            <td></td>
             <td colspan="1">${area.toLocaleString('pt-BR')}</td>
             <td colspan="1">${area3.toLocaleString('pt-BR')}</td>
         </tr>`;
@@ -615,12 +624,13 @@ function exportar12() {
         <td>${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th>Preço</th></tr>`
+    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th></th><th>Preço</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
             <th colspan="3">Soma ${nome}:</th>
             <td colspan="1">${area.toLocaleString('pt-BR')}</td>
+            <td></td>
             <td colspan="1">${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
         </tr>`;
     }
@@ -640,38 +650,30 @@ function exportar12() {
 
 
 function exportar2(){
-
-
     // Monta o cabeçalho CSV
     let csv = 'Nome;Altura;Largura;Área\n';
-
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
             arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR')]);
     }
-
     // Adiciona a soma final
     let soma2 = 0; // Inicializa a variável de soma
     let somaA = 0; // Inicializa a variável de soma das alturas
     let somaL = 0; // Inicializa a variável de soma das larguras
     for (let i = 0; i < array2d.length; i++) {
-        soma2 += Number(array2d[i][3]);
-    }
-    for (let i = 0; i < array2d.length; i++) {
-        somaA += Number(array2d[i][1]);
-    }
-    for (let i = 0; i < array2d.length; i++) {
-        somaL += Number(array2d[i][2]);
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
-    arrayTemp.push(["Soma Parcial dos Itens"]);
+    arrayTemp.push(["Soma Parcial dos Itens",'','', "Área"]);
     
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area] = arrayM1[i];
-        arrayTemp.push([`Soma ${nome}:`, '', '', area.toLocaleString('pt-BR')]);
+        arrayTemp.push([`Soma ${nome}:`,'','', area.toLocaleString('pt-BR')]);
     }
 
     arrayTemp.forEach(function(linha) {
@@ -683,7 +685,6 @@ function exportar2(){
             linha[3] !== undefined ? linha[3] : ''
         ].join(';') + '\n';
     });
-
     // Cria um link para download
     let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     let a = document.createElement('a');
@@ -692,16 +693,160 @@ function exportar2(){
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-
 }
+
+function exportar21() {
+    // Monta o cabeçalho CSV
+    let csv = 'Nome;Altura;Largura;Profundidade;Área(m²);Área(m³)\n';
+    // Adiciona as linhas do array2d
+    let arrayTemp = []
+    for (let i = 0; i < array3d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR')]);
+    }
+    // Adiciona a soma final
+    let soma2 = 0; // Inicializa a variável de soma
+    let somaA = 0; // Inicializa a variável de soma das alturas
+    let somaL = 0; // Inicializa a variável de soma das larguras
+    let somaP = 0; // Inicializa a variável de soma das profundidades
+    let soma3 = 0; // Inicializa a variável de soma das áreas 3
+    for (let i = 0; i < array3d.length; i++) {
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+    }
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
+    arrayTemp.push([]); // Adiciona uma linha vazia para separação
+    arrayTemp.push(["Soma Parcial dos Itens",'','','', 'Área(m²)', 'Área(m³)']);
+    
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area, area3] = arrayM1[i];
+        arrayTemp.push([`Soma ${nome}:`,'','','', area.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR')]);
+    }
+
+    arrayTemp.forEach(function(linha) {
+        // Usa ; como separador para compatibilidade com o LibreOffice em pt-BR
+            csv += [
+            linha[0] !== undefined ? linha[0] : '',
+            linha[1] !== undefined ? linha[1] : '',
+            linha[2] !== undefined ? linha[2] : '',
+            linha[3] !== undefined ? linha[3] : '',
+            linha[4] !== undefined ? linha[4] : '',
+            linha[5] !== undefined ? linha[5] : ''
+        ].join(';') + '\n';
+    });
+    // Cria um link para download
+    let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${nome2}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function exportar22() {
+    // Monta o cabeçalho CSV
+    let csv = 'Nome;Altura;Largura;Área;R$/m²;Preço\n';
+    // Adiciona as linhas do array2d
+    let arrayTemp = []
+    for (let i = 0; i < array3d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}), area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
+    }
+    // Adiciona a soma final
+    let soma2 = 0; // Inicializa a variável de soma
+    let somaA = 0; // Inicializa a variável de soma das alturas
+    let somaL = 0; // Inicializa a variável de soma das larguras
+    let somaP = 0; // Inicializa a variável de soma das profundidades
+    let soma3 = 0; // Inicializa a variável de soma das áreas 3
+    for (let i = 0; i < array3d.length; i++) {
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+    }
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}), soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
+    arrayTemp.push([]); // Adiciona uma linha vazia para separação
+    arrayTemp.push(["Soma Parcial dos Itens",'','','Área','','Preço']);
+    
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area, area3] = arrayM1[i];
+        arrayTemp.push([`Soma ${nome}:`,'','', area.toLocaleString('pt-BR'),'', area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),]);
+    }
+
+    arrayTemp.forEach(function(linha) {
+        // Usa ; como separador para compatibilidade com o LibreOffice em pt-BR
+            csv += [
+            linha[0] !== undefined ? linha[0] : '',
+            linha[1] !== undefined ? linha[1] : '',
+            linha[2] !== undefined ? linha[2] : '',
+            linha[3] !== undefined ? linha[3] : '',
+            linha[4] !== undefined ? linha[4] : '',
+            linha[5] !== undefined ? linha[5] : ''
+        ].join(';') + '\n';
+    });
+    // Cria um link para download
+    let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${nome2}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 
 function importarCSVparaArray2d(file) {
     const leitor = new FileReader(); // Cria um novo FileReader
     leitor.onload = function(e) { // Define o que fazer quando o arquivo for carregado
         const conteudo = e.target.result; // Obtém o conteúdo do arquivo
         const linhas = conteudo.split('\n'); // Divide o conteúdo em linhas
-        linhas.shift();  // Remove o cabeçalho do CSV
-        linhas.forEach(linha => { // Percorre cada linha do CSV
+        let verifT = linhas.shift();  // Remove o cabeçalho do CSV
+        if (verifT.valueOf().includes('Nome;Altura;Largura;Área;R$/m²;Preço')){ // Verifica se o cabeçalho é o esperado
+            linhas.forEach(linha => { // Percorre cada linha do CSV
+            if (linha.trim() !== '') { // Verifica se a linha não está vazia
+                const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
+                if (partes.length >= 6) { // Verifica se há pelo menos 4 partes
+                    let nome = partes[0]; // Obtém o nome da primeira parte
+                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade1 = partes[4].replace(/[^\d.,]/g, ''); // Converte a profundidade para número
+                    let area31 = partes[5].replace(/[^\d.,]/g, ''); // Converte a área 3D para número
+                    let profundidade = Number(profundidade1.replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
+                    let area3 = Number(area31.replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
+                    array3d.push([nome, altura, largura, area, profundidade, area3]); // Adiciona os valores ao array 2D
+                    }
+                }
+            });
+            medType.value = '2'; // Define o tipo de medição como monetário
+            tempTypeMed = 2; // Define o tipo de medição como monetário
+            formataVetor3d(array3d);
+        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Profundidade;Área(m²);Área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D
+            linhas.forEach(linha => { // Percorre cada linha do CSV
+            if (linha.trim() !== '') { // Verifica se a linha não está vazia
+                const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
+                if (partes.length >= 6) { // Verifica se há pelo menos 4 partes
+                    let nome = partes[0]; // Obtém o nome da primeira parte
+                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade = Number(partes[4].replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
+                    let area3 = Number(partes[5].replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
+                    array3d.push([nome, altura, largura, profundidade, area, area3]); // Adiciona os valores ao array 2D
+                    }
+                }
+            });
+            medType.value = '1'; // Define o tipo de medição como monetário
+            tempTypeMed = 1; // Define o tipo de medição como monetário
+            formataVetor3d(array3d);
+        } else {
+            tempTypeMed = 0; // Define o tipo de medição como 2D
+            linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
                 if (partes.length >= 4) { // Verifica se há pelo menos 4 partes
@@ -710,24 +855,23 @@ function importarCSVparaArray2d(file) {
                     let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
                     let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, area]); // Adiciona os valores ao array 2D
+                    }
                 }
-            }
-        });
-        formataVetor(array2d); // Chama a função para calcular a soma das alturas e larguras
+            });
+            formataVetor(array2d); 
+        }
         
     };
     leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
 }
 
 function formataVetor(array2d) {
-
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
-        if (largura == '' || largura == null && area == '' || area == null){   
+        if (area == '' || area == null || largura == '' || largura == null || altura == '' || altura == null){   
                 array2d.splice(i, 1); // Remove o elemento Soma(paralela) do array2d
                 i--; // Decrementa o índice para não pular o próximo elemento
             }
-            
         }
     array2d.pop(); // Remove o último elemento do array2d após a importação
 
@@ -740,15 +884,61 @@ function formataVetor(array2d) {
                 tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
             }
             tempAltura = altura; // Atualiza a altura temporária
+        }
     }
-    
-    
-}
-
-exibeArea2(array2d); // Atualiza a tabela na tela
+clonarVetor3d(array2d) // Clona o vetor 2D para o 3D
+exibeArea2(); // Atualiza a tabela na tela
 document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
 document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
 seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
 checarNome()
+}
+
+function formataVetor3d(array3d) {
+    for (let i = 0; i < array3d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+        if (area == '' || area == null || largura == '' || largura == null || altura == '' || altura == null){   
+                array3d.splice(i, 1); // Remove o elemento Soma(paralela) do array2d
+                i--; // Decrementa o índice para não pular o próximo elemento
+            }
+        }
+    array3d.pop(); // Remove o último elemento do array3d após a importação
+
+    for (let i = 0; i < array3d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+        if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
+            if (nome !== '' && nome !== null && nome != 'Soma:') {
+                    tempNome2 = nome; // Atualiza o nome temporário
+            } else {
+                tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
+            }
+            tempAltura = altura; // Atualiza a altura temporária
+            tempProfundidade = profundidade; // Atualiza a profundidade temporária
+        }
+    }
+    clonarVetor(array3d) // Clona o vetor 2D para o 3D
+    exibeArea2(); // Atualiza a tabela na tela
+    document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
+    document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
+    document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
+    seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a import
+    checarNome()
+    typeMed()
+}
+
+function clonarVetor3d(array2d) {
+    array3d = []; // Limpa o array 3D antes de clonar
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area] = array2d[i];
+        array3d.push([nome, altura, largura, area, 1, area]); // Adiciona os valores ao array 3D com profundidade e área 3D zerados
+    }
+}
+
+function clonarVetor(array3d) {
+    array2d = []; // Limpa o array 3D antes de clonar
+    for (let i = 0; i < array3d.length; i++) {
+        const [nome, altura, largura, area] = array3d[i];
+        array2d.push([nome, altura, largura, area]); // Adiciona os valores ao array 3D com profundidade e área 3D zerados
+    }
 }
 
