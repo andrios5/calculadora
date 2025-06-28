@@ -370,7 +370,7 @@ button#virarDia {
     margin: auto;
 }
 
-div.labelB{
+div.labelB {
     width: 95%;
     margin: auto;
     display: flex;
@@ -382,7 +382,7 @@ div.labelB{
 
 label.med {
     flex: 1;
-    padding: 10px 2.5px;
+    padding: 1px 5px;
     background-color: var(--cor3);
     color: var(--cor2);
     border-radius: 15px 0 0 15px;
@@ -392,13 +392,14 @@ label.med {
 
 select.med {
     flex: 1;
-    padding: 10px 2.5px;
+    padding: 1px 5px;
     background-color: var(--cor3);
     color: var(--cor2);
-    border-radius: 0 15px 15px 0;
+    border-radius: 15px;
     box-shadow: 1px 1px 2.5px rgba(0, 0, 0, 0.15);
     font-size: 1.25em;
     font-weight: normal;
+    margin: 5px;
 }
 
 
@@ -675,7 +676,7 @@ select#formatoEX {
     }
 
     div.labelB {
-        height: 55px;
+        margin-bottom: 10px;
     }
 
 }
@@ -753,7 +754,7 @@ select#formatoEX {
     }
 
     div.labelB {
-        height: 50px;
+        margin-bottom: 10px;
     }
 
 
@@ -800,7 +801,7 @@ select#formatoEX {
     }
 
     div.labelB {
-        height: 45px;
+    margin-bottom: 10px;
     }
 
     .telaV2, .telaV5 {

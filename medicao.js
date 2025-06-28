@@ -38,6 +38,7 @@ formatoEX.innerHTML += `<option value="1">XLS</option>`
 var tempNome2
 let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
 let array2d = []
+let array3d = []; // Array 2D para armazenar os dados
 let arrayM1 = []; // Array para armazenar os nomes únicos
 let tempTypeMed = 0 // Variável para armazenar o tipo de medição selecionado
 
@@ -111,6 +112,7 @@ function ordenarArray2dPorNome() {
     function calcularArea2(){
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
+        pro = document.querySelector('#profund')
         nome2 = document.querySelector('#nome2').value || 'Área'; // Define o nome, se estiver vazio usa 'Área'
         nome2 = nome2.trim() // Remove espaços em branco no início e no final do nome
         resM2 = document.querySelector('#resultadoM2')
@@ -125,6 +127,7 @@ function ordenarArray2dPorNome() {
         
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
+        if (pro.value.includes(',')){pro = pro.replace(",", ".")} //Troca virgula por ponto se tiver
         
         /*if (alt.value == '' || alt.value == null || alt.value == '0') { // Verifica se os campos estão vazios
             alt.value = `1`;
@@ -135,15 +138,27 @@ function ordenarArray2dPorNome() {
 
         alt = Number(alt.value)
         lar = Number(lar.value)
+        pro = Number(pro.value)
 
+        if (tempTypeMed == 0) { // Verifica se o tipo de medição é M²
         area = alt * lar
-
         array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
-
         exibeArea2(array2d) // Chama a função para exibir os resultados
         typeMed()
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
+        } else {
+            area = alt * lar
+            if (pro == '' || pro == null || pro == '0') { // Verifica se o campo de profundidade está vazio
+                pro = 1; // Define a profundidade como 1 se estiver vazio
+            }
+            area3 = alt * lar * pro // Calcula a área 3D
+            array3d.push([nome2, alt, lar, area, pro, area3]) // Adiciona os valores ao array 3D
+            console.log(array3d) // Exibe o array 3D no console para depuração
+            typeMed()
+            document.querySelector('#largura').value = ''
+            document.querySelector('#largura').focus() // Coloca o foco no input novamente
+        }
         
 }
 
