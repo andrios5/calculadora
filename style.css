@@ -194,7 +194,7 @@ section.in {
     padding: 20px;
     box-shadow: 5px 5px 5px var(--cor6);
     display: inline-block;
-    max-width: 575px;
+    max-width: 300px;
     background-color: var(--cor1);
     font-size: 1.75em;
     vertical-align: middle;
@@ -202,7 +202,7 @@ section.in {
 }
 
 .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
-    width: 80%;
+    width: 75%;
 }
 
 .telaV2 {
@@ -267,51 +267,87 @@ p.titulo {
     text-align: center;
 }
 
-
-
 table {
-    width: 600px;
+    width: fit-content;
     border-collapse: collapse;
-    background-color: var(--cor1);
     border-radius: 15px;
     margin: auto;
     border: none;
     display: none;
     margin-top: 25px;
     margin-bottom: 25px;
+    background-color: white;
+}
+
+table td {
+    min-width: 75px;
+    border: var(--cor2) solid 1px;
+}
+
+table#m1 td {
+    border: var(--cor5) solid 1px;
+}
+
+table#m2 {
+    background-color: var(--cor5);
+}
+
+table#m2 > tbody > tr > td {
+    min-width: 75px;
+}
+
+table#m2 > tbody td, table#m2 > tbody th {
+    background-color: white;
+}
+
+table#m2 > thead {
+    background-color: var(--cor2);
+    color: white;
+}
+
+table#m2 > thead > tr > th {
+    border-radius: 10px 10px 0 0;
 }
 
 table > tfoot#resultadoS2 > tr > th {
     font-size: 1.025em;
     background-color: var(--cor2);
-    border-radius: 0 0 0 10px;
+    border-radius: 0 0 10px 10px;
     color: var(--cor1);
+    border: var(--cor5) solid 1px;
 }
 
 table > tfoot#resultadoS2 > tr > td {
     background-color: var(--cor2);
     color: var(--cor1);
+    border: var(--cor5) solid 1px;
+    border-radius: 0 0 10px 10px;
 }
 
-table > tfoot#resultadoS2 > tr > td#m121 {
-    font-size: 1.025em;
-    background-color: var(--cor2);
-    border-radius: 0 0 10px 0;
-    color: var(--cor1);
+
+
+table#m1 {
+    width: 100%;
 }
 
-table#m1 th {
-    width: 400px;
+table#m1 tbody th {
+    width: 100%;
 }
+
 
 table#m1 td {
-    width: 200px;
+    min-width: 100px;
 }
 
-
-table#m3 {
-    width: 550px;
+div.container {
+    width: min-content;
+    margin: auto;
 }
+
+div.container2 {
+    overflow: auto;
+}
+
 
 tbody > tr > th {
     font-size: 1.025em;
@@ -322,7 +358,6 @@ th, td {
     padding: 8px;
     text-align: center;
     margin: auto;
-    width: 150px;
 }
 
 section#m2, section#m3 {
@@ -438,24 +473,27 @@ select#formatoEX {
     margin-top: 0;
     margin-bottom: 10px;
 }
+
+
+
     
 
 
 @media screen and (min-width: 1500px) {
-    h1 {
-        font-size: 5vw;
-    }
-    header {
-        border-radius: 0 0 15px 15px;
-    }
-    header img {
-        width: 5.5%;
-        vertical-align: -0.7vw;
-    }
+h1 {
+    font-size: 5vw;
+}
+header {
+    border-radius: 0 0 15px 15px;
+}
+header img {
+    width: 5.5%;
+    vertical-align: -0.7vw;
+}
 
-    section#m2 input {
-        max-width: 180px;
-    }
+section#m2 input {
+    max-width: 180px;
+}
 
 
 
@@ -520,10 +558,13 @@ select#formatoEX {
         max-width: 200px;
     }
 
-    #comparaPreco input {
+    .telaV0, #valorGasto {
         max-width: 180px;
     }
     
+    #comparaPreco input {
+        max-width: 180px;
+    }
 }
 
 @media screen and (max-width: 650px) {
@@ -674,11 +715,6 @@ select#formatoEX {
 
     table {
         font-size: 0.95em;
-        max-width: 410px;
-    }
-
-    tfoot, tfoot {
-    font-size: 1.03em;
     }
 
     #seletorDeArquivo {
@@ -718,6 +754,7 @@ select#formatoEX {
         padding: 15px 0px;
         margin-left: 5px;
     }
+
 
 }
     
@@ -776,13 +813,8 @@ select#formatoEX {
         font-size: 1.15em;
     }
 
-    table {
+    table > tbody {
         font-size: 0.9em;
-        max-width: 380px;
-    }
-
-    tfoot, tfoot {
-    font-size: 1.05em;
     }
 
     label.med {
@@ -858,12 +890,6 @@ select#formatoEX {
         max-width: 270px;
     }
 
-    table {
-        width: 340px;
-    }
 
-    table#m2, table#m1 {
-        width: 370px;
-    }
 }
 

@@ -9,6 +9,7 @@ profund = document.querySelector('#profund')
 lpro = document.querySelector('#lpro')
 cpro = document.querySelector('#cpro')
 tabela1 = document.querySelector('table#m1')
+theadM1 = document.querySelector('#theadM1')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -182,8 +183,67 @@ function exibeArea2() {
 
     resM2.innerHTML = '' // Limpa o conteúdo anterior
 
-    if (tempTypeMed == 0) {
-        theadM2.innerHTML = `<tr><th>Item</th><th>Altura</th><th>Largura</th><th>m²</th></tr>`; // Atualiza o cabeçalho da tabela
+
+    if (tempTypeMed == 2) {
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/m²</th><th>Preço</th></tr>`; // Atualiza o cabeçalho da tabela
+        for (let i = 0; i < array3d.length; i++) {
+            const [nome, altura, largura, area, preco, area3] = array3d[i];
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+        }
+        if (array2d.length == 0) { // Verifica se o array2d está vazio
+        tabela.style.display = 'none'
+        menosC2.style.display = 'none'
+        export2.style.display = 'none'
+        resetC2.style.display = 'none'
+        formatoEX.style.display = 'none'
+        tabela1.style.display = 'none'
+        ordenar.style.display = 'none'
+        seletorDeArquivo.style.display = 'inline-block'
+        }else{
+        tabela.style.display = 'block'
+        menosC2.style.display = 'inline-block'
+        export2.style.display = 'inline-block'
+        resetC2.style.display = 'inline-block'
+        formatoEX.style.display = 'inline-block'
+        ordenar.style.display = 'inline-block'
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+        }
+    } else if (tempTypeMed == 1) {
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>Profund.</th><th>m²</th><th>m³</th></tr>`; // Atualiza o cabeçalho da tabela
+        for (let i = 0; i < array3d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${profundidade.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+        }
+        if (array2d.length == 0) { // Verifica se o array2d está vazio
+        tabela.style.display = 'none'
+        menosC2.style.display = 'none'
+        export2.style.display = 'none'
+        resetC2.style.display = 'none'
+        formatoEX.style.display = 'none'
+        tabela1.style.display = 'none'
+        ordenar.style.display = 'none'
+        seletorDeArquivo.style.display = 'inline-block'
+        }else{
+        tabela.style.display = 'block'
+        menosC2.style.display = 'inline-block'
+        export2.style.display = 'inline-block'
+        resetC2.style.display = 'inline-block'
+        formatoEX.style.display = 'inline-block'
+        ordenar.style.display = 'inline-block'
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
+        }
+    } else {
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
             resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`;
@@ -191,7 +251,7 @@ function exibeArea2() {
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
         }
-        if (array2d.length == 0 || array3d.length == 0) { // Verifica se o array2d está vazio
+        if (array2d.length == 0) { // Verifica se o array2d está vazio
             tabela.style.display = 'none'
             menosC2.style.display = 'none'
             export2.style.display = 'none'
@@ -207,74 +267,10 @@ function exibeArea2() {
             resetC2.style.display = 'inline-block'
             formatoEX.style.display = 'inline-block'
             ordenar.style.display = 'inline-block'
-            resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1' id="m121">${soma2.toLocaleString('pt-BR')}</td></tr>`;
-        }
-    }
-
-    else if (tempTypeMed == 1) { // Se for medição 3D
-        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>Profund.</th><th>m²</th><th>m³</th></tr>`; // Atualiza o cabeçalho da tabela
-        for (let i = 0; i < array3d.length; i++) {
-            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${profundidade.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
-        }
-        if (array2d.length == 0 || array3d.length == 0) { // Verifica se o array2d está vazio
-        tabela.style.display = 'none'
-        menosC2.style.display = 'none'
-        export2.style.display = 'none'
-        resetC2.style.display = 'none'
-        formatoEX.style.display = 'none'
-        tabela1.style.display = 'none'
-        ordenar.style.display = 'none'
-        seletorDeArquivo.style.display = 'inline-block'
-        }else{
-        tabela.style.display = 'block'
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
-        formatoEX.style.display = 'inline-block'
-        ordenar.style.display = 'inline-block'
-        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td id="m121">${soma3.toLocaleString('pt-BR')}</td></tr>`;
-        }
-    } else { // Se for medição 3D
-        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/un</th><th>R$/m²</th></tr>`; // Atualiza o cabeçalho da tabela
-        for (let i = 0; i < array3d.length; i++) {
-            const [nome, altura, largura, area, preco, area3] = array3d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
-        }
-        if (array2d.length == 0 || array3d.length == 0) { // Verifica se o array2d está vazio
-        tabela.style.display = 'none'
-        menosC2.style.display = 'none'
-        export2.style.display = 'none'
-        resetC2.style.display = 'none'
-        formatoEX.style.display = 'none'
-        tabela1.style.display = 'none'
-        ordenar.style.display = 'none'
-        seletorDeArquivo.style.display = 'inline-block'
-        }else{
-        tabela.style.display = 'block'
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
-        formatoEX.style.display = 'inline-block'
-        ordenar.style.display = 'inline-block'
-        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td id="m121">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
     
-
-
-    
-
 
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome // Ordena o array2d por nome
 }
@@ -283,6 +279,13 @@ function mudouNome() {
     tabela1 = document.querySelector('table#m1')
     if (arrayM1.length >= 2) { // Verifica se o nome foi alterado
     tabela1.style.display = 'block'
+    if (tempTypeMed == 1) {
+        theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`; // Atualiza o cabeçalho da tabela'
+        } else if (tempTypeMed == 2) {
+            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th><th>R$</th></tr>`; // Atualiza o cabeçalho da tabela
+        } else {
+            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th></tr>`; // Atualiza o cabeçalho da tabela
+        }
     }
 }
 
@@ -292,9 +295,40 @@ function checarNome(){
         resM1.innerHTML = ''
         
         let somaPorNome = {}; // Objeto para armazenar a soma por nome
+        let somaPorNome2 = {}; // Objeto para armazenar a soma por nome para área 3D
         arrayM1.length = 0; // Array para armazenar os nomes únicos
 
-        for (let i = 0; i < array2d.length; i++) {
+        
+        if(tempTypeMed == 1 || tempTypeMed == 2) { // Verifica se o tipo de medição é 3D ou monetário
+            for (let i = 0; i < array3d.length; i++) {
+            const [nome, , , area, , area3] = array3d[i];
+
+            let nomeLimpo = nome
+            let somaArea3 = nome
+
+            if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
+                somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
+            }
+            somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
+
+            if (!somaPorNome2[somaArea3]) { // Verifica se o nome já existe no objeto
+                somaPorNome2[somaArea3] = 0; // Inicializa a soma para este nome
+            }
+            somaPorNome2[somaArea3] += Number(area3); // Adiciona a área à soma correspondente ao nome
+            }
+            if(tempTypeMed == 1){
+            for (let nome in somaPorNome) {
+                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
+                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+            }
+            } else {
+                for (let nome in somaPorNome) {
+                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
+                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+            }
+            }
+        } else {
+            for (let i = 0; i < array2d.length; i++) {
             const [nome, , , area] = array2d[i];
 
             let nomeLimpo = nome
@@ -303,11 +337,21 @@ function checarNome(){
                 somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
             }
             somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
-        }
-        
-        for (let nome in somaPorNome) {
-            resM1.innerHTML += `<tr><th colspan="1">Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
-            arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
+            }
+            for (let i = 0; i < array2d.length; i++) {
+            const [nome, , , area] = array2d[i];
+
+            let nomeLimpo = nome
+
+            if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
+                somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
+            }
+            somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
+            }   
+            for (let nome in somaPorNome) {
+                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
+                arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
+            }
         }
         mudouNome()
 }
@@ -361,8 +405,21 @@ function exportar() {
     }
 
     if (formatoEX.value == '0'){
-    exportar2()} else {
-        exportar1(); // Chama a função de exportação para XLS
+        if (tempTypeMed == 1){
+            alert('Exportação em m³')
+        } else if (tempTypeMed == 2) {
+            alert('Exportação em R$')
+        } else {
+            exportar2()
+        }
+    } else {
+        if (tempTypeMed == 1){
+            exportar11()
+        } else if (tempTypeMed == 2) {
+            exportar12()
+        } else {
+            exportar1()
+        }
     }
 
 }
@@ -387,7 +444,6 @@ function exportar1() {
             <th>Área</th>
         </tr>
     `;
-
     // Adiciona as linhas do array2d
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
@@ -400,7 +456,6 @@ function exportar1() {
             </tr>`;
         
     }
-
     // Soma final
     let soma2 = 0, somaA = 0, somaL = 0;
     for (let i = 0; i < array2d.length; i++) soma2 += Number(array2d[i][3]);
@@ -412,11 +467,8 @@ function exportar1() {
         <td>${somaL.toLocaleString('pt-BR')}</td>
         <td>${soma2.toLocaleString('pt-BR')}</td>
     </tr>`;
-
     html += `<tr></tr>`
-
     html += `<tr><th colspan="4">Soma Parcial dos Itens</th></tr>`
-
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area] = arrayM1[i];
         html += `<tr>
@@ -429,7 +481,6 @@ function exportar1() {
     </body>
     </html>
     `;
-
     // Cria um link para download
     let a = document.createElement('a');
     a.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
@@ -437,7 +488,154 @@ function exportar1() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+}
 
+function exportar11() {
+    let html = `
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #000; padding: 4px; text-align: center; }
+            th { background: #eee; }
+        </style>
+    </head>
+    <body>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Altura</th>
+            <th>Largura</th>
+            <th>Profundidade</th>
+            <th>Área(m²)</th>
+            <th>Área(m³)</th>
+        </tr>
+    `;
+    // Adiciona as linhas do array2d
+    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
+    for (let i = 0; i < array3d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+            html += `<tr>
+                <td>${nome}</td>
+                <td>${altura.toLocaleString('pt-BR')}</td>
+                <td>${largura.toLocaleString('pt-BR')}</td>
+                <td>${profundidade.toLocaleString('pt-BR')}</td>
+                <td>${area.toLocaleString('pt-BR')}</td>
+                <td>${area3.toLocaleString('pt-BR')}</td>
+            </tr>`;
+        
+    }
+    // Soma final
+    html += `<tr>
+        <th>Soma:</th>
+        <td>${somaA.toLocaleString('pt-BR')}</td>
+        <td>${somaL.toLocaleString('pt-BR')}</td>
+        <td>${somaP.toLocaleString('pt-BR')}</td>
+        <td>${soma2.toLocaleString('pt-BR')}</td>
+        <td>${soma3.toLocaleString('pt-BR')}</td>
+    </tr>`;
+    html += `<tr></tr>`
+    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area, area3] = arrayM1[i];
+        html += `<tr>
+            <th colspan="3">Soma ${nome}:</th>
+            <td colspan="1">${area.toLocaleString('pt-BR')}</td>
+            <td colspan="1">${area3.toLocaleString('pt-BR')}</td>
+        </tr>`;
+    }
+    html += `
+    </table>
+    </body>
+    </html>
+    `;
+    // Cria um link para download
+    let a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    a.download = `${nome2}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function exportar12() {
+    let html = `
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #000; padding: 4px; text-align: center; }
+            th { background: #eee; }
+        </style>
+    </head>
+    <body>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Altura</th>
+            <th>Largura</th>
+            <th>Área</th>
+            <th>R$/m²</th>
+            <th>Preço</th>
+        </tr>
+    `;
+    // Adiciona as linhas do array2d
+    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
+    for (let i = 0; i < array3d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+            html += `<tr>
+                <td>${nome}</td>
+                <td>${altura.toLocaleString('pt-BR')}</td>
+                <td>${largura.toLocaleString('pt-BR')}</td>
+                <td>${area.toLocaleString('pt-BR')}</td>
+                <td>${profundidade.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                <td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+            </tr>`;
+        
+    }
+    // Soma final
+    html += `<tr>
+        <th>Soma:</th>
+        <td>${somaA.toLocaleString('pt-BR')}</td>
+        <td>${somaL.toLocaleString('pt-BR')}</td>
+        <td>${soma2.toLocaleString('pt-BR')}</td>
+        <td>${somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+        <td>${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+    </tr>`;
+    html += `<tr></tr>`
+    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th>Preço</th></tr>`
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area, area3] = arrayM1[i];
+        html += `<tr>
+            <th colspan="3">Soma ${nome}:</th>
+            <td colspan="1">${area.toLocaleString('pt-BR')}</td>
+            <td colspan="1">${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+        </tr>`;
+    }
+    html += `
+    </table>
+    </body>
+    </html>
+    `;
+    // Cria um link para download
+    let a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    a.download = `${nome2}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
 
 
@@ -554,106 +752,3 @@ seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
 checarNome()
 }
 
-
-
-// Medição 3D
-
-med3 = document.querySelector('button#med3')
-resetC3 = document.querySelector('button#resetC3')
-menosC3 = document.querySelector('button#menosC3')
-export3 = document.querySelector('button#export3')
-
-med3.addEventListener('click', calcularArea3)
-resetC3.addEventListener('click', resetarC3)
-menosC3.addEventListener('click', diminuirC3)
-export3.addEventListener('click', exportar3)
-temp2 = 0
-temp3 = 0
-    function calcularArea3(){
-        alt3 = document.querySelector('#alturam3')
-        lar3 = document.querySelector('#larguram3')
-        pro3 = document.querySelector('#profundidadem3')
-        resM3 = document.querySelector('#resultadoM3')
-        resS3 = document.querySelector('#resultadoS3')
-        tabela3 = document.querySelector('table#m3')
-        tabela3.style.display = 'block'
-        export3.style.display = 'inline-block'
-       
-        
-        if (alt3.value.includes(',')){alt3 = alt3.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (lar3.value.includes(',')){lar3 = lar3.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (pro3.value.includes(',')){pro3 = pro3.replace(",", ".")} //Troca virgula por ponto se tiver
-        alt3 = Number(alt3.value)
-        lar3 = Number(lar3.value)
-        pro3 = Number(pro3.value)
-        
-        aream2 = alt3 * lar3
-        area3 = alt3 * lar3 * pro3
-        temp3 += aream2
-        temp2 += area3
-        resM3.innerHTML += `<tr><td>${alt3.toLocaleString('pt-BR')}</td> <td>${lar3.toLocaleString('pt-BR')}</td><td>${pro3.toLocaleString('pt-BR')}</td><td>${aream2.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`
-        resS3.innerHTML = `<tr><th colspan="3">Soma:</th><td>${temp3.toLocaleString('pt-BR')}</td><td>${temp2.toLocaleString('pt-BR')}</td></tr>`
-        document.querySelector('#profundidadem3').value = ''
-        document.querySelector('#profundidadem3').focus() // Coloca o foco no input novamente
-        menosC3.style.display = 'inline-block'
-        resetC3.style.display = 'inline-block'
-}
-
-    function resetarC3(){
-        resM3.innerHTML = ''
-        resS3.innerHTML = ''
-        temp2 = 0
-        temp3 = 0
-        tabela3.style.display = 'none'
-        document.querySelector('#alturam3').value = ''
-        document.querySelector('#larguram3').value = ''
-        document.querySelector('#profundidadem3').value = ''
-        menosC3.style.display = 'none'
-        resetC3.style.display = 'none'
-    }
-
-function diminuirC3(){
-    resM3 = document.querySelector('#resultadoM3')
-    resS3 = document.querySelector('#resultadoS3')
-    tabela3 = document.querySelector('table#m3')
-    if (temp2 > 0){ // Verifica se a área total é maior que zero
-        temp3 -= aream2 // Subtrai a última área calculada
-        temp2 -= area3 // Subtrai a última área calculada
-        resS3.innerHTML = `<tr><th colspan="3">Soma:</th><td>${temp3.toLocaleString('pt-BR')}</td><td colspan="2">${temp2.toLocaleString('pt-BR')}</td></tr>`
-        resM3.deleteRow(resM3.rows.length - 1) // Remove a última linha da tabela
-        menosC3.style.display = 'none'
-    }
-}
-
-function exportar3(){
-   
-    var tabela3 = document.querySelector('table#m3');
-    var rodape = document.querySelector('#resultadoS3');
-    if (!tabela3) return;
-
-    // Cria uma cópia da tabela para não alterar a original na tela
-    var tabelaClone = tabela3.cloneNode(true);
-
-    // Adiciona o rodapé como última linha do tbody
-    if (rodape && rodape.innerHTML.trim() !== '') {
-        // Cria um elemento temporário para manipular as linhas do rodapé
-        var temp = document.createElement('tbody');
-        temp.innerHTML = rodape.innerHTML;
-        // Adiciona cada linha do rodapé ao tbody da tabela clonada
-        var tbody = tabelaClone.querySelector('tbody') || tabelaClone;
-        Array.from(temp.children).forEach(function(tr){
-            tbody.appendChild(tr);
-        });
-    }
-
-    // Monta o HTML da tabela para exportação
-    var html = tabelaClone.outerHTML.replace(/ /g, '%20');
-
-    // Cria um link para download
-    var a = document.createElement('a');
-    a.href = 'data:application/vnd.ms-excel,' + html;
-    a.download = 'area3d.xls';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
