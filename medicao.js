@@ -8,9 +8,11 @@ ordenar = document.querySelector('#ordenarM2')
 profund = document.querySelector('#profund')
 lpro = document.querySelector('#lpro')
 cpro = document.querySelector('#cpro')
+tabela1 = document.querySelector('table#m1')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
     typeMed(); // Chama a função para atualizar o tipo de medição
+    exibeArea2()
 });
 const seletorDeArquivo = document.getElementById('seletorDeArquivo');
 
@@ -69,12 +71,12 @@ function typeMed() {
     medType = document.querySelector('#medType')
     if (tempTypeMed == 1) {
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
-    profund.placeholder = 'Digite a profundidade:'
+    profund.placeholder = 'Digite a profundidade'
     lpro.innerHTML = 'Profundidade:'
     }
     else if (tempTypeMed == 2) {
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
-    profund.placeholder = 'Digite o preço:'
+    profund.placeholder = 'Digite o preço'
     lpro.innerHTML = 'Preço:'}
     else {
     cpro.style.display = 'none' // Esconde o campo de profundidade
@@ -144,82 +146,135 @@ function ordenarArray2dPorNome() {
         lar = Number(lar.value)
         pro = Number(pro.value)
 
-        if (tempTypeMed == 0) { // Verifica se o tipo de medição é M²
         area = alt * lar
         array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
-        exibeArea2(array2d) // Chama a função para exibir os resultados
+
+        area = alt * lar
+        if (pro == '' || pro == null || pro == '0') { // Verifica se o campo de profundidade está vazio
+            pro = 1; // Define a profundidade como 1 se estiver vazio
+        }
+        area3 = alt * lar * pro // Calcula a área 3D
+        array3d.push([nome2, alt, lar, area, pro, area3]) // Adiciona os valores ao array 3D
+
         typeMed()
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
-        } else {
-            area = alt * lar
-            if (pro == '' || pro == null || pro == '0') { // Verifica se o campo de profundidade está vazio
-                pro = 1; // Define a profundidade como 1 se estiver vazio
-            }
-            area3 = alt * lar * pro // Calcula a área 3D
-            array3d.push([nome2, alt, lar, area, pro, area3]) // Adiciona os valores ao array 3D
-            console.log(array3d) // Exibe o array 3D no console para depuração
-            typeMed()
-            document.querySelector('#largura').value = ''
-            document.querySelector('#largura').focus() // Coloca o foco no input novamente
-        }
+
+        exibeArea2(array2d, array3d) // Chama a função para exibir os resultados
+        
         
 }
 
-function exibeArea2(array2d) {
+function exibeArea2() {
     let soma2 = 0 // Inicializa a variável de soma
+    let soma3 = 0 // Inicializa a variável de soma 3D
     let somaA = 0 // Inicializa a variável de soma das alturas
     let somaL = 0 // Inicializa a variável de soma das larguras
+    let somaP = 0 // Inicializa a variável de soma das profundidades
     resM2 = document.querySelector('#resultadoM2')
     resS2 = document.querySelector('#resultadoS2')
     tabela = document.querySelector('table#m2')
+    theadM2 = document.querySelector('#theadM2')
 
     if (vetorOrdenando === true) { // Verifica se o vetor está sendo ordenado
         ordenarArray2dPorNome(); // Ordena o array2d por nome
     }
 
-
-    
     resM2.innerHTML = '' // Limpa o conteúdo anterior
+
+    if (tempTypeMed == 0) {
+        theadM2.innerHTML = `<tr><th>Item</th><th>Altura</th><th>Largura</th><th>m²</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
-            
             resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`;
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
         }
+        if (array2d.length == 0 || array3d.length == 0) { // Verifica se o array2d está vazio
+            tabela.style.display = 'none'
+            menosC2.style.display = 'none'
+            export2.style.display = 'none'
+            resetC2.style.display = 'none'
+            formatoEX.style.display = 'none'
+            tabela1.style.display = 'none'
+            ordenar.style.display = 'none'
+            seletorDeArquivo.style.display = 'inline-block'
+        }else{
+            tabela.style.display = 'block'
+            menosC2.style.display = 'inline-block'
+            export2.style.display = 'inline-block'
+            resetC2.style.display = 'inline-block'
+            formatoEX.style.display = 'inline-block'
+            ordenar.style.display = 'inline-block'
+            resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1' id="m121">${soma2.toLocaleString('pt-BR')}</td></tr>`;
+        }
+    }
+
+    else if (tempTypeMed == 1) { // Se for medição 3D
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>Profund.</th><th>m²</th><th>m³</th></tr>`; // Atualiza o cabeçalho da tabela
+        for (let i = 0; i < array3d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${profundidade.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+        }
+        if (array2d.length == 0 || array3d.length == 0) { // Verifica se o array2d está vazio
+        tabela.style.display = 'none'
+        menosC2.style.display = 'none'
+        export2.style.display = 'none'
+        resetC2.style.display = 'none'
+        formatoEX.style.display = 'none'
+        tabela1.style.display = 'none'
+        ordenar.style.display = 'none'
+        seletorDeArquivo.style.display = 'inline-block'
+        }else{
+        tabela.style.display = 'block'
+        menosC2.style.display = 'inline-block'
+        export2.style.display = 'inline-block'
+        resetC2.style.display = 'inline-block'
+        formatoEX.style.display = 'inline-block'
+        ordenar.style.display = 'inline-block'
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td id="m121">${soma3.toLocaleString('pt-BR')}</td></tr>`;
+        }
+    } else { // Se for medição 3D
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/un</th><th>R$/m²</th></tr>`; // Atualiza o cabeçalho da tabela
+        for (let i = 0; i < array3d.length; i++) {
+            const [nome, altura, largura, area, preco, area3] = array3d[i];
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            soma2 += Number(array3d[i][3]);
+            somaA += Number(array3d[i][1]);
+            somaL += Number(array3d[i][2]);
+            somaP += Number(array3d[i][4]);
+            soma3 += Number(array3d[i][5]);
+        }
+        if (array2d.length == 0 || array3d.length == 0) { // Verifica se o array2d está vazio
+        tabela.style.display = 'none'
+        menosC2.style.display = 'none'
+        export2.style.display = 'none'
+        resetC2.style.display = 'none'
+        formatoEX.style.display = 'none'
+        tabela1.style.display = 'none'
+        ordenar.style.display = 'none'
+        seletorDeArquivo.style.display = 'inline-block'
+        }else{
+        tabela.style.display = 'block'
+        menosC2.style.display = 'inline-block'
+        export2.style.display = 'inline-block'
+        resetC2.style.display = 'inline-block'
+        formatoEX.style.display = 'inline-block'
+        ordenar.style.display = 'inline-block'
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td id="m121">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+        }
+    }
     
 
+
     
 
-    for (let i = 0; i < array2d.length; i++) {
-        soma2 += Number(array2d[i][3]);
-    }
-
-    for (let i = 0; i < array2d.length; i++) {
-        somaA += Number(array2d[i][1]);
-    }
-
-    for (let i = 0; i < array2d.length; i++) {
-        somaL += Number(array2d[i][2]);
-    }
-    
-    if (array2d.length == 0) { // Verifica se o array2d está vazio
-    tabela.style.display = 'none'
-    menosC2.style.display = 'none'
-    export2.style.display = 'none'
-    resetC2.style.display = 'none'
-    formatoEX.style.display = 'none'
-    tabela1.style.display = 'none'
-    ordenar.style.display = 'none'
-    seletorDeArquivo.style.display = 'inline-block'
-    }else{
-    tabela.style.display = 'block'
-    menosC2.style.display = 'inline-block'
-    export2.style.display = 'inline-block'
-    resetC2.style.display = 'inline-block'
-    formatoEX.style.display = 'inline-block'
-    ordenar.style.display = 'inline-block'
-    resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1' id="m121">${soma2.toLocaleString('pt-BR')}</td></tr>`;
-    }
 
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome // Ordena o array2d por nome
 }
@@ -250,7 +305,6 @@ function checarNome(){
             somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
         }
         
-        // Exemplo de exibição no console:
         for (let nome in somaPorNome) {
             resM1.innerHTML += `<tr><th colspan="1">Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
             arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
@@ -276,8 +330,9 @@ function resetarC2(){
     ordenar.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
     array2d = [] // Limpa o array 2D
+    array3d = []; // Limpa o array 3D
     tempTypeMed = 0
-    profund.value = 'none' // Esconde o campo de profundidade
+    profund.value = '' // Esconde o campo de profundidade
     typeMed()
 
 }

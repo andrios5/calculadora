@@ -833,11 +833,11 @@ select#formatoEX {
     }
 
     section#m2 input {
-        max-width: 150px;
+        max-width: 175px;
     }
 
     label.labelm2 {
-        width: 110px;
+        width: 100px;
     }
 }
 
