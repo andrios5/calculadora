@@ -1,3 +1,24 @@
+// Função para salvar cookies
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // 1 segundo
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+// Função para ler cookies
+function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.indexOf(name + "=") === 0) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return "";
+}
+
 
 med2 = document.querySelector('button#med2')
 resetC2 = document.querySelector('button#resetC2')
@@ -16,6 +37,13 @@ document.querySelector('#medType').addEventListener('change', function() {
     exibeArea2()
 });
 const seletorDeArquivo = document.getElementById('seletorDeArquivo');
+
+nome2 = document.querySelector('#nome2')
+
+if (nome2.value == '') { // Verifica se o campo de nome está vazio
+    tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
+    nome2.value = tempNome3 || 'Área'; // Define o nome, se estiver vazio usa 'Área'
+}
 
 document.querySelector('#largura').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
@@ -139,6 +167,7 @@ function ordenarArray2dPorNome() {
 
 
     function calcularArea2(){
+        let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
         pro = document.querySelector('#profund')
@@ -151,6 +180,8 @@ function ordenarArray2dPorNome() {
 
 
         tempNome2 = nome2 // Armazena o nome temporário
+        tempNome3 = tempNome2 // Armazena o nome temporário para a tabela de soma
+        setCookie('tempNome3', tempNome3, 7); // Salva o nome no cookie por 7 dias
         
 
         
