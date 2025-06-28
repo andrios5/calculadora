@@ -6,6 +6,8 @@ export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
 ordenar = document.querySelector('#ordenarM2')
 profund = document.querySelector('#profund')
+lpro = document.querySelector('#lpro')
+cpro = document.querySelector('#cpro')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -66,14 +68,16 @@ function obterDataHoraFormatada() {
 function typeMed() {
     medType = document.querySelector('#medType')
     if (tempTypeMed == 1) {
-    profund.style.display = 'inline-block' // Exibe o campo de profundidade
+    cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
     profund.placeholder = 'Digite a profundidade:'
+    lpro.innerHTML = 'Profundidade:'
     }
     else if (tempTypeMed == 2) {
-    profund.style.display = 'inline-block' // Exibe o campo de profundidade
-    profund.placeholder = 'Digite o preço:'}
+    cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
+    profund.placeholder = 'Digite o preço:'
+    lpro.innerHTML = 'Preço:'}
     else {
-    profund.style.display = 'none' // Esconde o campo de profundidade
+    cpro.style.display = 'none' // Esconde o campo de profundidade
     medType.innerHTML = `<option value="0">M² (Medição Quadrada)</option>`
     medType.innerHTML += `<option value="1">M³ (Medição Cubica)</option>`
     medType.innerHTML += `<option value="2">R$ (Medição com Valor)</option>`
@@ -274,7 +278,6 @@ function resetarC2(){
     array2d = [] // Limpa o array 2D
     tempTypeMed = 0
     profund.value = 'none' // Esconde o campo de profundidade
-    profund.style.display = 'none' // Esconde o campo de profundidade
     typeMed()
 
 }
