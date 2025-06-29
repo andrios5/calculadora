@@ -893,10 +893,13 @@ function importarCSVparaArray2d(file) {
                     let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
                     let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
                     let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
-                    array2d.push([nome, altura, largura, area]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, area, 1, area]); // Adiciona os valores ao array 2D
                     }
                 }
             });
+            medType.value = '0'; // Define o tipo de medição como monetário
+            tempTypeMed = 0; // Define o tipo de medição como monetário
+            typeMed() // Chama a função para definir o tipo de medição
         } else {
             alert('Formato de arquivo inválido!'); // Exibe um alerta se o formato do arquivo não for reconhecido
             seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
@@ -918,7 +921,7 @@ function formataVetor(array2d) {
     array2d.pop(); // Remove o último elemento do array2d após a importação
 
     for (let i = 0; i < array2d.length; i++) {
-        const [nome, altura, largura, area] = array2d[i];
+        const [nome, altura, largura, area, pro, area2] = array2d[i];
         if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
             if (nome !== '' && nome !== null && nome != 'Soma:') {
                     tempNome2 = nome; // Atualiza o nome temporário
@@ -926,6 +929,7 @@ function formataVetor(array2d) {
                 tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
             }
             tempAltura = altura; // Atualiza a altura temporária
+            tempProfundidade = pro; // Atualiza a profundidade temporária
         }
     }
 
@@ -936,7 +940,3 @@ document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo
 seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
 checarNome()
 }
-
-
-
-
