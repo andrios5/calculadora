@@ -71,7 +71,6 @@ formatoEX.innerHTML += `<option value="1">XLS</option>`
 var tempNome2
 let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
 let array2d = []
-let array3d = []; // Array 2D para armazenar os dados
 let arrayM1 = []; // Array para armazenar os nomes únicos
 let tempTypeMed = 0 // Variável para armazenar o tipo de medição selecionado
 
@@ -107,11 +106,23 @@ function typeMed() {
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
     profund.placeholder = 'Digite o preço'
     lpro.innerHTML = 'Preço:'}
+    else if (tempTypeMed == 3) {
+    cpro.style.display = 'inline-flex' // Esconde o campo de profundidade
+    profund.placeholder = 'Digite a unidade'
+    lpro.innerHTML = 'Unidade:'
+    }
+    else if (tempTypeMed == 4) {
+        alert('A medição UN + R$ não está implementada ainda!') // Exibe um alerta informando que a medição UN + R$ não está implementada
+        tempTypeMed = 0 // Reseta o tipo de medição para 2D
+        typeMed() // Chama a função para atualizar o tipo de medição
+    }
     else {
     cpro.style.display = 'none' // Esconde o campo de profundidade
     medType.innerHTML = `<option value="0">M² (Medição Quadrada)</option>`
     medType.innerHTML += `<option value="1">M³ (Medição Cubica)</option>`
+    medType.innerHTML += `<option value="3">UN (Medição com Unidade)</option>`
     medType.innerHTML += `<option value="2">R$ (Medição com Valor)</option>`
+    medType.innerHTML += `<option value="4">UN + R$ (Unidade e Valor)</option>`
     }
 }
 
@@ -130,23 +141,6 @@ function ordenarVetor() {
 }
 
 function ordenarArray2dPorNome() {
-    if (tempTypeMed == 1 || tempTypeMed == 2) {
-        for (let i = 0; i < array3d.length - 1; i++) {
-        for (let j = 0; j < array3d.length - 1 - i; j++) {
-            // Comparação ignorando maiúsculas/minúsculas
-            if (array3d[j][0].toLowerCase() > array3d[j + 1][0].toLowerCase()) {
-                // Troca as posições
-                let temp = array3d[j];
-                array3d[j] = array3d[j + 1];
-                array3d[j + 1] = temp;
-
-                let temp2 = array2d[j];
-                array2d[j] = array2d[j + 1];
-                array2d[j + 1] = temp2;
-                    }
-                }
-            } 
-        } else {
         for (let i = 0; i < array2d.length - 1; i++) {
             for (let j = 0; j < array2d.length - 1 - i; j++) {
                 // Comparação ignorando maiúsculas/minúsculas
@@ -155,11 +149,6 @@ function ordenarArray2dPorNome() {
                     let temp = array2d[j];
                     array2d[j] = array2d[j + 1];
                     array2d[j + 1] = temp;
-
-                    let temp2 = array3d[j];
-                    array3d[j] = array3d[j + 1];
-                    array3d[j + 1] = temp2;
-                }
             }
         }
     }
@@ -201,22 +190,20 @@ function ordenarArray2dPorNome() {
         pro = Number(pro.value)
 
         area = alt * lar
-        array2d.push([nome2, alt, lar, area]) // Adiciona os valores ao array 2D
 
-        area = alt * lar
-        if (pro == '' || pro == null || pro == '0') { // Verifica se o campo de profundidade está vazio
+        if (pro == '' || pro == null) { // Verifica se o campo de profundidade está vazio
             pro = 1; // Define a profundidade como 1 se estiver vazio
         }
-        area3 = alt * lar * pro // Calcula a área 3D
-        array3d.push([nome2, alt, lar, area, pro, area3]) // Adiciona os valores ao array 3D
+
+        area2 = alt * lar * pro // Calcula a área 3D
+
+        array2d.push([nome2, alt, lar, area, pro, area2]) // Adiciona os valores ao array 2D
 
         typeMed()
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
 
-        exibeArea2(array2d, array3d) // Chama a função para exibir os resultados
-        
-        
+        exibeArea2(array2d) // Chama a função para exibir os resultados  
 }
 
 function exibeArea2() {
@@ -236,18 +223,18 @@ function exibeArea2() {
 
     resM2.innerHTML = '' // Limpa o conteúdo anterior
 
-    if (tempTypeMed == 2) {
-        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/m²</th><th>Preço</th></tr>`; // Atualiza o cabeçalho da tabela
-        for (let i = 0; i < array3d.length; i++) {
-            const [nome, altura, largura, area, preco, area3] = array3d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
+    if (tempTypeMed == 3) {
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>Un</th><th>Un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
+        for (let i = 0; i < array2d.length; i++) {
+            const [nome, altura, largura, area, preco, area3] = array2d[i];
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            somaP += Number(array2d[i][4]);
+            soma3 += Number(array2d[i][5]);
         }
-        if (array3d.length == 0) { // Verifica se o array2d está vazio
+        if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
@@ -263,20 +250,48 @@ function exibeArea2() {
         resetC2.style.display = 'inline-block'
         formatoEX.style.display = 'inline-block'
         ordenar.style.display = 'inline-block'
-        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
+        }
+    } else if (tempTypeMed == 2) {
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/m²</th><th>Preço</th></tr>`; // Atualiza o cabeçalho da tabela
+        for (let i = 0; i < array2d.length; i++) {
+            const [nome, altura, largura, area, preco, area3] = array2d[i];
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            soma3 += Number(array2d[i][5]);
+        }
+        if (array2d.length == 0) { // Verifica se o array2d está vazio
+        tabela.style.display = 'none'
+        menosC2.style.display = 'none'
+        export2.style.display = 'none'
+        resetC2.style.display = 'none'
+        formatoEX.style.display = 'none'
+        tabela1.style.display = 'none'
+        ordenar.style.display = 'none'
+        seletorDeArquivo.style.display = 'inline-block'
+        }else{
+        tabela.style.display = 'block'
+        menosC2.style.display = 'inline-block'
+        export2.style.display = 'inline-block'
+        resetC2.style.display = 'inline-block'
+        formatoEX.style.display = 'inline-block'
+        ordenar.style.display = 'inline-block'
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td colspan="2">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
         }
     } else if (tempTypeMed == 1) {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>Profund.</th><th>m²</th><th>m³</th></tr>`; // Atualiza o cabeçalho da tabela
-        for (let i = 0; i < array3d.length; i++) {
-            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+        for (let i = 0; i < array2d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array2d[i];
             resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${profundidade.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            somaP += Number(array2d[i][4]);
+            soma3 += Number(array2d[i][5]);
         }
-        if (array3d.length == 0) { // Verifica se o array2d está vazio
+        if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
@@ -350,8 +365,8 @@ function checarNome(){
 
         
         if(tempTypeMed == 1 || tempTypeMed == 2) { // Verifica se o tipo de medição é 3D ou monetário
-            for (let i = 0; i < array3d.length; i++) {
-            const [nome, , , area, , area3] = array3d[i];
+            for (let i = 0; i < array2d.length; i++) {
+            const [nome, , , area, , area3] = array2d[i];
 
             let nomeLimpo = nome
             let somaArea3 = nome
@@ -412,9 +427,8 @@ function resetarC2(){
     formatoEX.style.display = 'none'
     tabela1.style.display = 'none'
     ordenar.style.display = 'none'
-    seletorDeArquivo.style.display = 'inline-block'
+    seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
     array2d = [] // Limpa o array 2D
-    array3d = []; // Limpa o array 3D
     tempTypeMed = 0
     profund.value = '' // Esconde o campo de profundidade
     typeMed()
@@ -553,13 +567,13 @@ function exportar11() {
     `;
     // Adiciona as linhas do array2d
     let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
-    for (let i = 0; i < array3d.length; i++) {
-        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array2d[i];
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            somaP += Number(array2d[i][4]);
+            soma3 += Number(array2d[i][5]);
             html += `<tr>
                 <td>${nome}</td>
                 <td>${altura.toLocaleString('pt-BR')}</td>
@@ -579,12 +593,11 @@ function exportar11() {
         <td>${soma3.toLocaleString('pt-BR')}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th></th><th>Área(m²)</th><th>Área(m³)</th></tr>`
+    html += `<tr><th colspan="4">Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
-            <th colspan="3">Soma ${nome}:</th>
-            <td></td>
+            <th colspan="4">Soma ${nome}:</th>
             <td colspan="1">${area.toLocaleString('pt-BR')}</td>
             <td colspan="1">${area3.toLocaleString('pt-BR')}</td>
         </tr>`;
@@ -627,13 +640,12 @@ function exportar12() {
     `;
     // Adiciona as linhas do array2d
     let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
-    for (let i = 0; i < array3d.length; i++) {
-        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array2d[i];
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            soma3 += Number(array2d[i][5]);
             html += `<tr>
                 <td>${nome}</td>
                 <td>${altura.toLocaleString('pt-BR')}</td>
@@ -650,18 +662,16 @@ function exportar12() {
         <td>${somaA.toLocaleString('pt-BR')}</td>
         <td>${somaL.toLocaleString('pt-BR')}</td>
         <td>${soma2.toLocaleString('pt-BR')}</td>
-        <td>${somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
-        <td>${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+        <td td colspan="2">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th></th><th>Preço</th></tr>`
+    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th colspan="2">Preço</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
             <th colspan="3">Soma ${nome}:</th>
             <td colspan="1">${area.toLocaleString('pt-BR')}</td>
-            <td></td>
-            <td colspan="1">${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+            <td colspan="2">${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
         </tr>`;
     }
     html += `
@@ -730,8 +740,8 @@ function exportar21() {
     let csv = 'Nome;Altura;Largura;Profundidade;Área(m²);Área(m³)\n';
     // Adiciona as linhas do array2d
     let arrayTemp = []
-    for (let i = 0; i < array3d.length; i++) {
-            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+    for (let i = 0; i < array2d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array2d[i];
             arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR')]);
     }
     // Adiciona a soma final
@@ -740,12 +750,12 @@ function exportar21() {
     let somaL = 0; // Inicializa a variável de soma das larguras
     let somaP = 0; // Inicializa a variável de soma das profundidades
     let soma3 = 0; // Inicializa a variável de soma das áreas 3
-    for (let i = 0; i < array3d.length; i++) {
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
+    for (let i = 0; i < array2d.length; i++) {
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            somaP += Number(array2d[i][4]);
+            soma3 += Number(array2d[i][5]);
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
@@ -782,8 +792,8 @@ function exportar22() {
     let csv = 'Nome;Altura;Largura;Área;R$/m²;Preço\n';
     // Adiciona as linhas do array2d
     let arrayTemp = []
-    for (let i = 0; i < array3d.length; i++) {
-            const [nome, altura, largura, area, profundidade, area3] = array3d[i];
+    for (let i = 0; i < array2d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array2d[i];
             arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}), area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
     }
     // Adiciona a soma final
@@ -792,14 +802,13 @@ function exportar22() {
     let somaL = 0; // Inicializa a variável de soma das larguras
     let somaP = 0; // Inicializa a variável de soma das profundidades
     let soma3 = 0; // Inicializa a variável de soma das áreas 3
-    for (let i = 0; i < array3d.length; i++) {
-            soma2 += Number(array3d[i][3]);
-            somaA += Number(array3d[i][1]);
-            somaL += Number(array3d[i][2]);
-            somaP += Number(array3d[i][4]);
-            soma3 += Number(array3d[i][5]);
+    for (let i = 0; i < array2d.length; i++) {
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            soma3 += Number(array2d[i][5]);
     }
-    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}), soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'),'', soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
     arrayTemp.push(["Soma Parcial dos Itens",'','','Área','','Preço']);
     
@@ -849,13 +858,13 @@ function importarCSVparaArray2d(file) {
                     let area31 = partes[5].replace(/[^\d.,]/g, ''); // Converte a área 3D para número
                     let profundidade = Number(profundidade1.replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
                     let area3 = Number(area31.replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
-                    array3d.push([nome, altura, largura, area, profundidade, area3]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, area, profundidade, area3]); // Adiciona os valores ao array 2D
                     }
                 }
             });
             medType.value = '2'; // Define o tipo de medição como monetário
             tempTypeMed = 2; // Define o tipo de medição como monetário
-            formataVetor3d(array3d);
+            typeMed() // Chama a função para definir o tipo de medição
         } else if (verifT.valueOf().includes('Nome;Altura;Largura;Profundidade;Área(m²);Área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -867,14 +876,14 @@ function importarCSVparaArray2d(file) {
                     let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = Number(partes[4].replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
                     let area3 = Number(partes[5].replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
-                    array3d.push([nome, altura, largura, profundidade, area, area3]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, profundidade, area, area3]); // Adiciona os valores ao array 2D
                     }
                 }
             });
             medType.value = '1'; // Define o tipo de medição como monetário
             tempTypeMed = 1; // Define o tipo de medição como monetário
-            formataVetor3d(array3d);
-        } else {
+            typeMed() // Chama a função para definir o tipo de medição
+        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Área')){ // Verifica se o cabeçalho é o esperado para 2D{
             tempTypeMed = 0; // Define o tipo de medição como 2D
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -888,9 +897,12 @@ function importarCSVparaArray2d(file) {
                     }
                 }
             });
-            formataVetor(array2d); 
+        } else {
+            alert('Formato de arquivo inválido!'); // Exibe um alerta se o formato do arquivo não for reconhecido
+            seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
+            return; // Interrompe a execução da função
         }
-        
+        formataVetor(array2d);
     };
     leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
 }
@@ -916,59 +928,15 @@ function formataVetor(array2d) {
             tempAltura = altura; // Atualiza a altura temporária
         }
     }
-clonarVetor3d(array2d) // Clona o vetor 2D para o 3D
+
 exibeArea2(); // Atualiza a tabela na tela
 document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
 document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
+document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
 seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
 checarNome()
 }
 
-function formataVetor3d(array3d) {
-    for (let i = 0; i < array3d.length; i++) {
-        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
-        if (area == '' || area == null || largura == '' || largura == null || altura == '' || altura == null){   
-                array3d.splice(i, 1); // Remove o elemento Soma(paralela) do array2d
-                i--; // Decrementa o índice para não pular o próximo elemento
-            }
-        }
-    array3d.pop(); // Remove o último elemento do array3d após a importação
 
-    for (let i = 0; i < array3d.length; i++) {
-        const [nome, altura, largura, area, profundidade, area3] = array3d[i];
-        if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
-            if (nome !== '' && nome !== null && nome != 'Soma:') {
-                    tempNome2 = nome; // Atualiza o nome temporário
-            } else {
-                tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
-            }
-            tempAltura = altura; // Atualiza a altura temporária
-            tempProfundidade = profundidade; // Atualiza a profundidade temporária
-        }
-    }
-    clonarVetor(array3d) // Clona o vetor 2D para o 3D
-    exibeArea2(); // Atualiza a tabela na tela
-    document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
-    document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
-    document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
-    seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a import
-    checarNome()
-    typeMed()
-}
 
-function clonarVetor3d(array2d) {
-    array3d = []; // Limpa o array 3D antes de clonar
-    for (let i = 0; i < array2d.length; i++) {
-        const [nome, altura, largura, area] = array2d[i];
-        array3d.push([nome, altura, largura, area, 1, area]); // Adiciona os valores ao array 3D com profundidade e área 3D zerados
-    }
-}
-
-function clonarVetor(array3d) {
-    array2d = []; // Limpa o array 3D antes de clonar
-    for (let i = 0; i < array3d.length; i++) {
-        const [nome, altura, largura, area] = array3d[i];
-        array2d.push([nome, altura, largura, area]); // Adiciona os valores ao array 3D com profundidade e área 3D zerados
-    }
-}
 
