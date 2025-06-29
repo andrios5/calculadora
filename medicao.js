@@ -348,6 +348,8 @@ function mudouNome() {
         theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`; // Atualiza o cabeçalho da tabela'
         } else if (tempTypeMed == 2) {
             theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th><th>R$</th></tr>`; // Atualiza o cabeçalho da tabela
+        } else if (tempTypeMed == 3) {
+            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th><th>Un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
         } else {
             theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th></tr>`; // Atualiza o cabeçalho da tabela
         }
@@ -364,7 +366,7 @@ function checarNome(){
         arrayM1.length = 0; // Array para armazenar os nomes únicos
 
         
-        if(tempTypeMed == 1 || tempTypeMed == 2) { // Verifica se o tipo de medição é 3D ou monetário
+        if(tempTypeMed == 1 || tempTypeMed == 2 || tempTypeMed == 3) { // Verifica se o tipo de medição é 3D ou monetário
             for (let i = 0; i < array2d.length; i++) {
             const [nome, , , area, , area3] = array2d[i];
 
@@ -386,9 +388,14 @@ function checarNome(){
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
             }
-            } else {
+            } else if (tempTypeMed == 2) {
                 for (let nome in somaPorNome) {
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
+                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+            }
+            } else if (tempTypeMed == 3) {
+                for (let nome in somaPorNome) {
+                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
             }
             }
@@ -462,6 +469,8 @@ function exportar() {
             exportar21()
         } else if (tempTypeMed == 2) {
             exportar22()
+        } else if (tempTypeMed == 3) {
+            exportar23()
         } else {
             exportar2()
         }
@@ -470,7 +479,9 @@ function exportar() {
             exportar11()
         } else if (tempTypeMed == 2) {
             exportar12()
-        } else {
+        } else if (tempTypeMed == 3) {
+            exportar13()
+        }else {
             exportar1()
         }
     }
@@ -688,6 +699,81 @@ function exportar12() {
     document.body.removeChild(a);
 }
 
+function exportar13() {
+    let html = `
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #000; padding: 4px; text-align: center; }
+            th { background: #eee; }
+        </style>
+    </head>
+    <body>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Altura</th>
+            <th>Largura</th>
+            <th>Área</th>
+            <th>Un</th>
+            <th>Un/Área</th>
+        </tr>
+    `;
+    // Adiciona as linhas do array2d
+    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area, profundidade, area3] = array2d[i];
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            somaP += Number(array2d[i][4]);
+            soma3 += Number(array2d[i][5]);
+            html += `<tr>
+                <td>${nome}</td>
+                <td>${altura.toLocaleString('pt-BR')}</td>
+                <td>${largura.toLocaleString('pt-BR')}</td>
+                <td>${area.toLocaleString('pt-BR')}</td>
+                <td>${profundidade.toLocaleString('pt-BR')}</td>
+                <td>${area3.toLocaleString('pt-BR')}</td>
+            </tr>`;
+        
+    }
+    // Soma final
+    html += `<tr>
+        <th>Soma:</th>
+        <td>${somaA.toLocaleString('pt-BR')}</td>
+        <td>${somaL.toLocaleString('pt-BR')}</td>
+        <td>${soma2.toLocaleString('pt-BR')}</td>
+        <td>${somaP.toLocaleString('pt-BR')}</td>
+        <td td>${soma3.toLocaleString('pt-BR')}</td>
+    </tr>`;
+    html += `<tr></tr>`
+    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th></th><th>Un/Área</th></tr>`
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area, area3] = arrayM1[i];
+        html += `<tr>
+            <th colspan="3">Soma ${nome}:</th>
+            <td>${area.toLocaleString('pt-BR')}</td>
+            <td></td>
+            <td>${area3.toLocaleString('pt-BR')}</td>
+        </tr>`;
+    }
+    html += `
+    </table>
+    </body>
+    </html>
+    `;
+    // Cria um link para download
+    let a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    a.download = `${nome2}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 
 function exportar2(){
     // Monta o cabeçalho CSV
@@ -838,6 +924,58 @@ function exportar22() {
     document.body.removeChild(a);
 }
 
+function exportar23() {
+    // Monta o cabeçalho CSV
+    let csv = 'Nome;Altura;Largura;Área;Un;Un/Área\n';
+    // Adiciona as linhas do array2d
+    let arrayTemp = []
+    for (let i = 0; i < array2d.length; i++) {
+            const [nome, altura, largura, area, profundidade, area3] = array2d[i];
+            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR')]);
+    }
+    // Adiciona a soma final
+    let soma2 = 0; // Inicializa a variável de soma
+    let somaA = 0; // Inicializa a variável de soma das alturas
+    let somaL = 0; // Inicializa a variável de soma das larguras
+    let somaP = 0; // Inicializa a variável de soma das profundidades
+    let soma3 = 0; // Inicializa a variável de soma das áreas 3
+    for (let i = 0; i < array2d.length; i++) {
+            soma2 += Number(array2d[i][3]);
+            somaA += Number(array2d[i][1]);
+            somaL += Number(array2d[i][2]);
+            somaP += Number(array2d[i][4]); 
+            soma3 += Number(array2d[i][5]);
+    }
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
+    arrayTemp.push([]); // Adiciona uma linha vazia para separação
+    arrayTemp.push(["Soma Parcial dos Itens",'','','Área','','Un/Área']);
+    for (let i = 0; i < arrayM1.length; i++) {
+        const [nome, area, area3] = arrayM1[i];
+        arrayTemp.push([`Soma ${nome}:`,'','', area.toLocaleString('pt-BR'),'', area3.toLocaleString('pt-BR')]);
+    }
+    arrayTemp.forEach(function(linha) {
+        // Usa ; como separador para compatibilidade com o LibreOffice em pt-BR
+        csv += [
+            linha[0] !== undefined ? linha[0] : '',
+            linha[1] !== undefined ? linha[1] : '',
+            linha[2] !== undefined ? linha[2] : '',
+            linha[3] !== undefined ? linha[3] : '',
+            linha[4] !== undefined ? linha[4] : '',
+            linha[5] !== undefined ? linha[5] : ''
+        ].join(';') + '\n';
+    });
+    // Cria um link para download
+    let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${nome2}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+
+
 
 function importarCSVparaArray2d(file) {
     const leitor = new FileReader(); // Cria um novo FileReader
@@ -845,7 +983,27 @@ function importarCSVparaArray2d(file) {
         const conteudo = e.target.result; // Obtém o conteúdo do arquivo
         const linhas = conteudo.split('\n'); // Divide o conteúdo em linhas
         let verifT = linhas.shift();  // Remove o cabeçalho do CSV
-        if (verifT.valueOf().includes('Nome;Altura;Largura;Área;R$/m²;Preço')){ // Verifica se o cabeçalho é o esperado
+        if (verifT.valueOf().includes('Nome;Altura;Largura;Área;Un;Un/Área')){ // Verifica se o cabeçalho é o esperado
+            linhas.forEach(linha => { // Percorre cada linha do CSV
+            if (linha.trim() !== '') { // Verifica se a linha não está vazia
+                const partes = linha.split(';'); // Divide a linha em partes usando o separador ';
+                if (partes.length >= 6) { // Verifica se há pelo menos 4 partes
+                    let nome = partes[0]; // Obtém o nome da primeira parte
+                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade1 = partes[4].replace(/[^\d.,]/g, ''); // Converte a profundidade para número
+                    let area31 = partes[5].replace(/[^\d.,]/g, ''); // Converte a área 3D para número
+                    let profundidade = Number(profundidade1.replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
+                    let area3 = Number(area31.replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
+                    array2d.push([nome, altura, largura, area, profundidade, area3]); // Adiciona os valores ao array 2D
+                    }
+                }
+            });
+            medType.value = '3'; // Define o tipo de medição como monetário
+            tempTypeMed = 3; // Define o tipo de medição como monetário
+            typeMed() // Chama a função para definir o tipo de medição
+        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Área;R$/m²;Preço')){ // Verifica se o cabeçalho é o esperado
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
