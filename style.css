@@ -280,7 +280,7 @@ table {
 }
 
 table#m1 th:nth-child(1) {
-    min-width: 150px;
+    min-width: 200px;
 }
 
 table#m2 {
@@ -699,11 +699,11 @@ section#m2 input {
     }
 
     table#m1 th:nth-child(1) {
-        min-width: 125px;
+        min-width: 140px;
     }
 
     input#seletorDeArquivo {
-        min-width: 375px;
+        min-width: 350px;
     }
     
 
@@ -812,7 +812,7 @@ section#m2 input {
         padding: 6px 5px;
     }
     table#m1 th:nth-child(1) {
-        min-width: 120px;
+        min-width: 130px;
     }
 
     label.med {
@@ -854,6 +854,10 @@ section#m2 input {
     label.labelm2 {
         width: 100px;
     }
+
+    input#seletorDeArquivo {
+        min-width: 300px;
+    }
 }
 
 @media screen and (max-width: 370px) {
@@ -877,9 +881,11 @@ section#m2 input {
         padding: 5px 4px;
     }
     table#m1 th:nth-child(1) {
-        min-width: 115px;
+        min-width: 125px;
     }
-
+    input#seletorDeArquivo {
+        min-width: 250px;
+    }
 
 }
 
