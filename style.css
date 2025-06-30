@@ -178,10 +178,10 @@ section.in {
     background-color: var(--cor5);
     width: 90%;
     margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     border-radius: 15px;
-    padding: 20px;
+    padding: 25px 15px;
     box-shadow: inset 5px 5px 5px var(--cor6);
 }
 
@@ -279,6 +279,12 @@ table {
     background-color: white;
 }
 
+table#m1{
+    overflow: auto;
+    max-width: 600px;
+    min-width: 400px;
+}
+
 table#m2 {
     border-collapse: separate;
     border-spacing: 1px 1px;
@@ -293,7 +299,9 @@ th, td {
 
 table#m1 th, table#m1 td {
     border: var(--cor5) 1px solid;
+    width: 100%;
 }
+
 
 table#m2 th, table#m2 td {
     border: none;
@@ -333,18 +341,6 @@ table > tfoot#resultadoS2 > tr > td {
     background-color: var(--cor2);
     color: var(--cor1);
     border-radius: 0 0 10px 10px;
-}
-
-table#m1 {
-    width: 100%;
-}
-
-table#m1 tbody th {
-    width: 100%;
-}
-
-table#m1 td {
-    min-width: 100px;
 }
 
 div.container {
@@ -412,7 +408,7 @@ p#teto {
     text-align: center;
 }
 
-#seletorDeArquivo {
+input#seletorDeArquivo {
     background-color: #FFD416;
     min-width: 400px;
     height: 25px;
@@ -456,18 +452,10 @@ select.med {
     margin: 5px;
 }
 
-
-#export2 {
-    padding: 12.5px 15px;
-    margin-top: 0;
-    margin-bottom: 0px;
-    
-}
-
 select#formatoEX {
-    padding: 0 10px;
-    margin-top: 0;
-    margin-bottom: 10px;
+    padding: 1px 22px;
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
 
 
@@ -597,7 +585,6 @@ section#m2 input {
         padding: 10px 0;
     }
     
-
     section.in {
         width: 85%;
     }
@@ -713,20 +700,16 @@ section#m2 input {
         font-size: 0.95em;
     }
 
-    #seletorDeArquivo {
-        min-width: 300px;
+    input#seletorDeArquivo {
+        min-width: 400px;
     }
     
-
-    #export2 {
-        height: 45px;
-    }
 
     #formatoEX {
         height: 18px;
     }
 
-    #resetC2, #ordenarM2{
+    #resetC2, #ordenarM2, #export2{
         width: 75px;
         padding: 5px;
     }
@@ -757,6 +740,11 @@ section#m2 input {
         flex: 1;
         padding: 15px 0px;
         margin-left: 5px;
+    }
+
+    select#formatoEX {
+        padding: 1px 12px;
+        margin-bottom: 15px;
     }
 }
     
@@ -829,13 +817,6 @@ section#m2 input {
     width: 98%;
     }
 
-
-    select#formatoEX {
-        padding: 0 10px;
-        margin-top: 0;
-        margin-bottom: 10px;
-    }
-
     #comparaPreco input {
         max-width: 120px;
     }
@@ -849,8 +830,8 @@ section#m2 input {
         max-width: 200px;
    }
 
-    #seletorDeArquivo {
-        min-width: 250px;
+    input#seletorDeArquivo {
+        min-width: 350px;
     }
 
     .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
@@ -886,6 +867,10 @@ section#m2 input {
 
     .telaV2, .telaV5 {
         max-width: 270px;
+    }
+
+    input#seletorDeArquivo {
+        min-width: 300px;
     }
 
 

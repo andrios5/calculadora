@@ -420,15 +420,15 @@ function mudouNome() {
     if (arrayM1.length >= 2) { // Verifica se o arrayM1 tem mais de um elemento e se o tipo de medição é diferente de 0
     tabela1.style.display = 'block'
     if (tempTypeMed == 1) {
-        theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`; // Atualiza o cabeçalho da tabela'
+        theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`; // Atualiza o cabeçalho da tabela'
         } else if (tempTypeMed == 2) {
-            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th><th>R$</th></tr>`; // Atualiza o cabeçalho da tabela
+            theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área</th><th>R$</th></tr>`; // Atualiza o cabeçalho da tabela
         } else if (tempTypeMed == 3) {
-            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th><th>Un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
+            theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área</th><th>Un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
         } else if (tempTypeMed == 4) {
-            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th><th>Un/m²</th><th>R$</th></tr>`;
+            theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área</th><th>Un/m²</th><th>R$</th></tr>`;
         } else {
-            theadM1.innerHTML = `<tr><th>Soma Parcial dos Itens</th><th>Área</th></tr>`; // Atualiza o cabeçalho da tabela
+            theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área</th></tr>`; // Atualiza o cabeçalho da tabela
         }
     }
 }
@@ -626,7 +626,7 @@ function exportar1() {
         <td>${soma2.toLocaleString('pt-BR')}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="4">Soma Parcial dos Itens</th></tr>`
+    html += `<tr><th colspan="4">Soma dos Itens</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area] = arrayM1[i];
         html += `<tr>
@@ -698,7 +698,7 @@ function exportar11() {
         <td>${soma3.toLocaleString('pt-BR')}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="4">Soma Parcial dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`
+    html += `<tr><th colspan="4">Soma dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
@@ -770,7 +770,7 @@ function exportar12() {
         <td colspan="2">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
     </tr>`;
     html += `<tr></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th colspan="2">Preço</th></tr>`
+    html += `<tr><th colspan="3">Soma dos Itens</th><th>Área</th><th colspan="2">Preço</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
@@ -844,7 +844,7 @@ function exportar13() {
         <td>${soma3.toLocaleString('pt-BR')}</td>
     </tr>`;
     html += `<tr colspan='6'></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th colspan='2'>Un/Área</th></tr>`
+    html += `<tr><th colspan="3">Soma dos Itens</th><th>Área</th><th colspan='2'>Un/Área</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         html += `<tr>
@@ -924,7 +924,7 @@ function exportar14() {
         <td colspan='2'>${soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
     </tr>`;
     html += `<tr colspan='8'></tr>`
-    html += `<tr><th colspan="3">Soma Parcial dos Itens</th><th>Área</th><th colspan='2'>Un/Área</th><th colspan='2'>Preço</th></tr>`
+    html += `<tr><th colspan="3">Soma dos Itens</th><th>Área</th><th colspan='2'>Un/Área</th><th colspan='2'>Preço</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area2, area3] = arrayM1[i];
         html += `<tr>
@@ -968,7 +968,7 @@ function exportar2(){
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
-    arrayTemp.push(["Soma Parcial dos Itens",'','', "Área"]);
+    arrayTemp.push(["Soma dos Itens",'','', "Área"]);
     
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area] = arrayM1[i];
@@ -1018,7 +1018,7 @@ function exportar21() {
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
-    arrayTemp.push(["Soma Parcial dos Itens",'','','', 'Área(m²)', 'Área(m³)']);
+    arrayTemp.push(["Soma dos Itens",'','','', 'Área(m²)', 'Área(m³)']);
     
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
@@ -1069,7 +1069,7 @@ function exportar22() {
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'),'', soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
-    arrayTemp.push(["Soma Parcial dos Itens",'','','Área','','Preço']);
+    arrayTemp.push(["Soma dos Itens",'','','Área','','Preço']);
     
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
@@ -1121,7 +1121,7 @@ function exportar23() {
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
-    arrayTemp.push(["Soma Parcial dos Itens",'','','Área','','Un/Área']);
+    arrayTemp.push(["Soma dos Itens",'','','Área','','Un/Área']);
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
         arrayTemp.push([`Soma ${nome}:`,'','', area.toLocaleString('pt-BR'),'', area3.toLocaleString('pt-BR')]);
@@ -1173,7 +1173,7 @@ function exportar24() {
     }
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'),somaP.toLocaleString('pt-BR'),soma3.toLocaleString('pt-BR'),'',soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
-    arrayTemp.push(["Soma Parcial dos Itens",'','','Área','','Un/Área','','Preço']);
+    arrayTemp.push(["Soma dos Itens",'','','Área','','Un/Área','','Preço']);
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area2, area3] = arrayM1[i];
         arrayTemp.push([`Soma ${nome}:`,'','', area.toLocaleString('pt-BR'),'', area2.toLocaleString('pt-BR'),'', area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);

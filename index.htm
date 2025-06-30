@@ -83,18 +83,7 @@
             <div class="labelB"><label for="medType" class="med">Medição:</label><select name="medType" id="medType" class="med"></select></div>
             
                 <section class="in" id="m2">
-                    
-                    <div class="containerm2"><label for="nome2" class="labelm2">Item:</label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item"></div>
-                    <div class="containerm2" id="cpro"><label for="profund" id="lpro" class="labelm2"></label><input type="number" name="profund" id="profund"></div>
-                    <div class="containerm2" id="cpro2"><label for="profund2" id="lpro2" class="labelm2"></label><input type="number" name="profund2" id="profund2"></div>
-                    <div class="containerm2"><label for="altura" class="labelm2">Altura:</label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
-                    <div class="containerm2"><label for="largura" class="labelm2">Largura:</label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
-                    <br>
-                
-                    <button id="menosC2">Diminuir</button>
-                    <button id="med2">Somar</button>
-                    
-                        <div class="container2">
+                    <div class="container2">
                             <div class="container">
                                 <table id="m2">
                                     <thead id="theadM2">
@@ -105,15 +94,30 @@
                                     <tfoot id="resultadoS2">
                                     </tfoot>
                                 </table>
-                                <table id="m1">
-                                    <thead id="theadM1">
-                                        <tr><th>Soma Parcial dos Itens</th><th>Área</th></tr>
-                                    </thead>
-                                    <tbody id="resultadoM1">
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
+                    <div class="containerm2"><label for="nome2" class="labelm2">Item:</label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item"></div>
+                    <div class="containerm2" id="cpro"><label for="profund" id="lpro" class="labelm2"></label><input type="number" name="profund" id="profund"></div>
+                    <div class="containerm2" id="cpro2"><label for="profund2" id="lpro2" class="labelm2"></label><input type="number" name="profund2" id="profund2"></div>
+                    <div class="containerm2"><label for="altura" class="labelm2">Altura:</label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
+                    <div class="containerm2"><label for="largura" class="labelm2">Largura:</label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
+                    <br>
+                
+                    <button id="menosC2">Diminuir</button>
+                    <button id="med2">Somar</button>
+                    
+                        
+                                <div class="container2">
+                                    <table id="m1">
+                                        <thead id="theadM1">
+                                            <tr><th id="som1">Soma dos Itens</th><th>Área</th></tr>
+                                        </thead>
+                                        <tbody id="resultadoM1">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            
+                        
                         <button id="resetC2">Reset</button>
                         <button id="export2">Salvar</button>
                         <button id="ordenarM2">Ordenar</button><br>
