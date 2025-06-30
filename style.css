@@ -279,10 +279,8 @@ table {
     background-color: white;
 }
 
-table#m1{
-    overflow: auto;
-    max-width: 600px;
-    min-width: 400px;
+table#m1 th:nth-child(1) {
+    min-width: 150px;
 }
 
 table#m2 {
@@ -299,7 +297,6 @@ th, td {
 
 table#m1 th, table#m1 td {
     border: var(--cor5) 1px solid;
-    width: 100%;
 }
 
 
@@ -410,6 +407,7 @@ p#teto {
 
 input#seletorDeArquivo {
     background-color: #FFD416;
+    width: 90%;
     min-width: 400px;
     height: 25px;
     padding: 25px;
@@ -700,8 +698,12 @@ section#m2 input {
         font-size: 0.95em;
     }
 
+    table#m1 th:nth-child(1) {
+        min-width: 125px;
+    }
+
     input#seletorDeArquivo {
-        min-width: 400px;
+        min-width: 375px;
     }
     
 
@@ -806,6 +808,12 @@ section#m2 input {
     table > tbody {
         font-size: 0.9em;
     }
+    table#m1 th, table#m1 td {
+        padding: 6px 5px;
+    }
+    table#m1 th:nth-child(1) {
+        min-width: 120px;
+    }
 
     label.med {
     font-size: 1.1em;
@@ -829,10 +837,6 @@ section#m2 input {
     input#tetoGasto {
         max-width: 200px;
    }
-
-    input#seletorDeArquivo {
-        min-width: 350px;
-    }
 
     .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5 {
         width: 90%;
@@ -869,8 +873,11 @@ section#m2 input {
         max-width: 270px;
     }
 
-    input#seletorDeArquivo {
-        min-width: 300px;
+    table#m1 th, table#m1 td {
+        padding: 5px 4px;
+    }
+    table#m1 th:nth-child(1) {
+        min-width: 115px;
     }
 
 
