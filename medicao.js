@@ -1217,17 +1217,13 @@ function importarCSVparaArray2d(file) {
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
                 if (partes.length >= 8) { // Verifica se há pelo menos 8 partes
                     let nome = partes[0]; // Obtém o nome da primeira parte
-                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
-                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura
-                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
-                    let profundidade1 = partes[4].replace(/[^\d.,]/g, ''); // Converte a profundidade para número
-                    let area31 = partes[5].replace(/[^\d.,]/g, '');
-                    let preco1 = partes[6].replace(/[^\d.,]/g, ''); // Converte o preço para número
-                    let area41 = partes[7].replace(/[^\d.,]/g, ''); // Converte a área 4 para número, substituindo vírgula por ponto
-                    let profundidade = Number(profundidade1.replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
-                    let area3 = Number(area31.replace(',', '.')); // Converte a área 3
-                    let preco = Number(preco1.replace(',', '.')); // Converte o preço para número
-                    let area4 = Number(area41.replace(',', '.')); // Converte a área 4 para número, substituindo vírgula por ponto
+                    let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = strNum(partes[2]); // Converte a largura
+                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade = strNum(partes[4]); // Converte a profundidade para número
+                    let area3 = strNum(partes[5]);
+                    let preco = strNum(partes[6]); // Converte o preço para número
+                    let area4 = strNum(partes[7]); // Converte a área 4 para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, area, profundidade, area3, preco, area4]); // Adiciona os valores ao array 2D
                 }
             }
@@ -1243,13 +1239,11 @@ function importarCSVparaArray2d(file) {
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';
                 if (partes.length >= 6) { // Verifica se há pelo menos 4 partes
                     let nome = partes[0]; // Obtém o nome da primeira parte
-                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
-                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
-                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
-                    let profundidade1 = partes[4].replace(/[^\d.,]/g, ''); // Converte a profundidade para número
-                    let area31 = partes[5].replace(/[^\d.,]/g, ''); // Converte a área 3D para número
-                    let profundidade = Number(profundidade1.replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
-                    let area3 = Number(area31.replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
+                    let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade = strNum(partes[4]); // Converte a profundidade para número
+                    let area3 = strNum(partes[5]); // Converte a área 3D para número
                     array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1263,13 +1257,11 @@ function importarCSVparaArray2d(file) {
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
                 if (partes.length >= 6) { // Verifica se há pelo menos 4 partes
                     let nome = partes[0]; // Obtém o nome da primeira parte
-                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
-                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
-                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
-                    let profundidade1 = partes[4].replace(/[^\d.,]/g, ''); // Converte a profundidade para número
-                    let area31 = partes[5].replace(/[^\d.,]/g, ''); // Converte a área 3D para número
-                    let profundidade = Number(profundidade1.replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
-                    let area3 = Number(area31.replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
+                    let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade = strNum(partes[4]); // Converte a profundidade para número
+                    let area3 = strNum(partes[5]); // Converte a área 3D para número
                     array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1283,11 +1275,11 @@ function importarCSVparaArray2d(file) {
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
                 if (partes.length >= 6) { // Verifica se há pelo menos 4 partes
                     let nome = partes[0]; // Obtém o nome da primeira parte
-                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
-                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
-                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
-                    let profundidade = Number(partes[4].replace(',', '.')); // Converte a profundidade para número, substituindo vírgula por ponto
-                    let area3 = Number(partes[5].replace(',', '.')); // Converte a área 3D para número, substituindo vírgula por ponto
+                    let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
+                    let profundidade = strNum(partes[4]); // Converte a profundidade para número, substituindo vírgula por ponto
+                    let area3 = strNum(partes[5]); // Converte a área 3D para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, profundidade, area, area3, 1, area3]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1302,9 +1294,9 @@ function importarCSVparaArray2d(file) {
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
                 if (partes.length >= 4) { // Verifica se há pelo menos 4 partes
                     let nome = partes[0]; // Obtém o nome da primeira parte
-                    let altura = Number(partes[1].replace(',', '.')); // Converte a altura para número, substituindo vírgula por ponto
-                    let largura = Number(partes[2].replace(',', '.')); // Converte a largura para número, substituindo vírgula por ponto
-                    let area = Number(partes[3].replace(',', '.')); // Converte a área para número, substituindo vírgula por ponto
+                    let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
+                    let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
+                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, area, 1, area, 1, area]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1320,6 +1312,15 @@ function importarCSVparaArray2d(file) {
         formataVetor(array2d);
     };
     leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
+}
+
+function strNum(n){
+    if ( n != '' && n != null) {
+    n = n.replace(/\./g,''); // Remove os pontos
+    n = n.replace(/,/g,'.'); // Substitui as vírgulas por pontos
+    n = n.replace(/[^\d.-]/g, ''); // Remove caracteres não numéricos, exceto ponto e traço
+    return parseFloat(n); // Converte a string para número
+    }
 }
 
 function formataVetor(array2d) {
