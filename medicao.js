@@ -76,6 +76,7 @@ ordenar.addEventListener('click', ordenarVetor)
 
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
+formatoEX.value = getCookie("formatoEXC") || 0
 
 var tempNome2
 let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
@@ -114,19 +115,18 @@ function typeMed() {
     profund.placeholder = 'Digite a profundidade'
     lpro.innerHTML = 'Profundidade:'
     cpro2.style.display = 'none' // Esconde o campo de profundidade 2
-    tempTypeMed2 = 0;
+        
     } else if (tempTypeMed == 2) { //R$
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
     profund.placeholder = 'Digite o preço'
     lpro.innerHTML = 'Preço:'
     cpro2.style.display = 'none' // Esconde o campo de profundidade 2
-    tempTypeMed2 = 0;
-    tempTypeMed2 = 1;
+
     if (tempTypeMed3 == 1) {
         inverteVetor(array2d); // Inverte o vetor se o tipo de medição for 4
-        tempTypeMed3 = 0
-        tempTypeMed2 = 1
     }
+    tempTypeMed3 = 0;
+    tempTypeMed2 = 1;
     } else if (tempTypeMed == 3) { //UN
     cpro.style.display = 'inline-flex' // Esconde o campo de profundidade
     profund.placeholder = 'Digite a unidade'
@@ -139,11 +139,13 @@ function typeMed() {
     profund2.placeholder = 'Digite o preço'
     lpro2.innerHTML = 'Preço:'
     cpro2.style.display = 'inline-flex' // Esconde o campo de profundidade 2
+
     if (tempTypeMed2 == 1) {
         inverteVetor(array2d); // Inverte o vetor se o tipo de medição for 4
-        tempTypeMed3 = 1
-        tempTypeMed2 = 0
+
     }
+    tempTypeMed3 = 1
+    tempTypeMed2 = 0
     }
     else {
     cpro.style.display = 'none' // Esconde o campo de profundidade
@@ -153,7 +155,6 @@ function typeMed() {
     medType.innerHTML += `<option value="3">UN (Medição com Unidade)</option>`
     medType.innerHTML += `<option value="2">R$ (Medição com Valor)</option>`
     medType.innerHTML += `<option value="4">UN + R$ (Unidade e Valor)</option>`
-    tempTypeMed2 = 0;
     }
 }
 
@@ -224,7 +225,7 @@ function ordenarArray2dPorNome() {
 
         tempNome2 = nome2 // Armazena o nome temporário
         tempNome3 = tempNome2 // Armazena o nome temporário para a tabela de soma
-        setCookie('tempNome3', tempNome3, 7); // Salva o nome no cookie por 7 dias
+        setCookie('tempNome3', tempNome3, 30); // Salva o nome no cookie por 30 dias
         
         if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
         if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
@@ -533,19 +534,23 @@ function resetarC2(){
     seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
     array2d = [] // Limpa o array 2D
     tempTypeMed = 0
+    tempTypeMed2 = 0
+    tempTypeMed3 = 0
     profund.value = '' // Esconde o campo de profundidade
     profund2.value = '' // Esconde o campo de profundidade 2
     typeMed()
 }
 
 function diminuirC2(){
-    array2d.pop() // Remove o último elemento do array 2D
-
      for (let i = 0; i < array2d.length; i++) {
-        const [nome, altura, largura, area] = array2d[i];
+        const [nome, altura, largura, area, un, area3, preco, area4] = array2d[i];
         tempNome2 = nome
-        
+        document.getElementById('altura').value = altura
+        document.getElementById('largura').value = largura
+        document.getElementById('profund').value = un
+        document.getElementById('profund2').value = preco
      }
+    array2d.pop() // Remove o último elemento do array 2D
     exibeArea2(array2d) // Atualiza a exibição
 }
 
@@ -573,6 +578,7 @@ function exportar() {
         } else {
             exportar2()
         }
+        setCookie('formatoEXC', 0, 30)
     } else {
         if (tempTypeMed == 1){
             exportar11()
@@ -585,6 +591,7 @@ function exportar() {
         } else {
             exportar1()
         }
+        setCookie('formatoEXC', 1, 30)
     }
 
 }
@@ -894,7 +901,7 @@ function exportar14() {
             <th>Área</th>
             <th>un</th>
             <th>un/Área</th>
-            <th>R$</th>
+            <th>R$/m²</th>
             <th>Preço</th>
         </tr>
     `;
@@ -1156,7 +1163,7 @@ function exportar23() {
 
 function exportar24() {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  'Nome;Altura;Largura;Área;un;un/Área;R$;Preço\n';
+    let csv = '\uFEFF' +  'Nome;Altura;Largura;Área;un;un/Área;R$/m²;Preço\n';
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1218,7 +1225,10 @@ function importarCSVparaArray2d(file) {
         const conteudo = e.target.result; // Obtém o conteúdo do arquivo
         const linhas = conteudo.split('\n'); // Divide o conteúdo em linhas
         let verifT = linhas.shift();  // Remove o cabeçalho do CSV
-        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$;preço')){ // Verifica se o cabeçalho é o esperado
+        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$/m²;preço')){ // Verifica se o cabeçalho é o esperado
+            medType.value = '4'; // Define o tipo de medição como monetário
+            tempTypeMed = 4; // Define o tipo de medição como monetário
+            typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
@@ -1235,12 +1245,12 @@ function importarCSVparaArray2d(file) {
                 }
             }
         });
-            medType.value = '4'; // Define o tipo de medição como monetário
-            tempTypeMed = 4; // Define o tipo de medição como monetário
-            tempTypeMed3 = 1
-            tempTypeMed2 = 0
-            typeMed() // Chama a função para definir o tipo de medição
+
+            
         } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área')){ // Verifica se o cabeçalho é o esperado
+            medType.value = '3'; // Define o tipo de medição como monetário
+            tempTypeMed = 3; // Define o tipo de medição como monetário
+            typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';
@@ -1255,10 +1265,12 @@ function importarCSVparaArray2d(file) {
                     }
                 }
             });
-            medType.value = '3'; // Define o tipo de medição como monetário
-            tempTypeMed = 3; // Define o tipo de medição como monetário
-            typeMed() // Chama a função para definir o tipo de medição
+
+
         } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;r$/m²;preço')){ // Verifica se o cabeçalho é o esperado
+            medType.value = '2'; // Define o tipo de medição como monetário
+            tempTypeMed = 2; // Define o tipo de medição como monetário
+            typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
@@ -1273,10 +1285,12 @@ function importarCSVparaArray2d(file) {
                     }
                 }
             });
-            medType.value = '2'; // Define o tipo de medição como monetário
-            tempTypeMed = 2; // Define o tipo de medição como monetário
+            
+
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;profundidade;área(m²);área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D            
+            medType.value = '1'; // Define o tipo de medição como monetário
+            tempTypeMed = 1; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
-        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;profundidade;área(m²);área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
@@ -1291,10 +1305,12 @@ function importarCSVparaArray2d(file) {
                     }
                 }
             });
-            medType.value = '1'; // Define o tipo de medição como monetário
-            tempTypeMed = 1; // Define o tipo de medição como monetário
+
+
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área')){ // Verifica se o cabeçalho é o esperado para 2D
+            medType.value = '0'; // Define o tipo de medição como monetário
+            tempTypeMed = 0; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
-        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área')){ // Verifica se o cabeçalho é o esperado para 2D{
             tempTypeMed = 0; // Define o tipo de medição como 2D
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -1308,16 +1324,13 @@ function importarCSVparaArray2d(file) {
                     }
                 }
             });
-            medType.value = '0'; // Define o tipo de medição como monetário
-            tempTypeMed = 0; // Define o tipo de medição como monetário
-            typeMed() // Chama a função para definir o tipo de medição
+
         } else {
             alert('Formato de arquivo inválido!'); // Exibe um alerta se o formato do arquivo não for reconhecido
             seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
             return; // Interrompe a execução da função
         }
         formataVetor(array2d);
-        console.log(array2d); // Exibe o array2d no console para depuração
     };
     leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
 }
@@ -1354,9 +1367,8 @@ document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome 
 document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
 document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
 document.querySelector('#profund2').value = tempProfundidade2; // Atualiza o campo de profundidade 2 com a profundidade temporária
-document.querySelector('#nomeArquivo').innerHTML = `Arquivo: ${seletorDeArquivo.value.replace(/C:\\fakepath\\/i, '')}`; // Atualiza o nome do arquivo exibido
+
 console.log(seletorDeArquivo.value.replace(/C:\\fakepath\\/i, '')); // Exibe o nome do arquivo selecionado no console
-seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
 checarNome()
 }
 
@@ -1376,8 +1388,20 @@ function importarXLSparaArray2d(file) {
         if (linhas.length > 0) {
             cabecalho = Array.from(linhas[0].querySelectorAll('th,td')).map(td => td.textContent.trim());
         }
-        // Limpa array2d antes de importar
-        array2d.length = 0;
+
+        if (cabecalho.includes('un/Área') && cabecalho.includes('R$/m²') && cabecalho.length >= 8) {
+            medType.value = '4'; tempTypeMed = 4; tempTypeMed3 = 1; tempTypeMed2 = 0;
+        } else if (cabecalho.includes('un/Área')) {
+            medType.value = '3'; tempTypeMed = 3;
+        } else if (cabecalho.includes('R$/m²')) {
+            medType.value = '2'; tempTypeMed = 2;
+        } else if (cabecalho.includes('Profundidade')) {
+            medType.value = '1'; tempTypeMed = 1;
+        } else {
+            medType.value = '0'; tempTypeMed = 0;
+        }
+        typeMed();
+        
         // Importação para cada formato conhecido
         for (let i = 1; i < linhas.length; i++) { // começa do 1 para pular o cabeçalho
             const celulas = linhas[i].querySelectorAll('td, th');
@@ -1396,7 +1420,7 @@ function importarXLSparaArray2d(file) {
                 let area4 = strNum(celulas[7].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
                     array2d.push([nome, altura, largura, area, profundidade, area3, preco, area4]);
-                } console.log(array2d);
+                }
             // XLS tipo 3 (6 colunas, un/unÁrea)
             } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('un/Área')) {
                 let nome = celulas[0].textContent.trim();
@@ -1442,20 +1466,8 @@ function importarXLSparaArray2d(file) {
             }
         }
         // Detecta e ajusta tipo de medição
-        if (cabecalho.includes('un/Área') && cabecalho.includes('R$') && cabecalho.length >= 8) {
-            medType.value = '4'; tempTypeMed = 4; tempTypeMed3 = 1; tempTypeMed2 = 0;
-        } else if (cabecalho.includes('un/Área')) {
-            medType.value = '3'; tempTypeMed = 3;
-        } else if (cabecalho.includes('R$/m²')) {
-            medType.value = '2'; tempTypeMed = 2;
-        } else if (cabecalho.includes('Profundidade')) {
-            medType.value = '1'; tempTypeMed = 1;
-        } else {
-            medType.value = '0'; tempTypeMed = 0;
-        }
-        typeMed();
+
         formataVetor(array2d);
     };
     leitor.readAsText(file, 'utf-8');
 }
-
