@@ -456,6 +456,12 @@ select#formatoEX {
     margin-bottom: 15px;
 }
 
+p#nomeArquivo {
+    color: var(--cor1);
+    font-size: 0.9em;
+    padding: 0;
+    text-align: center;
+}
 
 
     

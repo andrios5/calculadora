@@ -54,8 +54,15 @@ document.querySelector('#largura').addEventListener('keydown', function(e) {
 });
 
 seletorDeArquivo.addEventListener('change', function(e){
-if (e.target.files.length) { // Verifica se algum arquivo foi selecionado
-        importarCSVparaArray2d(e.target.files[0]);
+    if (e.target.files.length) {
+        const file = e.target.files[0];
+        if (file.name.toLowerCase().endsWith('.csv')) {
+            importarCSVparaArray2d(file);
+        } else if (file.name.toLowerCase().endsWith('.xls')) {
+            importarXLSparaArray2d(file);
+        } else {
+            alert('Formato de arquivo não suportado!');
+        }
     }
 });
 
@@ -1211,7 +1218,7 @@ function importarCSVparaArray2d(file) {
         const conteudo = e.target.result; // Obtém o conteúdo do arquivo
         const linhas = conteudo.split('\n'); // Divide o conteúdo em linhas
         let verifT = linhas.shift();  // Remove o cabeçalho do CSV
-        if (verifT.valueOf().includes('Nome;Altura;Largura;Área;un;un/Área;R$;Preço')){ // Verifica se o cabeçalho é o esperado
+        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$;preço')){ // Verifica se o cabeçalho é o esperado
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
@@ -1233,7 +1240,7 @@ function importarCSVparaArray2d(file) {
             tempTypeMed3 = 1
             tempTypeMed2 = 0
             typeMed() // Chama a função para definir o tipo de medição
-        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Área;un;un/Área')){ // Verifica se o cabeçalho é o esperado
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área')){ // Verifica se o cabeçalho é o esperado
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';
@@ -1251,7 +1258,7 @@ function importarCSVparaArray2d(file) {
             medType.value = '3'; // Define o tipo de medição como monetário
             tempTypeMed = 3; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
-        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Área;R$/m²;Preço')){ // Verifica se o cabeçalho é o esperado
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;r$/m²;preço')){ // Verifica se o cabeçalho é o esperado
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
@@ -1269,7 +1276,7 @@ function importarCSVparaArray2d(file) {
             medType.value = '2'; // Define o tipo de medição como monetário
             tempTypeMed = 2; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
-        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Profundidade;Área(m²);Área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;profundidade;área(m²);área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
                 const partes = linha.split(';'); // Divide a linha em partes usando o separador ';'
@@ -1287,7 +1294,7 @@ function importarCSVparaArray2d(file) {
             medType.value = '1'; // Define o tipo de medição como monetário
             tempTypeMed = 1; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
-        } else if (verifT.valueOf().includes('Nome;Altura;Largura;Área')){ // Verifica se o cabeçalho é o esperado para 2D{
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área')){ // Verifica se o cabeçalho é o esperado para 2D{
             tempTypeMed = 0; // Define o tipo de medição como 2D
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -1310,6 +1317,7 @@ function importarCSVparaArray2d(file) {
             return; // Interrompe a execução da função
         }
         formataVetor(array2d);
+        console.log(array2d); // Exibe o array2d no console para depuração
     };
     leitor.readAsText(file, 'utf-8'); // Lê o arquivo como texto
 }
@@ -1324,35 +1332,130 @@ function strNum(n){
 }
 
 function formataVetor(array2d) {
-    for (let i = 0; i < array2d.length; i++) {
-        const [nome, altura, largura, area] = array2d[i];
-        if (area == '' || area == null || largura == '' || largura == null || altura == '' || altura == null){   
-                array2d.splice(i, 1); // Remove o elemento Soma(paralela) do array2d
-                i--; // Decrementa o índice para não pular o próximo elemento
-            }
-        }
-    array2d.pop(); // Remove o último elemento do array2d após a importação
-
+            let tempAltura = 0; // Atualiza a altura temporária
+            let tempProfundidade = 0; // Atualiza a profundidade temporária
+            let tempProfundidade2 = 0; // Atualiza a profundidade temporária
+            let tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, pro, area2, pro2] = array2d[i];
-        if (largura > 0 && area > 0) { // Verifica se a largura e a área são maiores que zero
-            if (nome !== '' && nome !== null && nome != 'Soma:') {
-                    tempNome2 = nome; // Atualiza o nome temporário
+        if (typeof area !== "number"|| typeof largura !== "number" || typeof altura !== 'number' || nome == '' || nome == null || nome == 'Soma:') {   
+                array2d.splice(i, 1); // Remove o elemento Soma(paralela) do array2d
+                i--; // Decrementa o índice para não pular o próximo elemento
             } else {
-                tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
-            }
             tempAltura = altura; // Atualiza a altura temporária
             tempProfundidade = pro; // Atualiza a profundidade temporária
             tempProfundidade2 = pro2; // Atualiza a profundidade temporária
+            tempNome2 = nome; // Se o nome for vazio ou nulo, define como 'Área'
+            }
         }
-    }
 
 exibeArea2(); // Atualiza a tabela na tela
 document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
 document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
 document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
 document.querySelector('#profund2').value = tempProfundidade2; // Atualiza o campo de profundidade 2 com a profundidade temporária
+document.querySelector('#nomeArquivo').innerHTML = `Arquivo: ${seletorDeArquivo.value.replace(/C:\\fakepath\\/i, '')}`; // Atualiza o nome do arquivo exibido
+console.log(seletorDeArquivo.value.replace(/C:\\fakepath\\/i, '')); // Exibe o nome do arquivo selecionado no console
 seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
 checarNome()
+}
+
+function importarXLSparaArray2d(file) {
+    const leitor = new FileReader();
+    leitor.onload = function(e) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = e.target.result;
+        const tabela = tempDiv.querySelector('table');
+        if (!tabela) {
+            alert('Arquivo não contém tabela!');
+            return;
+        }
+        const linhas = tabela.querySelectorAll('tr');
+        // Detecta o tipo de tabela pelo cabeçalho
+        let cabecalho = [];
+        if (linhas.length > 0) {
+            cabecalho = Array.from(linhas[0].querySelectorAll('th,td')).map(td => td.textContent.trim());
+        }
+        // Limpa array2d antes de importar
+        array2d.length = 0;
+        // Importação para cada formato conhecido
+        for (let i = 1; i < linhas.length; i++) { // começa do 1 para pular o cabeçalho
+            const celulas = linhas[i].querySelectorAll('td, th');
+            // XLS tipo 4 (com 8 colunas)
+            if (celulas[0] && celulas[0].textContent.trim().toLowerCase().includes('soma dos itens')) { // Verifica se é a linha de soma dos itens
+                break;
+            }
+            if (cabecalho.length >= 8 && celulas.length >= 8) {
+                let nome = celulas[0].textContent.trim();
+                let altura = strNum(celulas[1].textContent);
+                let largura = strNum(celulas[2].textContent);
+                let area = strNum(celulas[3].textContent);
+                let profundidade = strNum(celulas[4].textContent);
+                let area3 = strNum(celulas[5].textContent);
+                let preco = strNum(celulas[6].textContent);
+                let area4 = strNum(celulas[7].textContent);
+                if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
+                    array2d.push([nome, altura, largura, area, profundidade, area3, preco, area4]);
+                } console.log(array2d);
+            // XLS tipo 3 (6 colunas, un/unÁrea)
+            } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('un/Área')) {
+                let nome = celulas[0].textContent.trim();
+                let altura = strNum(celulas[1].textContent);
+                let largura = strNum(celulas[2].textContent);
+                let area = strNum(celulas[3].textContent);
+                let profundidade = strNum(celulas[4].textContent);
+                let area3 = strNum(celulas[5].textContent);
+                if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
+                    array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]);
+                }
+            // XLS tipo 2 (6 colunas, R$/m² e Preço)
+            } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('R$/m²')) {
+                let nome = celulas[0].textContent.trim();
+                let altura = strNum(celulas[1].textContent);
+                let largura = strNum(celulas[2].textContent);
+                let area = strNum(celulas[3].textContent);
+                let profundidade = strNum(celulas[4].textContent);
+                let area3 = strNum(celulas[5].textContent);
+                if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
+                    array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]);
+                }
+            // XLS tipo 1 (6 colunas, Profundidade, Área(m²), Área(m³))
+            } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('Profundidade')) {
+                let nome = celulas[0].textContent.trim();
+                let altura = strNum(celulas[1].textContent);
+                let largura = strNum(celulas[2].textContent);
+                let profundidade = strNum(celulas[3].textContent);
+                let area = strNum(celulas[4].textContent);
+                let area3 = strNum(celulas[5].textContent);
+                if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
+                    array2d.push([nome, altura, largura, profundidade, area, area3, 1, area3]);
+                }
+            // XLS tipo 0 (4 colunas)
+            } else if (cabecalho.length >= 4 && celulas.length >= 4) {
+                let nome = celulas[0].textContent.trim();
+                let altura = strNum(celulas[1].textContent);
+                let largura = strNum(celulas[2].textContent);
+                let area = strNum(celulas[3].textContent);
+                if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
+                    array2d.push([nome, altura, largura, area, 1, area, 1, area]);
+                }
+            }
+        }
+        // Detecta e ajusta tipo de medição
+        if (cabecalho.includes('un/Área') && cabecalho.includes('R$') && cabecalho.length >= 8) {
+            medType.value = '4'; tempTypeMed = 4; tempTypeMed3 = 1; tempTypeMed2 = 0;
+        } else if (cabecalho.includes('un/Área')) {
+            medType.value = '3'; tempTypeMed = 3;
+        } else if (cabecalho.includes('R$/m²')) {
+            medType.value = '2'; tempTypeMed = 2;
+        } else if (cabecalho.includes('Profundidade')) {
+            medType.value = '1'; tempTypeMed = 1;
+        } else {
+            medType.value = '0'; tempTypeMed = 0;
+        }
+        typeMed();
+        formataVetor(array2d);
+    };
+    leitor.readAsText(file, 'utf-8');
 }
 
