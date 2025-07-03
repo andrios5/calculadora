@@ -211,8 +211,7 @@ function ordenarArray2dPorNome() {
     }
 }
 
-let tempScroll = 2500
-let tempPosicao = 0
+
     function calcularArea2(){
         let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
         alt = document.querySelector('#altura')
@@ -264,6 +263,7 @@ let tempPosicao = 0
         noScroll()  
 }
 
+let tempPosicao = 0
 function posicaoM() {
     if (tempPosicao == 0) {
         tempPosicao = 1;
@@ -271,15 +271,18 @@ function posicaoM() {
         posicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
         noScroll(); // Chama a função para não rolar a tela
         document.querySelector('.container2').style.maxHeight = 'none'; // Define a altura do container para auto
+        document.getElementById('containerM1').style.maxHeight = 'none';
     } else {
         tempPosicao = 0;
         posicao.style.backgroundColor = ''; // Restaura a cor original do botão
         posicao.style.boxShadow = ''; // Remove a sombra do botão
-        document.querySelector('.container2').style.maxHeight = '70vh'; // Define a altura máxima do container para 75vh
+        document.querySelector('.container2').style.maxHeight = '70vh'; // Define a altura máxima do container para 70vh
+        document.getElementById('containerM1').style.maxHeight = '30vh';
     }
 }
 
 function noScroll() {
+    let tempScroll = 2500
     let temp001 = array2d.length
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
@@ -598,6 +601,8 @@ function resetarC2(){
     tempTypeMed = 0
     tempTypeMed2 = 0
     tempTypeMed3 = 0
+    vetorOrdenando = true // Reseta o estado de ordenação
+    ordenarVetor()
     tempPosicao = 1
     posicaoM()
     profund.value = '' // Esconde o campo de profundidade

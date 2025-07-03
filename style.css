@@ -350,6 +350,10 @@ div.container2 {
     max-height: 70vh;
 }
 
+#containerM1 {
+    max-height: 30vh;
+}
+
 section#m2, section#m3 {
     display: block;
 }
