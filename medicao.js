@@ -25,6 +25,7 @@ menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
 ordenar = document.querySelector('#ordenarM2')
+posicao = document.querySelector('#posicaoM2')
 profund = document.querySelector('#profund')
 profund2 = document.querySelector('#profund2')
 lpro = document.querySelector('#lpro')
@@ -71,6 +72,7 @@ resetC2.addEventListener('click', resetarC2)
 menosC2.addEventListener('click', diminuirC2)
 export2.addEventListener('click', exportar)
 ordenar.addEventListener('click', ordenarVetor)
+posicao.addEventListener('click', posicaoM)
 
 
 
@@ -209,7 +211,8 @@ function ordenarArray2dPorNome() {
     }
 }
 
-
+let tempScroll = 2500
+let tempPosicao = 0
     function calcularArea2(){
         let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
         alt = document.querySelector('#altura')
@@ -240,11 +243,11 @@ function ordenarArray2dPorNome() {
         area = alt * lar
 
         if (pro == '' || pro == null) { // Verifica se o campo de profundidade está vazio
-            pro = 1; // Define a profundidade como 1 se estiver vazio
+            pro = 0; // Define a profundidade como 1 se estiver vazio
         }
 
         if (pro2 == '' || pro2 == null) { // Verifica se o campo de profundidade 2 está vazio
-            pro2 = 1; // Define a profundidade 2 como 1 se estiver vazio
+            pro2 = 0; // Define a profundidade 2 como 0 se estiver vazio
         }
 
         area2 = alt * lar * pro // Calcula a área 3D
@@ -256,9 +259,57 @@ function ordenarArray2dPorNome() {
         document.querySelector('#largura').value = ''
         document.querySelector('#largura').focus() // Coloca o foco no input novamente
 
-        exibeArea2(array2d) // Chama a função para exibir os resultados  
+       
+        exibeArea2(array2d) // Chama a função para exibir os resultados
+        noScroll()  
 }
 
+function posicaoM() {
+    if (tempPosicao == 0) {
+        tempPosicao = 1;
+        posicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ativo
+        posicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
+        noScroll(); // Chama a função para não rolar a tela
+        document.querySelector('.container2').style.maxHeight = 'none'; // Define a altura do container para auto
+    } else {
+        tempPosicao = 0;
+        posicao.style.backgroundColor = ''; // Restaura a cor original do botão
+        posicao.style.boxShadow = ''; // Remove a sombra do botão
+        document.querySelector('.container2').style.maxHeight = '70vh'; // Define a altura máxima do container para 75vh
+    }
+}
+
+function noScroll() {
+    let temp001 = array2d.length
+     if(tempPosicao == 1){
+        let larguraDaTela = window.innerWidth;
+        if (larguraDaTela <= 360) { // Verifica se a largura da tela é maior que 800px
+        tempScroll = 2820 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        }else if (larguraDaTela <= 412) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2420 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 480) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2340 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 609) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2120 + (37 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 650) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2060 + (37 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 768) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2950 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 810) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2900 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 1000) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 2800 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else if (larguraDaTela <= 1350) { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 3200 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        } else { // Verifica se a largura da tela é menor que 800px
+        tempScroll = 3000 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        }
+        window.scrollTo(0, tempScroll);}
+        else {
+            tempScroll = 35 * temp001
+            document.querySelector('.container2').scrollTo(0, tempScroll)
+        }
+    }
 function exibeArea2() {
     let soma2 = 0 // Inicializa a variável de soma
     let somaA = 0 // Inicializa a variável de soma das alturas
@@ -296,6 +347,7 @@ function exibeArea2() {
         formatoEX.style.display = 'none'
         tabela1.style.display = 'none'
         ordenar.style.display = 'none'
+        posicao.style.display = 'none'
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
@@ -304,6 +356,7 @@ function exibeArea2() {
         resetC2.style.display = 'inline-block'
         formatoEX.style.display = 'inline-block'
         ordenar.style.display = 'inline-block'
+        posicao.style.display = 'inline-block'
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td><td colspan="2">${soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
         }
     } else if (tempTypeMed == 3) {
@@ -325,6 +378,7 @@ function exibeArea2() {
         formatoEX.style.display = 'none'
         tabela1.style.display = 'none'
         ordenar.style.display = 'none'
+        posicao.style.display = 'none'
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
@@ -333,6 +387,7 @@ function exibeArea2() {
         resetC2.style.display = 'inline-block'
         formatoEX.style.display = 'inline-block'
         ordenar.style.display = 'inline-block'
+        posicao.style.display = 'inline-block'
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
         }
     } else if (tempTypeMed == 2) {
@@ -353,6 +408,7 @@ function exibeArea2() {
         formatoEX.style.display = 'none'
         tabela1.style.display = 'none'
         ordenar.style.display = 'none'
+        posicao.style.display = 'none'
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
@@ -361,6 +417,7 @@ function exibeArea2() {
         resetC2.style.display = 'inline-block'
         formatoEX.style.display = 'inline-block'
         ordenar.style.display = 'inline-block'
+        posicao.style.display = 'inline-block'
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td colspan="2">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
         }
     } else if (tempTypeMed == 1) {
@@ -382,6 +439,7 @@ function exibeArea2() {
         formatoEX.style.display = 'none'
         tabela1.style.display = 'none'
         ordenar.style.display = 'none'
+        posicao.style.display = 'none'
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
@@ -390,6 +448,7 @@ function exibeArea2() {
         resetC2.style.display = 'inline-block'
         formatoEX.style.display = 'inline-block'
         ordenar.style.display = 'inline-block'
+        posicao.style.display = 'inline-block'
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
         }
     } else {
@@ -409,6 +468,7 @@ function exibeArea2() {
             formatoEX.style.display = 'none'
             tabela1.style.display = 'none'
             ordenar.style.display = 'none'
+            posicao.style.display = 'none'
             seletorDeArquivo.style.display = 'inline-block'
         }else{
             tabela.style.display = 'block'
@@ -417,6 +477,7 @@ function exibeArea2() {
             resetC2.style.display = 'inline-block'
             formatoEX.style.display = 'inline-block'
             ordenar.style.display = 'inline-block'
+            posicao.style.display = 'inline-block'
             resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
@@ -531,14 +592,18 @@ function resetarC2(){
     formatoEX.style.display = 'none'
     tabela1.style.display = 'none'
     ordenar.style.display = 'none'
+    posicao.style.display = 'none'
     seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
     array2d = [] // Limpa o array 2D
     tempTypeMed = 0
     tempTypeMed2 = 0
     tempTypeMed3 = 0
+    tempPosicao = 1
+    posicaoM()
     profund.value = '' // Esconde o campo de profundidade
     profund2.value = '' // Esconde o campo de profundidade 2
     typeMed()
+    
 }
 
 function diminuirC2(){
@@ -1261,7 +1326,7 @@ function importarCSVparaArray2d(file) {
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número
                     let area3 = strNum(partes[5]); // Converte a área 3D para número
-                    array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
             });
@@ -1281,7 +1346,7 @@ function importarCSVparaArray2d(file) {
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número
                     let area3 = strNum(partes[5]); // Converte a área 3D para número
-                    array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
             });
@@ -1301,7 +1366,7 @@ function importarCSVparaArray2d(file) {
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número, substituindo vírgula por ponto
                     let area3 = strNum(partes[5]); // Converte a área 3D para número, substituindo vírgula por ponto
-                    array2d.push([nome, altura, largura, profundidade, area, area3, 1, area3]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
             });
@@ -1320,7 +1385,7 @@ function importarCSVparaArray2d(file) {
                     let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
                     let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
-                    array2d.push([nome, altura, largura, area, 1, area, 1, area]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, area, 0, 0, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
             });
@@ -1430,7 +1495,7 @@ function importarXLSparaArray2d(file) {
                 let profundidade = strNum(celulas[4].textContent);
                 let area3 = strNum(celulas[5].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
-                    array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]);
+                    array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]);
                 }
             // XLS tipo 2 (6 colunas, R$/m² e Preço)
             } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('R$/m²')) {
@@ -1441,7 +1506,7 @@ function importarXLSparaArray2d(file) {
                 let profundidade = strNum(celulas[4].textContent);
                 let area3 = strNum(celulas[5].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
-                    array2d.push([nome, altura, largura, area, profundidade, area3, 1, area3]);
+                    array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]);
                 }
             // XLS tipo 1 (6 colunas, Profundidade, Área(m²), Área(m³))
             } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('Profundidade')) {
@@ -1452,7 +1517,7 @@ function importarXLSparaArray2d(file) {
                 let area = strNum(celulas[4].textContent);
                 let area3 = strNum(celulas[5].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
-                    array2d.push([nome, altura, largura, profundidade, area, area3, 1, area3]);
+                    array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]);
                 }
             // XLS tipo 0 (4 colunas)
             } else if (cabecalho.length >= 4 && celulas.length >= 4) {
@@ -1461,7 +1526,7 @@ function importarXLSparaArray2d(file) {
                 let largura = strNum(celulas[2].textContent);
                 let area = strNum(celulas[3].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
-                    array2d.push([nome, altura, largura, area, 1, area, 1, area]);
+                    array2d.push([nome, altura, largura, area, 0, 0, 0, 0]);
                 }
             }
         }

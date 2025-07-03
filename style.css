@@ -347,13 +347,14 @@ div.container {
 
 div.container2 {
     overflow: auto;
+    max-height: 70vh;
 }
 
 section#m2, section#m3 {
     display: block;
 }
 
-button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX, #ordenarM2 {
+button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX, #ordenarM2, #posicaoM2 {
     display: none;
 }
 
@@ -717,7 +718,7 @@ section#m2 input {
         height: 18px;
     }
 
-    #resetC2, #ordenarM2, #export2{
+    #resetC2, #ordenarM2, #export2, #posicaoM2 {
         width: 75px;
         padding: 5px;
     }
@@ -754,6 +755,7 @@ section#m2 input {
         padding: 1px 12px;
         margin-bottom: 15px;
     }
+
 }
     
 
