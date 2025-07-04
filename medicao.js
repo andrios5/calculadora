@@ -33,7 +33,11 @@ cpro = document.querySelector('#cpro')
 lpro2 = document.querySelector('#lpro2')
 cpro2 = document.querySelector('#cpro2')
 tabela1 = document.querySelector('table#m1')
+containerM0 = document.querySelector('#containerM0')
+containerM1 = document.querySelector('#containerM1')
 theadM1 = document.querySelector('#theadM1')
+dataMed = document.querySelector('#dataMed')
+nomeMed = document.querySelector('#nomeMed')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -87,8 +91,11 @@ let arrayM1 = []; // Array para armazenar os nomes únicos
 let tempTypeMed = 0 // Variável para armazenar o tipo de medição selecionado
 let tempTypeMed2 = 0
 let tempTypeMed3 = 0 // Variável para armazenar o tipo de medição selecionado
+let tempData = ''
 
-typeMed()
+
+typeMed ()
+dataMedicao ()
 
 function obterDataHoraFormatada() {
   const data = new Date();
@@ -106,7 +113,12 @@ function obterDataHoraFormatada() {
   const minutos = padZero(data.getMinutes());
   const segundos = padZero(data.getSeconds());
 
-  return `${horas}${dia}${mes}${ano}`;
+        return `${dia}/${mes}/${ano}`
+  
+}
+
+function dataMedicao () {
+    dataMed.innerHTML = tempData || obterDataHoraFormatada(); // Obtém a data de medição do cookie
 }
 
 
@@ -115,13 +127,13 @@ function typeMed() {
     if (tempTypeMed == 1) {
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
     profund.placeholder = 'Digite a profundidade'
-    lpro.innerHTML = 'Profundidade:'
+    lpro.innerHTML = 'Profundidade: '
     cpro2.style.display = 'none' // Esconde o campo de profundidade 2
         
     } else if (tempTypeMed == 2) { //R$
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
     profund.placeholder = 'Digite o preço'
-    lpro.innerHTML = 'Preço:'
+    lpro.innerHTML = 'Preço: '
     cpro2.style.display = 'none' // Esconde o campo de profundidade 2
 
     if (tempTypeMed3 == 1) {
@@ -132,19 +144,18 @@ function typeMed() {
     } else if (tempTypeMed == 3) { //UN
     cpro.style.display = 'inline-flex' // Esconde o campo de profundidade
     profund.placeholder = 'Digite a unidade'
-    lpro.innerHTML = 'Unidade:'
+    lpro.innerHTML = 'Unidade: '
     cpro2.style.display = 'none' // Esconde o campo de profundidade 2
     } else if (tempTypeMed == 4) {
     cpro.style.display = 'inline-flex' // Exibe o campo de profundidade
     profund.placeholder = 'Digite a Unidade'
     lpro.innerHTML = 'Unidade:'
     profund2.placeholder = 'Digite o preço'
-    lpro2.innerHTML = 'Preço:'
+    lpro2.innerHTML = 'Preço: '
     cpro2.style.display = 'inline-flex' // Esconde o campo de profundidade 2
 
     if (tempTypeMed2 == 1) {
         inverteVetor(array2d); // Inverte o vetor se o tipo de medição for 4
-
     }
     tempTypeMed3 = 1
     tempTypeMed2 = 0
@@ -270,14 +281,14 @@ function posicaoM() {
         posicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ativo
         posicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
         noScroll(); // Chama a função para não rolar a tela
-        document.querySelector('.container2').style.maxHeight = 'none'; // Define a altura do container para auto
+        document.getElementById('containerM0').style.height = 'auto'; // Define a altura do container para auto
         document.getElementById('containerM1').style.maxHeight = 'none';
     } else {
         tempPosicao = 0;
         posicao.style.backgroundColor = ''; // Restaura a cor original do botão
         posicao.style.boxShadow = ''; // Remove a sombra do botão
-        document.querySelector('.container2').style.maxHeight = '70vh'; // Define a altura máxima do container para 70vh
-        document.getElementById('containerM1').style.maxHeight = '30vh';
+        document.getElementById('containerM0').style.height = '50vh'; // Define a altura máxima do container para 70vh
+        document.getElementById('containerM1').style.maxHeight = '25vh';
     }
 }
 
@@ -344,16 +355,19 @@ function exibeArea2() {
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
+        containerM0.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
         resetC2.style.display = 'none'
         formatoEX.style.display = 'none'
         tabela1.style.display = 'none'
+        containerM1.style.display = 'none'
         ordenar.style.display = 'none'
         posicao.style.display = 'none'
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
+        containerM0.style.display = 'block'
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
         resetC2.style.display = 'inline-block'
@@ -375,16 +389,19 @@ function exibeArea2() {
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
+        containerM0.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
         resetC2.style.display = 'none'
         formatoEX.style.display = 'none'
         tabela1.style.display = 'none'
+        containerM1.style.display = 'none'
         ordenar.style.display = 'none'
         posicao.style.display = 'none'
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
+        containerM0.style.display = 'block'
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
         resetC2.style.display = 'inline-block'
@@ -405,6 +422,7 @@ function exibeArea2() {
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
+        containerM0.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
         resetC2.style.display = 'none'
@@ -415,6 +433,7 @@ function exibeArea2() {
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
+        containerM0.style.display = 'block'
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
         resetC2.style.display = 'inline-block'
@@ -436,6 +455,7 @@ function exibeArea2() {
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabela.style.display = 'none'
+        containerM0.style.display = 'none'
         menosC2.style.display = 'none'
         export2.style.display = 'none'
         resetC2.style.display = 'none'
@@ -446,6 +466,7 @@ function exibeArea2() {
         seletorDeArquivo.style.display = 'inline-block'
         }else{
         tabela.style.display = 'block'
+        containerM0.style.display = 'block'
         menosC2.style.display = 'inline-block'
         export2.style.display = 'inline-block'
         resetC2.style.display = 'inline-block'
@@ -465,6 +486,7 @@ function exibeArea2() {
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
             tabela.style.display = 'none'
+            containerM0.style.display = 'none'
             menosC2.style.display = 'none'
             export2.style.display = 'none'
             resetC2.style.display = 'none'
@@ -475,6 +497,7 @@ function exibeArea2() {
             seletorDeArquivo.style.display = 'inline-block'
         }else{
             tabela.style.display = 'block'
+            containerM0.style.display = 'block'
             menosC2.style.display = 'inline-block'
             export2.style.display = 'inline-block'
             resetC2.style.display = 'inline-block'
@@ -491,6 +514,7 @@ function mudouNome() {
     tabela1 = document.querySelector('table#m1')
     if (arrayM1.length >= 2) { // Verifica se o arrayM1 tem mais de um elemento e se o tipo de medição é diferente de 0
     tabela1.style.display = 'block'
+    containerM1.style.display = 'block'
     if (tempTypeMed == 1) {
         theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`; // Atualiza o cabeçalho da tabela'
         } else if (tempTypeMed == 2) {
@@ -586,6 +610,7 @@ function resetarC2(){
     resM2.innerHTML = ''
     resS2.innerHTML = ''
     tabela.style.display = 'none'
+    containerM0.style.display = 'none'
     document.querySelector('#altura').value = ''
     document.querySelector('#largura').value = ''
     document.querySelector('#nome2').value = tempNome2 // Reseta o campo de nome para o valor temporário
@@ -594,6 +619,7 @@ function resetarC2(){
     resetC2.style.display = 'none'
     formatoEX.style.display = 'none'
     tabela1.style.display = 'none'
+    containerM1.style.display = 'none'
     ordenar.style.display = 'none'
     posicao.style.display = 'none'
     seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
@@ -601,14 +627,16 @@ function resetarC2(){
     tempTypeMed = 0
     tempTypeMed2 = 0
     tempTypeMed3 = 0
+    tempData = ''
     vetorOrdenando = true // Reseta o estado de ordenação
     ordenarVetor()
     tempPosicao = 1
     posicaoM()
     profund.value = '' // Esconde o campo de profundidade
     profund2.value = '' // Esconde o campo de profundidade 2
+    nomeMed.value = ''
     typeMed()
-    
+    dataMedicao ()
 }
 
 function diminuirC2(){
@@ -628,9 +656,11 @@ function exportar() {
     nome2 = '0'
     let nome1 = ''
     checarNome(); // Atualiza o nome temporário
-    nome1 = document.querySelector('#nome2').value || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
+    nome1 = nomeMed.value || document.querySelector('#nome2').value || 'Área'; // Define o nome para exportação, se estiver vazio usa 'Área'
     nome1 = nome1.trim() // Remove espaços em branco no início e no final do nome
-    nome2 = nome1 + obterDataHoraFormatada(); // Define o nome do arquivo com data e hora
+    
+    nome2 = nome1 + obterDataHoraFormatada(); // Define o nome do arquivo
+    
     if (!array2d.length) {
         alert('Não há dados para exportar!');
         return;
@@ -638,15 +668,15 @@ function exportar() {
 
     if (formatoEX.value == '0'){
         if (tempTypeMed == 1){
-            exportar21()
+            exportar21(nome1, nome2)
         } else if (tempTypeMed == 2) {
-            exportar22()
+            exportar22(nome1, nome2)
         } else if (tempTypeMed == 3) {
-            exportar23()
+            exportar23(nome1, nome2)
         } else if (tempTypeMed == 4) {
-            exportar24()
+            exportar24(nome1, nome2)
         } else {
-            exportar2()
+            exportar2(nome1, nome2)
         }
         setCookie('formatoEXC', 0, 30)
     } else {
@@ -1032,9 +1062,9 @@ function exportar14() {
     document.body.removeChild(a);
 }
 
-function exportar2(){
+function exportar2(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  'Nome;Altura;Largura;Área\n';
+    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1078,9 +1108,9 @@ function exportar2(){
     document.body.removeChild(a);
 }
 
-function exportar21() {
+function exportar21(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  'Nome;Altura;Largura;Profundidade;Área(m²);Área(m³)\n';
+    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Profundidade;Área(m²);Área(m³)\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1130,9 +1160,9 @@ function exportar21() {
     document.body.removeChild(a);
 }
 
-function exportar22() {
+function exportar22(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  'Nome;Altura;Largura;Área;R$/m²;Preço\n';
+    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;R$/m²;Preço\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1181,9 +1211,9 @@ function exportar22() {
     document.body.removeChild(a);
 }
 
-function exportar23() {
+function exportar23(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = 'Nome;Altura;Largura;Área;un;un/Área\n';
+    let csv = '\uFEFF' +   `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;un;un/Área\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1231,9 +1261,9 @@ function exportar23() {
     document.body.removeChild(a);
 }
 
-function exportar24() {
+function exportar24(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  'Nome;Altura;Largura;Área;un;un/Área;R$/m²;Preço\n';
+    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;un;un/Área;R$/m²;Preço\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1294,7 +1324,15 @@ function importarCSVparaArray2d(file) {
     leitor.onload = function(e) { // Define o que fazer quando o arquivo for carregado
         const conteudo = e.target.result; // Obtém o conteúdo do arquivo
         const linhas = conteudo.split('\n'); // Divide o conteúdo em linhas
-        let verifT = linhas.shift();  // Remove o cabeçalho do CSV
+        let verifT = ''; // Inicializa a variável de verificação
+        let tempCabecalho = linhas.shift(); // Remove o cabeçalho do CSV
+        if (tempCabecalho.valueOf().toLowerCase().includes('medição:')){ // Verifica se o cabeçalho é o esperado
+            nomeMed.value = tempCabecalho.split(';')[1]; // Define o nome da medição
+            tempData = tempCabecalho.split(';')[2]; // Define a data da medição
+            verifT = linhas.shift();  // Remove o cabeçalho do CSV
+        } else {
+            verifT = tempCabecalho; // Se não for o cabeçalho esperado, armazena para verificação posterior
+        }
         if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$/m²;preço')){ // Verifica se o cabeçalho é o esperado
             medType.value = '4'; // Define o tipo de medição como monetário
             tempTypeMed = 4; // Define o tipo de medição como monetário
@@ -1440,6 +1478,7 @@ document.querySelector('#profund2').value = tempProfundidade2; // Atualiza o cam
 
 console.log(seletorDeArquivo.value.replace(/C:\\fakepath\\/i, '')); // Exibe o nome do arquivo selecionado no console
 checarNome()
+dataMedicao ()
 }
 
 function importarXLSparaArray2d(file) {

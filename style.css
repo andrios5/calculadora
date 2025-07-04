@@ -185,6 +185,10 @@ section.in {
     box-shadow: inset 5px 5px 5px var(--cor6);
 }
 
+section#m2 {
+    padding: 0px 0px 25px 0px;
+}
+
 .tela, .tela2, .tela15, .tela25, .telaV2, .telaV0, .telaV1, .telaV3, .telaV4, .telaV5, #tela35{
     width: 70%;
     margin: auto;
@@ -286,6 +290,13 @@ table#m1 th:nth-child(1) {
 table#m2 {
     border-collapse: separate;
     border-spacing: 1px 1px;
+    margin-top: 10px;
+    margin-bottom: 7.5px;
+}
+
+table#m1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 th, td {
@@ -345,13 +356,29 @@ div.container {
     margin: auto;
 }
 
+div.containerNome {
+    display: flex;
+    background-color: var(--cor2);
+    padding: 5px;
+    margin: 0;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.1);
+    transform: translate(0, -1px);
+}
+
+
 div.container2 {
     overflow: auto;
-    max-height: 70vh;
+}
+
+#containerM0 {
+    height: 50vh;
+    display: none;
 }
 
 #containerM1 {
-    max-height: 30vh;
+    max-height: 25vh;
+    display: none;
 }
 
 section#m2, section#m3 {
@@ -468,8 +495,41 @@ p#nomeArquivo {
     text-align: center;
 }
 
+div.containerNome {
+    color: var(--cor1);
+    font-size: 1.25em;
+}
 
-    
+div.containerNome > label {
+    flex-grow: 1;
+}
+
+div.containerNome > input {
+    padding: 0;
+    height: 0;
+    min-width: 50vw;
+    text-align: center;
+    background-color: var(--cor2);
+    font-size: 0.9em;
+    color: var(--cor1);
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+input#nomeMed::-webkit-input-placeholder{
+    color: var(--cor1);
+    margin: 0 5px
+}
+
+div.containerNome > span {
+    padding: 0;
+    height: 0;
+    color: var(--cor1);
+    font-size: 0.9em;
+    cursor: default;
+    flex-grow: 1;
+    transform: translate(0, 4px);
+}
 
 
 @media screen and (min-width: 1500px) {
@@ -699,9 +759,7 @@ section#m2 input {
     text-align: center;
     }
 
-    section#m2, section#m3{
-    padding: 5px;
-    margin: 5px;
+    section#m2{
     width: 95%;
     }
 
@@ -759,6 +817,7 @@ section#m2 input {
         padding: 1px 12px;
         margin-bottom: 15px;
     }
+
 
 }
     

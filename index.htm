@@ -83,8 +83,9 @@
             <div class="labelB"><label for="medType" class="med">Medição:</label><select name="medType" id="medType" class="med"></select></div>
             
                 <section class="in" id="m2">
+                    <div class="containerNome"><label for="nomeMed">Nome: </label><input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição"><span id="dataMed"></span></div>
                     <div class="container2">
-                            <div class="container">
+                            <div class="container" id="containerM0">
                                 <table id="m2">
                                     <thead id="theadM2">
                                         <tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>
@@ -96,15 +97,15 @@
                                 </table>
                             </div>
                         </div>
-                    <div class="containerm2"><label for="nome2" class="labelm2">Item:</label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item">
+                    <div class="containerm2"><label for="nome2" class="labelm2">Item: </label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item">
                     </div><div class="containerm2" id="cpro2"><label for="profund2" id="lpro2" class="labelm2"></label><input type="number" name="profund2" id="profund2"></div>
                     <div class="containerm2" id="cpro"><label for="profund" id="lpro" class="labelm2"></label><input type="number" name="profund" id="profund"></div>
-                    <div class="containerm2"><label for="altura" class="labelm2">Altura:</label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
-                    <div class="containerm2"><label for="largura" class="labelm2">Largura:</label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
+                    <div class="containerm2"><label for="altura" class="labelm2">Altura: </label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
+                    <div class="containerm2"><label for="largura" class="labelm2">Largura: </label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
                     <br>
                 
                     <button id="menosC2">Diminuir</button>
-                    <button id="med2">Somar</button>
+                    <button id="med2">Somar</button><br>
                     
                                 <div class="container2" id="containerM1">
                                     <table id="m1">
@@ -119,7 +120,7 @@
                         <button id="resetC2">Reset</button>
                         <button id="export2">Salvar</button>
                         <button id="ordenarM2">Ordenar</button>
-                        <button id="posicaoM2">Posição</button><br>
+                        <button id="posicaoM2">Exibição</button><br>
                         <select name="formatoEX" id="formatoEX"></select><br>
                         
                 </section>
