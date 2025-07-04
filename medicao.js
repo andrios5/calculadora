@@ -304,11 +304,9 @@ function noScroll() {
         } else if (larguraDaTela <= 480) { // Verifica se a largura da tela é menor que 800px
         tempScroll = 2340 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 609) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2120 + (37 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 650) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2060 + (37 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 2000 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 768) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2950 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 1950 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 810) { // Verifica se a largura da tela é menor que 800px
         tempScroll = 2900 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 1000) { // Verifica se a largura da tela é menor que 800px
