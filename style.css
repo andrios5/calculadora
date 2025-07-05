@@ -9,6 +9,7 @@
 --cor4: #000;
 --cor5: #8181d3;
 --cor6: #0000007a;
+--cor7: #231d44;
 
 --fonte1: 'Roboto', sans-serif;
 }
@@ -19,7 +20,7 @@ padding: 0px;
 }
 
 body {
-    background-color: var(--cor4);
+    background-color: var(--cor7);
     font-size: 24px;
 }
 
@@ -44,7 +45,8 @@ h1 {
 main {
     background-color: var(--cor5);
     margin: auto;
-    max-width: 1800px;
+    max-width: 1600px;
+    min-height: 90vh;
     padding: 20px;
     border-radius: 0 0 15px 15px;
 }
@@ -533,6 +535,9 @@ div.containerNome > span {
     transform: translate(0, 4px);
 }
 
+a {
+    text-decoration: none;
+}
 
 @media screen and (min-width: 1500px) {
 h1 {

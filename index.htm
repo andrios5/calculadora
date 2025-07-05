@@ -7,174 +7,28 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleindex.css">
 </head>
 <body>
-    <header><h1><img src="favicon.ico" alt="Calculadora">Calculadora Multifuncional</h1></header>
+    <header><h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1></header>
 
     <main>
-        <h2><span class="aut">⏲️</span> Contador Diario</h2>
-        <section class="out">
-            <p  class="intro">Para usar o contador basta clicar no botão mais (+), após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem da semana por uma semana a partir da primeira contagem. Se o contador não zerar no outro dia basta atualizar a página.</p>
-                <button id="virarDia">Virar Dia</button>
-                <button id="menos">-</button>
-                <section class="tela"></section>
-                <button id="mais">+</button><br>
-                <section class="tela15">Data Inicial:</section>
-                <button id="reset">Reset Dia</button>
-                <section class="tela2"></section>
-                <button id="reset2">Reset Sem</button>
-                <section class="tela25">Contador Semanal:</section>
-                <table id="contSem">
-                    <tbody id="bodySem">
+        <h2><a href="medicao.htm" rel="next">📏 Medição</a></h2>
 
-                    </tbody>
-                    <tfoot id="rodSem"></tfoot>
-                </table>
-                <section id="tela35"></section>
-        </section>
+        <h2><a href="contador.htm" rel="next">⏲️ Contador Diario</a></h2>
 
 
-        <h2>💳 Dinheiro Gasto</h2>
-        <section class="out">
-            <p class="intro">Para adicionar dinheiro gasto basta clicar no botão mais (+) ou menos (-) para remover o valor, após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem do mês, para terminar o mês basta clicar no botão virar mês. Se o contador não zerar no outro dia basta atualizar a página.</p>
-                <button id="menosV">-</button>
-                <input type="number" placeholder="Digite o valor gasto:" id="valorGasto" value="1">
-                <button id="maisV">+</button><br>
-                <section class="telaV1"></section> <!-- Tela oculta -->
-                <button id="resetV1">Reset Dia</button>
-                <section class="telaV0">0</section>
-                <button id="resetV2">Virar Mês</button><br>
-                <section class="telaV3"></section> <!-- Tela oculta -->
-                <section class="telaV2"></section><br>
-                <section class="telaV4"></section>
-                <section class="telaV5"></section>
-                <span class="material-symbols-outlined" style="font-size: 32px;" id="setaGasto">arrow_drop_down</span><br>
-                <input type="number" placeholder="Digite o teto de gastos" id="tetoGasto">
-                <button id="definirTeto">Definir Teto</button>
-        </section>
+        <h2><a href="dinheiro.htm" rel="next">💳 Dinheiro Gasto</a></h2>
+        
 
-        <h2>💸 Compara Preço</h2>
-        <section class="out" id="comparaPreco">
-            <p class="intro">Para comparar preço basta preencher os dois primeiros campos. Mas se quiser comparar com peso preencha também as duas medidas de baixo:</p>
-            <p class="titulo">1º Preço</p><p class="titulo">2º Preço</p><br>
-            <input type="number" name="valor1" id="valor1" placeholder="Digite o 1º preço:">
-            <input type="number" name="valor2" id="valor2" placeholder="Digite o 2º preço:"><br>
-            <p class="titulo">1º Unidade</p><p class="titulo">2º Unidade</p><br>
-            <input type="number" name="peso1" id="peso1" placeholder="Digite o 1º unidade:">
-            <input type="number" name="peso2" id="peso2" placeholder="Digite o 2º unidade:"><br>
-            <div class="containerMedida">
-            <p class="titulo">1º Medida</p><p class="titulo">2º Medida</p><br>
-                <input type="number" name="medida1" id="medidaU1" placeholder="Digite a 1º medida:">
-                <input type="number" name="medida2" id="medidaU2" placeholder="Digite a 2º medida:"><br>
-            </div>
-            <select name="peso" id="peso"></select>
-            <button name="dif1" id="dif1">Verificar</button>
-            <select name="pes2" id="pes2"></select><br>
-            <button name="UNM" id="UNM">Modo Un/m</button>
-            <button name="UN" id="UN">Voltar</button>
-            <section id="resultado1" class="in">
-            <ul></ul>
-            </section>
-        </section>
+        <h2><a href="compara.htm" rel="next">💸 Compara Preço</a></h2>
+        
 
-        <h2>📏 Medição</h2>
-        <section class="out" id="medicao">
-            <p class="intro">Para somar basta preencher os 3 campos do tipo de medida que você gostaria de fazer, e clicar em somar:</p>
-            <div class="labelB"><label for="medType" class="med">Medição:</label><select name="medType" id="medType" class="med"></select></div>
-            
-                <section class="in" id="m2">
-                    <div class="containerNome"><label for="nomeMed">Nome: </label><input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição"><span id="dataMed"></span></div>
-                    <div class="container2">
-                            <div class="container" id="containerM0">
-                                <table id="m2">
-                                    <thead id="theadM2">
-                                        <tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>
-                                    </thead>
-                                    <tbody id="resultadoM2">
-                                    </tbody>
-                                    <tfoot id="resultadoS2">
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    <div class="containerm2"><label for="nome2" class="labelm2">Item: </label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item">
-                    </div><div class="containerm2" id="cpro2"><label for="profund2" id="lpro2" class="labelm2"></label><input type="number" name="profund2" id="profund2"></div>
-                    <div class="containerm2" id="cpro"><label for="profund" id="lpro" class="labelm2"></label><input type="number" name="profund" id="profund"></div>
-                    <div class="containerm2"><label for="altura" class="labelm2">Altura: </label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
-                    <div class="containerm2"><label for="largura" class="labelm2">Largura: </label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
-                    <br>
-                
-                    <button id="menosC2">Diminuir</button>
-                    <button id="med2">Somar</button><br>
-                    
-                                <div class="container2" id="containerM1">
-                                    <table id="m1">
-                                        <thead id="theadM1">
-                                            <tr><th id="som1">Soma dos Itens</th><th>Área</th></tr>
-                                        </thead>
-                                        <tbody id="resultadoM1">
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                        <button id="resetC2">Reset</button>
-                        <button id="export2">Salvar</button>
-                        <button id="ordenarM2">Ordenar</button>
-                        <button id="posicaoM2">Exibição</button><br>
-                        <select name="formatoEX" id="formatoEX"></select><br>
-                        
-                </section>
-            <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel">
-           
-        </section>
-
-        <h2>📅 Verificar Ano Bissexto</h2>
-        <section class="out">
-            <input type="number" name="ano" id="ano" placeholder="Digite um ano:"><br>
-            <button id="anob">Verificar</button>
-            <section id="resultado2" class="in">
-                <p></p>
-            </section>
-        </section>
-
-        <h2>📐 Conversor de Medidas</h2>
-        <section class="out">
-            <input type="number" name="medida1" id="medida1" placeholder="Digite uma medida em metros:"><br>
-            <button id="med1">Converter</button>
-            <section id="resultado3" class="in">
-                <p></p>
-            </section>
-        </section>
-
-        <h2>🌡️ Conversor de Temperatura</h2>
-        <section class="out">
-            <input type="number" name="temp1" id="temp1" placeholder="Digite a temperatura em C°:"><br>
-            <button id="tem1">Converter</button>
-            <section id="resultado4" class="in">
-                <p></p>
-            </section>
-        </section>
-
-        <h2>💵 Conversor R$ → US$</h2>
-        <section class="out">
-            <input type="number" name="dolar1" id="dolar1" placeholder="Digite a cotação do dólar:">
-            <input type="number" name="reais1" id="reais1" placeholder="Digite o valor em R$:"><br>
-            <button id="dolar">Converter</button><br>
-            <section id="resultado5" class="in">
-                <p></p>
-            </section>
-        </section>
-
-
+        <h2><a href="conversoes.htm">📐 Conversões</a></h2>
+        
 
     </main>
-    <script src="script.js"></script>
-    <script src="contadorDiario.js"></script>
-    <script src="dinheiroGasto.js"></script>
-    <script src="comparaPreco.js"></script>
-    <script src="medicao.js"></script>
-    
-
+ 
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
 <script>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><a href="index.htm" rel="home" >
+        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
+    </a></header>
+
+    <main>
+
+        <h2>💸 Compara Preço</h2>
+        <section class="out" id="comparaPreco">
+            <p class="intro">Para comparar preço basta preencher os dois primeiros campos. Mas se quiser comparar com peso preencha também as duas medidas de baixo:</p>
+            <p class="titulo">1º Preço</p><p class="titulo">2º Preço</p><br>
+            <input type="number" name="valor1" id="valor1" placeholder="Digite o 1º preço:">
+            <input type="number" name="valor2" id="valor2" placeholder="Digite o 2º preço:"><br>
+            <p class="titulo">1º Unidade</p><p class="titulo">2º Unidade</p><br>
+            <input type="number" name="peso1" id="peso1" placeholder="Digite o 1º unidade:">
+            <input type="number" name="peso2" id="peso2" placeholder="Digite o 2º unidade:"><br>
+            <div class="containerMedida">
+            <p class="titulo">1º Medida</p><p class="titulo">2º Medida</p><br>
+                <input type="number" name="medida1" id="medidaU1" placeholder="Digite a 1º medida:">
+                <input type="number" name="medida2" id="medidaU2" placeholder="Digite a 2º medida:"><br>
+            </div>
+            <select name="peso" id="peso"></select>
+            <button name="dif1" id="dif1">Verificar</button>
+            <select name="pes2" id="pes2"></select><br>
+            <button name="UNM" id="UNM">Modo Un/m</button>
+            <button name="UN" id="UN">Voltar</button>
+            <section id="resultado1" class="in">
+            <ul></ul>
+            </section>
+        </section>
+
+
+
+    </main>
+    <script src="comparaPreco.js"></script>
+    
+
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RQ819RVB2H');
+</script>
+</body>
+</html>

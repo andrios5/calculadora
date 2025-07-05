@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><a href="index.htm" rel="home" >
+        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
+    </a></header>
+
+    <main>
+
+        <h2>📏 Medição</h2>
+        <section class="out" id="medicao">
+            <p class="intro">Para somar basta preencher os 3 campos do tipo de medida que você gostaria de fazer, e clicar em somar:</p>
+            <div class="labelB"><label for="medType" class="med">Medição:</label><select name="medType" id="medType" class="med"></select></div>
+            
+                <section class="in" id="m2">
+                    <div class="containerNome"><label for="nomeMed">Nome: </label><input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição"><span id="dataMed"></span></div>
+                    <div class="container2">
+                            <div class="container" id="containerM0">
+                                <table id="m2">
+                                    <thead id="theadM2">
+                                        <tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>
+                                    </thead>
+                                    <tbody id="resultadoM2">
+                                    </tbody>
+                                    <tfoot id="resultadoS2">
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="containerm2"><label for="nome2" class="labelm2">Item: </label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item">
+                    </div><div class="containerm2" id="cpro2"><label for="profund2" id="lpro2" class="labelm2"></label><input type="number" name="profund2" id="profund2"></div>
+                    <div class="containerm2" id="cpro"><label for="profund" id="lpro" class="labelm2"></label><input type="number" name="profund" id="profund"></div>
+                    <div class="containerm2"><label for="altura" class="labelm2">Altura: </label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
+                    <div class="containerm2"><label for="largura" class="labelm2">Largura: </label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
+                    <br>
+                
+                    <button id="menosC2">Diminuir</button>
+                    <button id="med2">Somar</button><br>
+                    
+                                <div class="container2" id="containerM1">
+                                    <table id="m1">
+                                        <thead id="theadM1">
+                                            <tr><th id="som1">Soma dos Itens</th><th>Área</th></tr>
+                                        </thead>
+                                        <tbody id="resultadoM1">
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                        <button id="resetC2">Reset</button>
+                        <button id="export2">Salvar</button>
+                        <button id="ordenarM2">Ordenar</button>
+                        <button id="posicaoM2">Exibição</button><br>
+                        <select name="formatoEX" id="formatoEX"></select><br>
+                        
+                </section>
+            <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel">
+           
+        </section>
+
+
+
+    </main>
+    <script src="medicao.js"></script>
+    
+
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RQ819RVB2H');
+</script>
+</body>
+</html>

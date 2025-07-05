@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><a href="index.htm" rel="home" >
+        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
+    </a></header>
+
+    <main>
+
+        <h2>📅 Verificar Ano Bissexto</h2>
+        <section class="out">
+            <input type="number" name="ano" id="ano" placeholder="Digite um ano:"><br>
+            <button id="anob">Verificar</button>
+            <section id="resultado2" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>📐 Conversor de Medidas</h2>
+        <section class="out">
+            <input type="number" name="medida1" id="medida1" placeholder="Digite uma medida em metros:"><br>
+            <button id="med1">Converter</button>
+            <section id="resultado3" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>🌡️ Conversor de Temperatura</h2>
+        <section class="out">
+            <input type="number" name="temp1" id="temp1" placeholder="Digite a temperatura em C°:"><br>
+            <button id="tem1">Converter</button>
+            <section id="resultado4" class="in">
+                <p></p>
+            </section>
+        </section>
+
+        <h2>💵 Conversor R$ → US$</h2>
+        <section class="out">
+            <input type="number" name="dolar1" id="dolar1" placeholder="Digite a cotação do dólar:">
+            <input type="number" name="reais1" id="reais1" placeholder="Digite o valor em R$:"><br>
+            <button id="dolar">Converter</button><br>
+            <section id="resultado5" class="in">
+                <p></p>
+            </section>
+        </section>
+
+
+
+    </main>
+    <script src="script.js"></script>
+    
+
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RQ819RVB2H');
+</script>
+</body>
+</html>

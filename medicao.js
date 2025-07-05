@@ -223,7 +223,7 @@ function ordenarArray2dPorNome() {
 }
 
 
-    function calcularArea2(){
+function calcularArea2(){
         let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
         alt = document.querySelector('#altura')
         lar = document.querySelector('#largura')
@@ -298,23 +298,23 @@ function noScroll() {
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
         if (larguraDaTela <= 360) { // Verifica se a largura da tela é maior que 800px
-        tempScroll = 2820 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
         }else if (larguraDaTela <= 412) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2420 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 480) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2340 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 609) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2000 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 768) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 1950 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 810) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2900 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 1000) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 2800 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 1350) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 3200 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 3000 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 0 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
         }
         window.scrollTo(0, tempScroll);}
         else {
@@ -322,6 +322,7 @@ function noScroll() {
             document.querySelector('.container2').scrollTo(0, tempScroll)
         }
     }
+
 function exibeArea2() {
     let soma2 = 0 // Inicializa a variável de soma
     let somaA = 0 // Inicializa a variável de soma das alturas
@@ -708,6 +709,11 @@ function exportar1() {
     <body>
     <table>
         <tr>
+            <th>Medição:</th>
+            <td colspan='2'>${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</td>
+            <td>${obterDataHoraFormatada()}</td>
+        </tr>
+        <tr>
             <th>Nome</th>
             <th>Altura</th>
             <th>Largura</th>
@@ -773,6 +779,11 @@ function exportar11() {
     </head>
     <body>
     <table>
+        <tr>
+            <th>Medição:</th>
+            <td colspan='4'>${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</td>
+            <td>${obterDataHoraFormatada()}</td>
+        </tr>
         <tr>
             <th>Nome</th>
             <th>Altura</th>
@@ -847,6 +858,11 @@ function exportar12() {
     <body>
     <table>
         <tr>
+            <th>Medição:</th>
+            <td colspan='4'>${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</td>
+            <td>${obterDataHoraFormatada()}</td>
+        </tr>
+        <tr>
             <th>Nome</th>
             <th>Altura</th>
             <th>Largura</th>
@@ -918,6 +934,11 @@ function exportar13() {
     </head>
     <body>
     <table>
+        <tr>
+            <th>Medição:</th>
+            <td colspan='4'>${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</td>
+            <td>${obterDataHoraFormatada()}</td>
+        </tr>
         <tr>
             <th>Nome</th>
             <th>Altura</th>
@@ -992,6 +1013,11 @@ function exportar14() {
     </head>
     <body>
     <table>
+        <tr>
+            <th>Medição:</th>
+            <td colspan='6'>${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</td>
+            <td>${obterDataHoraFormatada()}</td>
+        </tr>
         <tr>
             <th>Nome</th>
             <th>Altura</th>
@@ -1494,6 +1520,12 @@ function importarXLSparaArray2d(file) {
         let cabecalho = [];
         if (linhas.length > 0) {
             cabecalho = Array.from(linhas[0].querySelectorAll('th,td')).map(td => td.textContent.trim());
+        }
+
+        if (cabecalho.includes("Medição:")) {
+            nomeMed.value = cabecalho[1]; // Define o nome da medição
+            tempData = cabecalho[2]; // Define a data da medição
+            cabecalho = Array.from(linhas[1].querySelectorAll('th,td')).map(td => td.textContent.trim());
         }
 
         if (cabecalho.includes('un/Área') && cabecalho.includes('R$/m²') && cabecalho.length >= 8) {

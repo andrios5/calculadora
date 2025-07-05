@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><a href="index.htm" rel="home" >
+        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
+    </a></header>
+
+    <main>
+
+        <h2>💳 Dinheiro Gasto</h2>
+        <section class="out">
+            <p class="intro">Para adicionar dinheiro gasto basta clicar no botão mais (+) ou menos (-) para remover o valor, após o término de cada dia ele vai resetar o contador diário mas mantêm a contagem do mês, para terminar o mês basta clicar no botão virar mês. Se o contador não zerar no outro dia basta atualizar a página.</p>
+                <button id="menosV">-</button>
+                <input type="number" placeholder="Digite o valor gasto:" id="valorGasto" value="1">
+                <button id="maisV">+</button><br>
+                <section class="telaV1"></section> <!-- Tela oculta -->
+                <button id="resetV1">Reset Dia</button>
+                <section class="telaV0">0</section>
+                <button id="resetV2">Virar Mês</button><br>
+                <section class="telaV3"></section> <!-- Tela oculta -->
+                <section class="telaV2"></section><br>
+                <section class="telaV4"></section>
+                <section class="telaV5"></section>
+                <span class="material-symbols-outlined" style="font-size: 32px;" id="setaGasto">arrow_drop_down</span><br>
+                <input type="number" placeholder="Digite o teto de gastos" id="tetoGasto">
+                <button id="definirTeto">Definir Teto</button>
+        </section>
+
+
+
+    </main>
+    <script src="dinheiroGasto.js"></script>
+    
+
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RQ819RVB2H');
+</script>
+</body>
+</html>
