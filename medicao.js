@@ -293,7 +293,7 @@ function posicaoM() {
 }
 
 function noScroll() {
-    let tempScroll = 2500
+    let tempScroll = 100
     let temp001 = array2d.length
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
@@ -320,6 +320,7 @@ function noScroll() {
         else {
             tempScroll = 35 * temp001
             document.querySelector('.container2').scrollTo(0, tempScroll)
+            window.scrollTo(0, 500)
         }
     }
 
