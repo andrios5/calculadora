@@ -82,47 +82,59 @@ posicao.addEventListener('click', posicaoM)
 
 // Seleciona todos os containers dos inputs que podem ser reordenados
 const containers = document.querySelectorAll('.containerm2');
+let draggingElem = null;
+let placeholder = document.createElement('div');
+placeholder.className = 'drop-placeholder';
 
 containers.forEach(container => {
     container.setAttribute('draggable', 'true');
 
     container.addEventListener('dragstart', function(e) {
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', null); // Necessário para Firefox
+        draggingElem = container;
         container.classList.add('dragging');
-        window.draggedContainer = container;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(() => container.style.display = 'none', 0); // Esconde o original durante o drag
+    });
+
+    container.addEventListener('dragend', function() {
+        draggingElem = null;
+        container.classList.remove('dragging');
+        container.style.display = '';
+        if (placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
     });
 
     container.addEventListener('dragover', function(e) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
+        // Adiciona o placeholder antes ou depois, dependendo da posição do mouse
+        const rect = container.getBoundingClientRect();
+        const offset = e.clientY - rect.top;
+        if (offset < rect.height / 2) {
+            container.parentNode.insertBefore(placeholder, container);
+        } else {
+            container.parentNode.insertBefore(placeholder, container.nextSibling);
+        }
+    });
+
+    container.addEventListener('dragleave', function(e) {
+        if (placeholder.parentNode === container.parentNode) {
+            container.parentNode.removeChild(placeholder);
+        }
     });
 
     container.addEventListener('drop', function(e) {
         e.preventDefault();
-        const dragging = window.draggedContainer;
-        if (dragging && dragging !== container) {
-            // Insere o elemento arrastado antes ou depois do alvo, dependendo da posição
-            const parent = container.parentNode;
-            if ([...parent.children].indexOf(dragging) < [...parent.children].indexOf(container)) {
-                parent.insertBefore(dragging, container);
-            } else {
-                parent.insertBefore(dragging, container.nextSibling);
-            }
+        if (placeholder.parentNode) {
+            placeholder.parentNode.replaceChild(draggingElem, placeholder);
         }
-        container.classList.remove('dragging');
-        window.draggedContainer = null;
-    });
-
-    container.addEventListener('dragleave', function() {
-        container.classList.remove('dragging');
-    });
-
-    container.addEventListener('dragend', function() {
-        container.classList.remove('dragging');
-        window.draggedContainer = null;
+        draggingElem.classList.remove('dragging');
+        draggingElem.style.display = '';
+        draggingElem = null;
     });
 });
+
+
 
 
 
