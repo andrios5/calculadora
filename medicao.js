@@ -777,7 +777,7 @@ function exportarParaDoc() {
         return;
     }
 
-    let tabelaClone = tabela.cloneNode(true) + '' + obterDataHoraFormatada; // Clona a tabela para exportação
+    let tabelaClone = tabela.cloneNode(true); // Clona a tabela para exportação
     tabelaClone.setAttribute('width', '100%');
 
     // Monta o HTML do documento Word
@@ -791,7 +791,7 @@ function exportarParaDoc() {
             th, td { border: 1px solid #000; padding: 8px; }
     </style>
     <body>
-        <h2 style="text-align: center;">${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</h2>
+        <h2 style="text-align: center;">${nomeMed.value || document.querySelector('#nome2').value || 'Área'} ${obterDataHoraFormatada()}</h2>
         ${tabelaClone.outerHTML}
     </body>
     </html>
