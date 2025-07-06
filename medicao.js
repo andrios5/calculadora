@@ -764,48 +764,112 @@ function exportar() {
         }
         setCookie('formatoEXC', 1, 30)
     } else {
-        exportarParaDoc(); // Exporta para documento Word
+        exportarParaDocx(); // Exporta para documento Word
     }
 
 }
 
-function exportarParaDoc() {
-    // Selecione o conteúdo que deseja exportar (exemplo: a tabela de medição)
+
+async function exportarParaDocx() {
     const tabela = document.querySelector('table#m2');
     if (!tabela) {
         alert('Tabela não encontrada!');
         return;
     }
 
-    let tabelaClone = tabela.cloneNode(true); // Clona a tabela para exportação
-    tabelaClone.setAttribute('width', '100%');
+    // Extrai os dados da tabela para um array
+    const linhas = Array.from(tabela.querySelectorAll('tr')).map(tr =>
+        Array.from(tr.querySelectorAll('th,td')).map(td => td.textContent)
+    );
 
-    // Monta o HTML do documento Word
-    let html = `
-    <html xmlns:o='urn:schemas-microsoft-com:office:office'
-          xmlns:w='urn:schemas-microsoft-com:office:word'
-          xmlns='http://www.w3.org/TR/REC-html40'>
-    <head><meta charset='utf-8'></head>
-    <style>
-            table { width: 100% !important; border-collapse: collapse; }
-            th, td { border: 1px solid #000; padding: 8px; }
-    </style>
-    <body>
-        <h2 style="text-align: center;">${nomeMed.value || document.querySelector('#nome2').value || 'Área'} ${obterDataHoraFormatada()}</h2>
-        ${tabelaClone.outerHTML}
-    </body>
-    </html>
-    `;
+    // Função para criar uma célula com fonte Arial e tamanho 24pt
+    
+    function makeCell(text) {
+        if (tempTypeMed == 4) {
+        return new docx.TableCell({
+            children: [
+                new docx.Paragraph({
+                    children: [
+                        new docx.TextRun({
+                            text: text,
+                            font: 'Arial',
+                            size: 22 // 16pt = 32 half-points
+                        })
+                    ]
+                })
+            ]
+        });
+    } else if (tempTypeMed == 3 || tempTypeMed == 2 || tempTypeMed == 1) {
+        return new docx.TableCell({
+            children: [
+                new docx.Paragraph({
+                    children: [
+                        new docx.TextRun({
+                            text: text,
+                            font: 'Arial',
+                            size: 24 // 12pt = 24 half-points
+                        })
+                    ]
+                })
+            ]
+        });
+    } else {
+        return new docx.TableCell({
+            children: [
+                new docx.Paragraph({
+                    children: [
+                        new docx.TextRun({
+                            text: text,
+                            font: 'Arial',
+                            size: 26 // 12pt = 24 half-points
+                        })
+                    ]
+                })
+            ]
+        });
+    }
+}
 
-    // Cria o arquivo para download
-    let blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-    let a = document.createElement('a');
+
+    // Cria as linhas da tabela para o docx
+    const docxRows = linhas.map(row =>
+        new docx.TableRow({
+            children: row.map(cell => makeCell(cell)),
+        })
+    );
+
+    // Cria o documento
+    const doc = new docx.Document({
+        sections: [{
+            properties: {},
+            children: [
+                new docx.Paragraph({
+                    text: `${nomeMed.value || document.querySelector('#nome2').value || 'Área'} ${obterDataHoraFormatada()}`,
+                    heading: docx.HeadingLevel.HEADING_1,
+                    font: 'Arial',
+                    size: 20, // 10pt = 20 half-points
+                    style: 'Title'
+                }),
+                new docx.Table({
+                    rows: docxRows,
+                    width: { size: 100, type: docx.WidthType.PERCENTAGE }
+                }),
+            ],
+        }],
+    });
+
+    // Gera o arquivo e faz o download
+    const blob = await docx.Packer.toBlob(doc);
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'medicao.doc';
+    a.download = `${nomeMed.value || document.querySelector('#nome2').value || 'Área'}${obterDataHoraFormatada()}.docx`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
 }
+
+
+
 
 function exportar1() {
     let html = `
