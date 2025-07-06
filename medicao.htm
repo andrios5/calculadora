@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="medicao.css">
 </head>
 <body>
     <header><a href="index.htm" rel="home" >
@@ -17,7 +18,7 @@
 
         <h2>📏 Medição</h2>
         <section class="out" id="medicao">
-            <p class="intro">Para somar basta preencher os 3 campos do tipo de medida que você gostaria de fazer, e clicar em somar:</p>
+            <p class="intro">Para somar basta preencher os vazios e clicar em somar, após a soma o último campo ficara vazio mas você pode alterar a ordem dos campos para que outros fiquem vazio. Você pode exportar para 4 tipos de arquivos: CSV, XML, DOC e PDF. E pode importar novamente as medidas salvas nos formatos CSV e XML.</p>
             <div class="labelB"><label for="medType" class="med">Medição:</label><select name="medType" id="medType" class="med"></select></div>
             
                 <section class="in" id="m2">
@@ -70,6 +71,8 @@
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="medicao.js"></script>
     
 

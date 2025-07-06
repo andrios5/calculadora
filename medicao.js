@@ -156,6 +156,7 @@ dropArea.addEventListener('drop', function(e) {
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
 formatoEX.innerHTML += `<option value="2">DOC</option>`
+formatoEX.innerHTML += `<option value="3">PDF</option>`
 formatoEX.value = getCookie("formatoEXC") || 0
 
 var tempNome2
@@ -763,10 +764,79 @@ function exportar() {
             exportar1()
         }
         setCookie('formatoEXC', 1, 30)
-    } else {
+    } else if (formatoEX.value == '2') {
         exportarParaDocx(); // Exporta para documento Word
+    } else {
+        exportarParaPDF(); // Exporta para PDF
     }
 
+}
+
+
+
+function exportarParaPDF() {
+
+
+
+    const tabela = document.querySelector('table#m2');
+    if (!tabela) {
+        alert('Tabela não encontrada!');
+        return;
+    }
+
+    // Extrai os dados da tabela
+    const linhas = Array.from(tabela.querySelectorAll('tr')).map(tr =>
+        Array.from(tr.querySelectorAll('th,td')).map(td => td.textContent)
+    );
+
+    
+
+    // Separa cabeçalho e corpo
+    const head = [linhas[0]];
+    const body = [];
+
+    for (let i = 1; i < linhas.length; i++) {
+        const linha = linhas[i];
+    // Detecta linha de soma com preço (ajuste conforme seu texto)
+        if (linha[0] && linha[0].toLowerCase().includes('soma') && linha.length >= 6) {
+            // Exemplo: soma ocupa as colunas 4 e 5 (ajuste conforme sua tabela)
+            body.push([
+                linha[0], // Ex: "Soma:"
+                linha[1],
+                linha[2],
+                linha[3],
+                linha[4],
+                linha[5], // Ex: "R$ 100,00"
+                { content: linha[6], colSpan: 2, styles: { halign: 'center' } }, // ocupa 2 colunas
+                '', // célula vazia para o colSpan
+            ]);
+        } else {
+            body.push(linha);
+        }
+    }
+    // Cria o PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFont('Arial', 'normal');
+    doc.setFontSize(16);
+    doc.text(`${nomeMed.value || document.querySelector('#nome2').value || 'Área'} ${obterDataHoraFormatada()}`, 105, 15, { align: 'center' });
+
+    doc.autoTable({
+    head: head,
+    body: body,
+    startY: 25,
+    styles: { font: 'Arial', fontSize: 12 },
+    headStyles: {
+        fillColor: [187, 187, 187], // fundo amarelo (RGB)
+        textColor: [0, 0, 0],   // texto azul escuro (RGB)
+        fontStyle: 'bold'
+    },
+    tableWidth: 'auto',
+    margin: { left: 10, right: 10 }
+    });
+
+    doc.save(`${nomeMed.value || document.querySelector('#nome2').value || 'Área'}${obterDataHoraFormatada()}.pdf`);
 }
 
 
