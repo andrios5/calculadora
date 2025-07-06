@@ -80,58 +80,72 @@ ordenar.addEventListener('click', ordenarVetor)
 posicao.addEventListener('click', posicaoM)
 
 
-// Seleciona todos os containers dos inputs que podem ser reordenados
-const containers = document.querySelectorAll('.containerm2');
+// Supondo que todos os .containerm2 estão dentro de um container, por exemplo, section#m2
+const parent = document.querySelector('#m2'); // ou outro container pai dos .containerm2
+const containers = parent.querySelectorAll('.containerm2');
 let draggingElem = null;
-let placeholder = document.createElement('div');
-placeholder.className = 'drop-placeholder';
 
+// Cria a área de drop (inicialmente oculta)
+let dropArea = document.createElement('div');
+dropArea.style.height = '60px';
+dropArea.style.background = '#FFD416';
+dropArea.style.color = '#8181d3';
+dropArea.style.border = '2px dashed #8181d3';
+dropArea.style.margin = '10px 0';
+dropArea.style.display = 'none';
+dropArea.style.alignItems = 'center';
+dropArea.style.justifyContent = 'center';
+dropArea.style.fontWeight = 'bold';
+dropArea.style.textAlign = 'center';
+dropArea.textContent = 'Solte aqui para mover para o final';
+
+// Encontra o elemento de referência (ex: botão Somar ou rodapé)
+const referencia = document.getElementById('quebraM'); // ou outro elemento ANTES do qual a área deve aparecer
+parent.insertBefore(dropArea, referencia);
+
+// Drag and drop nos elementos
 containers.forEach(container => {
     container.setAttribute('draggable', 'true');
-
     container.addEventListener('dragstart', function(e) {
         draggingElem = container;
         container.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', '');
-        setTimeout(() => container.style.display = 'none', 0); // Esconde o original durante o drag
+        setTimeout(() => container.style.opacity = '0.5', 0);
+        dropArea.style.display = 'flex'; // Mostra a área de drop
     });
-
     container.addEventListener('dragend', function() {
         draggingElem = null;
         container.classList.remove('dragging');
-        container.style.display = '';
-        if (placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
+        container.style.opacity = '';
+        dropArea.style.display = 'none'; // Esconde a área de drop
     });
+});
 
-    container.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        // Adiciona o placeholder antes ou depois, dependendo da posição do mouse
-        const rect = container.getBoundingClientRect();
-        const offset = e.clientY - rect.top;
-        if (offset < rect.height / 2) {
-            container.parentNode.insertBefore(placeholder, container);
-        } else {
-            container.parentNode.insertBefore(placeholder, container.nextSibling);
-        }
-    });
-
-    container.addEventListener('dragleave', function(e) {
-        if (placeholder.parentNode === container.parentNode) {
-            container.parentNode.removeChild(placeholder);
-        }
-    });
-
-    container.addEventListener('drop', function(e) {
-        e.preventDefault();
-        if (placeholder.parentNode) {
-            placeholder.parentNode.replaceChild(draggingElem, placeholder);
-        }
+// Eventos da área de drop
+dropArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    dropArea.style.background = '#6969AD';
+    dropArea.style.color = '#FFD416';
+    dropArea.style.border = '2px dashed #FFD416';
+});
+dropArea.addEventListener('dragleave', function(e) {
+    dropArea.style.background = '#FFD416';
+    dropArea.style.color = '#8181d3';
+    dropArea.style.border = '2px dashed #8181d3';
+});
+dropArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dropArea.style.background = '#FFD416';
+    dropArea.style.color = '#8181d3';
+    dropArea.style.border = '2px dashed #8181d3';
+    if (draggingElem) {
+        parent.insertBefore(draggingElem, dropArea);
         draggingElem.classList.remove('dragging');
-        draggingElem.style.display = '';
+        draggingElem.style.opacity = '';
         draggingElem = null;
-    });
+        dropArea.style.display = 'none';
+    }
 });
 
 
@@ -344,21 +358,22 @@ function alteraInput() {
         ultimoInput.focus(); // Coloca o foco no último input
 }
 
-let tempPosicao = 0
+let tempPosicao = 1
 function posicaoM() {
-    if (tempPosicao == 0) {
-        tempPosicao = 1;
+    if (tempPosicao == 1) {
+        tempPosicao = 0;
         posicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ativo
         posicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
+        
+        document.getElementById('containerM0').style.height = '50vh'; // Define a altura máxima do container para 70vh
+        document.getElementById('containerM1').style.maxHeight = '25vh';
+    } else {
+        tempPosicao = 1;
+        posicao.style.backgroundColor = ''; // Restaura a cor original do botão
+        posicao.style.boxShadow = ''; // Remove a sombra do botão
         noScroll(); // Chama a função para não rolar a tela
         document.getElementById('containerM0').style.height = 'auto'; // Define a altura do container para auto
         document.getElementById('containerM1').style.maxHeight = 'none';
-    } else {
-        tempPosicao = 0;
-        posicao.style.backgroundColor = ''; // Restaura a cor original do botão
-        posicao.style.boxShadow = ''; // Remove a sombra do botão
-        document.getElementById('containerM0').style.height = '50vh'; // Define a altura máxima do container para 70vh
-        document.getElementById('containerM1').style.maxHeight = '25vh';
     }
 }
 

@@ -380,12 +380,10 @@ div.container2 {
 }
 
 #containerM0 {
-    height: 50vh;
     display: none;
 }
 
 #containerM1 {
-    max-height: 25vh;
     display: none;
 }
 
