@@ -80,6 +80,51 @@ ordenar.addEventListener('click', ordenarVetor)
 posicao.addEventListener('click', posicaoM)
 
 
+// Seleciona todos os containers dos inputs que podem ser reordenados
+const containers = document.querySelectorAll('.containerm2');
+
+containers.forEach(container => {
+    container.setAttribute('draggable', 'true');
+
+    container.addEventListener('dragstart', function(e) {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', null); // Necessário para Firefox
+        container.classList.add('dragging');
+        window.draggedContainer = container;
+    });
+
+    container.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+    });
+
+    container.addEventListener('drop', function(e) {
+        e.preventDefault();
+        const dragging = window.draggedContainer;
+        if (dragging && dragging !== container) {
+            // Insere o elemento arrastado antes ou depois do alvo, dependendo da posição
+            const parent = container.parentNode;
+            if ([...parent.children].indexOf(dragging) < [...parent.children].indexOf(container)) {
+                parent.insertBefore(dragging, container);
+            } else {
+                parent.insertBefore(dragging, container.nextSibling);
+            }
+        }
+        container.classList.remove('dragging');
+        window.draggedContainer = null;
+    });
+
+    container.addEventListener('dragleave', function() {
+        container.classList.remove('dragging');
+    });
+
+    container.addEventListener('dragend', function() {
+        container.classList.remove('dragging');
+        window.draggedContainer = null;
+    });
+});
+
+
 
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
@@ -267,12 +312,24 @@ function calcularArea2(){
         array2d.push([nome2, alt, lar, area, pro, area2, pro2, area3]) // Adiciona os valores ao array 2D
 
         typeMed()
-        document.querySelector('#largura').value = ''
-        document.querySelector('#largura').focus() // Coloca o foco no input novamente
 
        
         exibeArea2(array2d) // Chama a função para exibir os resultados
-        noScroll()  
+        noScroll()
+        alteraInput(); // Chama a função para alterar o input
+
+}
+
+function alteraInput() {
+            // Seleciona todos os inputs dentro do container desejado
+        const container = document.querySelector('#m2'); // ou outro container pai
+        const inputs = container.querySelectorAll('input');
+
+        // O último input exibido:
+        const ultimoInput = inputs[inputs.length - 1];
+
+        ultimoInput.value = ''; // Limpa o valor do último input
+        ultimoInput.focus(); // Coloca o foco no último input
 }
 
 let tempPosicao = 0

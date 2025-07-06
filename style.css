@@ -543,6 +543,10 @@ a {
     text-decoration: none;
 }
 
+.dragging {
+    opacity: 0.5;
+    border: 2px dashed #888;
+}
 
 @media screen and (min-width: 1500px) {
 h1 {
