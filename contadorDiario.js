@@ -41,6 +41,7 @@ function diaDoAno(data) {
   return diaDoAno;
 }
 
+
 let tempDiaSem = 0;
 let tempSetar = 0; // Variável para controlar se o dia da semana deve ser atualizado
 let tempAut = 0;
@@ -144,7 +145,7 @@ function salvarDia(){
     let dataC = 0 // Exibe a data Inicial
     dataC = getCookie('data') // Lê o cookie da data
     if (dataC === "" || dataC == 0) { // Se o cookie estiver vazio ou for 0
-    dataC = dataAtualV.toLocaleDateString('pt-BR', {year: 'numeric', month: '2-digit', day: '2-digit'}); // Formata a data atual
+    dataC = dataAtual.toLocaleDateString('pt-BR', {year: 'numeric', month: '2-digit', day: '2-digit'}); // Formata a data atual
     setCookie('data', dataC, 365); // Salva a data no cookie por 365 dias
     }
 }
@@ -429,3 +430,7 @@ function exibeSemana() {
         tela35.style.display = 'none'; // Oculta a seção da semana anterior se o total for 0
     }
 }
+
+
+
+

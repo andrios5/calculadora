@@ -295,32 +295,32 @@ function posicaoM() {
 function noScroll() {
     let tempScroll = 100
     let temp001 = array2d.length
+    cont2 = document.getElementById('containerM0')
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
         if (larguraDaTela <= 360) { // Verifica se a largura da tela é maior que 800px
         tempScroll = 150 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
         }else if (larguraDaTela <= 412) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 480) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 609) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 768) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 810) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 1000) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 1350) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 0 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
         }
         window.scrollTo(0, tempScroll);}
         else {
             tempScroll = 35 * temp001
-            document.querySelector('.container2').scrollTo(0, tempScroll)
-            window.scrollTo(0, 500)
+            cont2.scrollTo(0, tempScroll)
         }
     }
 
@@ -342,10 +342,10 @@ function exibeArea2() {
 
     resM2.innerHTML = '' // Limpa o conteúdo anterior
     if (tempTypeMed == 4) {
-        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th><th>R$/m²</th><th>Preço</th></tr>`
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th><th>R$/un</th><th>Preço</th></tr>`
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, un, area3, preco, area4] = array2d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td  class="cSoma">${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td  class="cSoma">${area3.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td class="cSoma">${area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
             soma2 += Number(array2d[i][3]);
@@ -1026,7 +1026,7 @@ function exportar14() {
             <th>Área</th>
             <th>un</th>
             <th>un/Área</th>
-            <th>R$/m²</th>
+            <th>R$/un</th>
             <th>Preço</th>
         </tr>
     `;
@@ -1288,7 +1288,7 @@ function exportar23(nome1, nome2) {
 
 function exportar24(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;un;un/Área;R$/m²;Preço\n`;
+    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;un;un/Área;R$/un;Preço\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
@@ -1358,7 +1358,7 @@ function importarCSVparaArray2d(file) {
         } else {
             verifT = tempCabecalho; // Se não for o cabeçalho esperado, armazena para verificação posterior
         }
-        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$/m²;preço')){ // Verifica se o cabeçalho é o esperado
+        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$/un;preço')){ // Verifica se o cabeçalho é o esperado
             medType.value = '4'; // Define o tipo de medição como monetário
             tempTypeMed = 4; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
@@ -1529,7 +1529,7 @@ function importarXLSparaArray2d(file) {
             cabecalho = Array.from(linhas[1].querySelectorAll('th,td')).map(td => td.textContent.trim());
         }
 
-        if (cabecalho.includes('un/Área') && cabecalho.includes('R$/m²') && cabecalho.length >= 8) {
+        if (cabecalho.includes('un/Área') && cabecalho.includes('R$/un') && cabecalho.length >= 8) {
             medType.value = '4'; tempTypeMed = 4; tempTypeMed3 = 1; tempTypeMed2 = 0;
         } else if (cabecalho.includes('un/Área')) {
             medType.value = '3'; tempTypeMed = 3;
@@ -1588,8 +1588,8 @@ function importarXLSparaArray2d(file) {
                 let nome = celulas[0].textContent.trim();
                 let altura = strNum(celulas[1].textContent);
                 let largura = strNum(celulas[2].textContent);
-                let profundidade = strNum(celulas[3].textContent);
-                let area = strNum(celulas[4].textContent);
+                let profundidade = strNum(celulas[4].textContent);
+                let area = strNum(celulas[3].textContent);
                 let area3 = strNum(celulas[5].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
                     array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]);

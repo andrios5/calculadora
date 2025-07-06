@@ -331,6 +331,10 @@ table#m2 > tbody > tr > td {
     border: none;
 }
 
+table#m2 > tbody > tr > td.cSoma:nth-child(2n) {
+    background-color: rgb(216, 226, 255);
+}
+
 table#m2 > thead > tr > th {
     background-color: var(--cor2);
     color: white;
@@ -537,6 +541,10 @@ div.containerNome > span {
 
 a {
     text-decoration: none;
+}
+
+tbody td {
+    background-color: lightblue;
 }
 
 @media screen and (min-width: 1500px) {
