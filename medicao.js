@@ -299,15 +299,15 @@ function noScroll() {
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
         if (larguraDaTela <= 360) { // Verifica se a largura da tela é maior que 800px
-        tempScroll = 150 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 200 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
         }else if (larguraDaTela <= 412) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 175 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 480) { // Verifica se a largura da tela é menor que 800px
         tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 609) { // Verifica se a largura da tela é menor que 800px
         tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 768) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
+        tempScroll = 150 + (40 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 810) { // Verifica se a largura da tela é menor que 800px
         tempScroll = 150 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
         } else if (larguraDaTela <= 1000) { // Verifica se a largura da tela é menor que 800px
@@ -319,7 +319,7 @@ function noScroll() {
         }
         window.scrollTo(0, tempScroll);}
         else {
-            tempScroll = 35 * temp001
+            tempScroll = 40 * temp001
             cont2.scrollTo(0, tempScroll)
         }
     }
