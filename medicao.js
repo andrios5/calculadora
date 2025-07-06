@@ -135,7 +135,7 @@ dropArea.addEventListener('dragleave', function(e) {
     dropArea.style.color = '#8181d3';
     dropArea.style.border = '2px dashed #8181d3';
 });
-dropArea.addEventListener('drop', function(e) {
+dropArea.addEventListener('drop', function(e) { // Evento de drop
     e.preventDefault();
     dropArea.style.background = '#FFD416';
     dropArea.style.color = '#8181d3';
@@ -147,6 +147,28 @@ dropArea.addEventListener('drop', function(e) {
         draggingElem = null;
         dropArea.style.display = 'none';
     }
+
+    let tempAltura = 0; // Atualiza a altura temporária
+    let tempProfundidade = 0; // Atualiza a profundidade temporária
+    let tempProfundidade2 = 0; // Atualiza a profundidade temporária
+    let tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
+    let tempLar = 0; // Atualiza a largura temporária
+    for (let i = 0; i < array2d.length; i++) {
+        const [nome, altura, largura, area, pro, area2, pro2] = array2d[i];
+        
+            tempAltura = altura; // Atualiza a altura temporária
+            tempProfundidade = pro; // Atualiza a profundidade temporária
+            tempProfundidade2 = pro2; // Atualiza a profundidade temporária
+            tempNome2 = nome; // Se o nome for vazio ou nulo, define como 'Área'
+            tempLar = largura; // Atualiza a largura temporária
+            
+        }
+        document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome com o nome temporário
+        document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
+        document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
+        document.querySelector('#profund2').value = tempProfundidade2; // Atualiza o campo de profundidade 2 com a profundidade temporária
+        document.querySelector('#largura').value = tempLar; // Atualiza o campo de largura com a largura temporária
+        alteraInput()
 });
 
 
@@ -708,6 +730,7 @@ function resetarC2(){
     nomeMed.value = ''
     typeMed()
     dataMedicao()
+    formatoEX.value = getCookie("formatoEXC") || '0' // Reseta o formato de exportação para o padrão
     ordemOriginal.forEach(elem => {parent.insertBefore(elem, referencia);});
 }
 
@@ -1727,6 +1750,7 @@ function formataVetor(array2d) {
             let tempProfundidade = 0; // Atualiza a profundidade temporária
             let tempProfundidade2 = 0; // Atualiza a profundidade temporária
             let tempNome2 = 'Área'; // Se o nome for vazio ou nulo, define como 'Área'
+            let tempLar = 0; // Atualiza a largura temporária
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, pro, area2, pro2] = array2d[i];
         if (typeof area !== "number"|| typeof largura !== "number" || typeof altura !== 'number' || nome == '' || nome == null || nome == 'Soma:') {   
@@ -1737,6 +1761,7 @@ function formataVetor(array2d) {
             tempProfundidade = pro; // Atualiza a profundidade temporária
             tempProfundidade2 = pro2; // Atualiza a profundidade temporária
             tempNome2 = nome; // Se o nome for vazio ou nulo, define como 'Área'
+            tempLar = largura; // Atualiza a largura temporária
             }
         }
 
@@ -1745,10 +1770,12 @@ document.querySelector('#nome2').value = tempNome2; // Atualiza o campo de nome 
 document.querySelector('#altura').value = tempAltura; // Atualiza o campo de altura com a altura temporária
 document.querySelector('#profund').value = tempProfundidade; // Atualiza o campo de profundidade com a profundidade temporária
 document.querySelector('#profund2').value = tempProfundidade2; // Atualiza o campo de profundidade 2 com a profundidade temporária
+document.querySelector('#largura').value = tempLar; // Atualiza o campo de largura com a largura temporária
 
 console.log(seletorDeArquivo.value.replace(/C:\\fakepath\\/i, '')); // Exibe o nome do arquivo selecionado no console
 checarNome()
-dataMedicao ()
+dataMedicao()
+alteraInput()
 }
 
 function importarXLSparaArray2d(file) {
