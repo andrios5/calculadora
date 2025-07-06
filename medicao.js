@@ -101,13 +101,17 @@ dropArea.textContent = 'Solte aqui para mover para o final';
 
 // Encontra o elemento de referência (ex: botão Somar ou rodapé)
 const referencia = document.getElementById('quebraM'); // ou outro elemento ANTES do qual a área deve aparecer
-const ordemOriginal = Array.from(parent.querySelectorAll('.containerm2'));
 parent.insertBefore(dropArea, referencia);
 
 // Drag and drop nos elementos
 containers.forEach(container => {
     container.setAttribute('draggable', 'true');
     container.addEventListener('dragstart', function(e) {
+        // Remove classe e opacidade de todos antes de iniciar
+        containers.forEach(c => {
+            c.classList.remove('dragging');
+            c.style.opacity = '';
+        });
         draggingElem = container;
         container.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
@@ -120,6 +124,11 @@ containers.forEach(container => {
         container.classList.remove('dragging');
         container.style.opacity = '';
         dropArea.style.display = 'none'; // Esconde a área de drop
+        // Garante limpeza em todos
+        containers.forEach(c => {
+            c.classList.remove('dragging');
+            c.style.opacity = '';
+        });
     });
 });
 
@@ -146,6 +155,11 @@ dropArea.addEventListener('drop', function(e) { // Evento de drop
         draggingElem.style.opacity = '';
         draggingElem = null;
         dropArea.style.display = 'none';
+        // Garante limpeza em todos
+        containers.forEach(c => {
+            c.classList.remove('dragging');
+            c.style.opacity = '';
+        });
     }
 
     let tempAltura = 0; // Atualiza a altura temporária
@@ -273,6 +287,8 @@ function inverteVetor(array2d) {
     array2dTemp = []; // Cria um novo array temporário
     let tempPreco = 0
     let tempUn = 0
+    let area2Calc = 0; // Variável para armazenar o valor de area2 calculado
+    let area3Calc = 0; // Variável para armazenar o valor de area3 calculado
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, preco, area2, un, area3] = array2d[i];
         array2dTemp.push([nome, altura, largura, area, un, area2, preco, area3]); // Adiciona os valores ao array temporário
@@ -281,9 +297,11 @@ function inverteVetor(array2d) {
     array2d.length = 0; // Limpa o array original
     for (let i = 0; i < array2dTemp.length; i++) {
         const [nome, altura, largura, area, un, area2, preco, area3] = array2dTemp[i];
-        array2d.push([nome, altura, largura, area, un, area2, preco, area3]); // Adiciona os valores do array temporário ao array original
-        tempPreco = preco
-        tempUn = un
+        area2Calc = Number(area) * Number(un); // Calcula area2 sem sobrescrever
+        area3Calc = area2Calc * Number(preco); // Usa o valor calculado de area2
+        array2d.push([nome, altura, largura, area, un, area2Calc, preco, area3Calc]); // Adiciona os valores do array temporário ao array original
+        tempPreco = preco;
+        tempUn = un;
     }
     document.querySelector('#profund').value = tempUn
     document.querySelector('#profund2').value = tempPreco
@@ -699,7 +717,7 @@ function checarNome(){
 
 
 function resetarC2(){
-    tempNome2 = getCookie('tempNome3') || 'Área'; // Obtém o nome temporário do cookie
+    /*tempNome2 = getCookie('tempNome3') || 'Área'; // Obtém o nome temporário do cookie
     resM2.innerHTML = ''
     resS2.innerHTML = ''
     tabela.style.display = 'none'
@@ -730,8 +748,8 @@ function resetarC2(){
     nomeMed.value = ''
     typeMed()
     dataMedicao()
-    formatoEX.value = getCookie("formatoEXC") || '0' // Reseta o formato de exportação para o padrão
-    ordemOriginal.forEach(elem => {parent.insertBefore(elem, referencia);});
+    formatoEX.value = getCookie("formatoEXC") || '0'; // Reseta o formato de exportação para o padrão*/
+    window.location.reload()
 }
 
 function diminuirC2(){
