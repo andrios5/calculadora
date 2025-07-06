@@ -543,9 +543,6 @@ a {
     text-decoration: none;
 }
 
-tbody td {
-    background-color: lightblue;
-}
 
 @media screen and (min-width: 1500px) {
 h1 {

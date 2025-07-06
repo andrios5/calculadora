@@ -33,6 +33,7 @@ cpro = document.querySelector('#cpro')
 lpro2 = document.querySelector('#lpro2')
 cpro2 = document.querySelector('#cpro2')
 tabela1 = document.querySelector('table#m1')
+tabela2 = document.querySelector('table#m2')
 containerM0 = document.querySelector('#containerM0')
 containerM1 = document.querySelector('#containerM1')
 theadM1 = document.querySelector('#theadM1')
@@ -293,36 +294,19 @@ function posicaoM() {
 }
 
 function noScroll() {
-    let tempScroll = 100
-    let temp001 = array2d.length
     cont2 = document.getElementById('containerM0')
+    let altura1 = tabela2.offsetHeight;
+    let altura2 = cont2.offsetHeight;
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
-        if (larguraDaTela <= 360) { // Verifica se a largura da tela é maior que 800px
-        tempScroll = 200 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        }else if (larguraDaTela <= 412) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 175 + (35 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 480) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 609) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (38 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 768) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (40 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 810) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 1000) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (40.5 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else if (larguraDaTela <= 1350) { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        } else { // Verifica se a largura da tela é menor que 800px
-        tempScroll = 150 + (45 * temp001) // Calcula a altura do scroll baseado no número de linhas
-        }
-        window.scrollTo(0, tempScroll);}
-        else {
-            tempScroll = 40 * temp001
-            cont2.scrollTo(0, tempScroll)
-        }
+        if (larguraDaTela <= 360) {
+            let tempScroll = altura2 + 200
+        window.scrollTo(0, tempScroll);} else {window.scrollTo(0, altura2)}
+    } else {
+        cont2.scrollTo(0, altura1)
     }
+    
+}
 
 function exibeArea2() {
     let soma2 = 0 // Inicializa a variável de soma
