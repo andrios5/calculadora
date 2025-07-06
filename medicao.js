@@ -101,6 +101,7 @@ dropArea.textContent = 'Solte aqui para mover para o final';
 
 // Encontra o elemento de referência (ex: botão Somar ou rodapé)
 const referencia = document.getElementById('quebraM'); // ou outro elemento ANTES do qual a área deve aparecer
+const ordemOriginal = Array.from(parent.querySelectorAll('.containerm2'));
 parent.insertBefore(dropArea, referencia);
 
 // Drag and drop nos elementos
@@ -154,6 +155,7 @@ dropArea.addEventListener('drop', function(e) {
 
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
+formatoEX.innerHTML += `<option value="2">DOC</option>`
 formatoEX.value = getCookie("formatoEXC") || 0
 
 var tempNome2
@@ -698,13 +700,14 @@ function resetarC2(){
     tempData = ''
     vetorOrdenando = true // Reseta o estado de ordenação
     ordenarVetor()
-    tempPosicao = 1
+    tempPosicao = 0
     posicaoM()
     profund.value = '' // Esconde o campo de profundidade
     profund2.value = '' // Esconde o campo de profundidade 2
     nomeMed.value = ''
     typeMed()
-    dataMedicao ()
+    dataMedicao()
+    ordemOriginal.forEach(elem => {parent.insertBefore(elem, referencia);});
 }
 
 function diminuirC2(){
@@ -747,7 +750,7 @@ function exportar() {
             exportar2(nome1, nome2)
         }
         setCookie('formatoEXC', 0, 30)
-    } else {
+    } else if (formatoEX.value == '1') {
         if (tempTypeMed == 1){
             exportar11()
         } else if (tempTypeMed == 2) {
@@ -760,8 +763,48 @@ function exportar() {
             exportar1()
         }
         setCookie('formatoEXC', 1, 30)
+    } else {
+        exportarParaDoc(); // Exporta para documento Word
     }
 
+}
+
+function exportarParaDoc() {
+    // Selecione o conteúdo que deseja exportar (exemplo: a tabela de medição)
+    const tabela = document.querySelector('table#m2');
+    if (!tabela) {
+        alert('Tabela não encontrada!');
+        return;
+    }
+
+    let tabelaClone = tabela.cloneNode(true) + '' + obterDataHoraFormatada; // Clona a tabela para exportação
+    tabelaClone.setAttribute('width', '100%');
+
+    // Monta o HTML do documento Word
+    let html = `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office'
+          xmlns:w='urn:schemas-microsoft-com:office:word'
+          xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset='utf-8'></head>
+    <style>
+            table { width: 100% !important; border-collapse: collapse; }
+            th, td { border: 1px solid #000; padding: 8px; }
+    </style>
+    <body>
+        <h2 style="text-align: center;">${nomeMed.value || document.querySelector('#nome2').value || 'Área'}</h2>
+        ${tabelaClone.outerHTML}
+    </body>
+    </html>
+    `;
+
+    // Cria o arquivo para download
+    let blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'medicao.doc';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
 
 function exportar1() {
