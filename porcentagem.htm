@@ -7,29 +7,32 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="styleindex.css">
+    <link rel="stylesheet" href="styleporcentagem.css">
 </head>
 <body>
-    <header><h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1></header>
+    <header><a href="index.htm" rel="home" >
+        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
+    </a></header>
 
     <main>
-        <h2><a href="medicao.htm" rel="next">📏 Medição</a></h2>
 
-        <h2><a href="contador.htm" rel="next">⏲️ Contador Diario</a></h2>
+        <h2>📊 Porcentagem</h2>
+        <section class="out">
+            <p>Adicione dois valores para calcular:</p>
+            <input type="number" name="por1" id="por1" placeholder="Valor 1">
+            <input type="number" name="por2" id="por2" placeholder="Valor 2"><br>
+            <div class="containerm2"><input type="number" name="por3" id="por3" placeholder="Porcentagem">%</div><br>
 
-        <h2><a href="dinheiro.htm" rel="next">💳 Dinheiro Gasto</a></h2>
+            <button id="resetP">Reset</button>
+        </section>
 
-        <h2><a href="compara.htm" rel="next">💸 Compara Preço</a></h2>
-        
-        <h2><a href="esquadro.htm">📐 Esquadro</a></h2>
 
-        <h2><a href="porcentagem.htm">📊 Porcentagem</a></h2>
 
-        <h2><a href="conversoes.htm">💱 Conversões</a></h2>
-        
 
     </main>
- 
+    <script src="porcentagem.js"></script>
+    
+
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
 <script>

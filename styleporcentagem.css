@@ -1,0 +1,23 @@
+p {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+div.containerm2 {
+    padding: 0 10px;
+    height: fit-content;
+}
+
+input {
+    text-align: center;
+    width: 100%;
+}
+
+div.containerm2 input {
+    width: 100%;
+    font-size: 1em;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+}
