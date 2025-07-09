@@ -120,3 +120,22 @@
     transform: scale(1.02);
     transition: transform 0.3s ease;
 }
+
+
+@media screen and (max-width: 750px) {
+    .esquadro {
+        width: 275px;
+        height: 275px;
+    }
+
+    .esquadro-container {
+        padding-left: 20%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .esquadro {
+        width: 225px;
+        height: 225px;
+    }
+}
