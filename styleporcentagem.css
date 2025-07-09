@@ -21,3 +21,11 @@ div.containerm2 input {
     border-radius: 10px;
     border: 2px solid #ccc;
 }
+
+@media screen and (max-width: 600px) {
+    input {
+        width: 40%;
+        display: inline-block;
+    }
+    
+}
