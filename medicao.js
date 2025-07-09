@@ -59,6 +59,24 @@ document.querySelector('#largura').addEventListener('keydown', function(e) {
     }
 });
 
+document.querySelector('#altura').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+        calcularArea2();
+    }
+});
+
+document.querySelector('#profund').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+        calcularArea2();
+    }
+});
+
+document.querySelector('#profund2').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+        calcularArea2();
+    }
+});
+
 seletorDeArquivo.addEventListener('change', function(e){
     if (e.target.files.length) {
         const file = e.target.files[0];
@@ -474,26 +492,9 @@ function exibeArea2() {
             soma4 += Number(array2d[i][7]);
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
-        tabela.style.display = 'none'
-        containerM0.style.display = 'none'
-        menosC2.style.display = 'none'
-        export2.style.display = 'none'
-        resetC2.style.display = 'none'
-        formatoEX.style.display = 'none'
-        tabela1.style.display = 'none'
-        containerM1.style.display = 'none'
-        ordenar.style.display = 'none'
-        posicao.style.display = 'none'
-        seletorDeArquivo.style.display = 'inline-block'
+        tabelaVazia()
         }else{
-        tabela.style.display = 'block'
-        containerM0.style.display = 'block'
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
-        formatoEX.style.display = 'inline-block'
-        ordenar.style.display = 'inline-block'
-        posicao.style.display = 'inline-block'
+        tabelaCheia()
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td><td colspan="2">${soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
         }
     } else if (tempTypeMed == 3) {
@@ -517,26 +518,9 @@ function exibeArea2() {
             soma3 += Number(array2d[i][5]);
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
-        tabela.style.display = 'none'
-        containerM0.style.display = 'none'
-        menosC2.style.display = 'none'
-        export2.style.display = 'none'
-        resetC2.style.display = 'none'
-        formatoEX.style.display = 'none'
-        tabela1.style.display = 'none'
-        containerM1.style.display = 'none'
-        ordenar.style.display = 'none'
-        posicao.style.display = 'none'
-        seletorDeArquivo.style.display = 'inline-block'
+        tabelaVazia()
         }else{
-        tabela.style.display = 'block'
-        containerM0.style.display = 'block'
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
-        formatoEX.style.display = 'inline-block'
-        ordenar.style.display = 'inline-block'
-        posicao.style.display = 'inline-block'
+        tabelaCheia()
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
         }
     } else if (tempTypeMed == 2) {
@@ -559,25 +543,9 @@ function exibeArea2() {
             soma3 += Number(array2d[i][5]);
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
-        tabela.style.display = 'none'
-        containerM0.style.display = 'none'
-        menosC2.style.display = 'none'
-        export2.style.display = 'none'
-        resetC2.style.display = 'none'
-        formatoEX.style.display = 'none'
-        tabela1.style.display = 'none'
-        ordenar.style.display = 'none'
-        posicao.style.display = 'none'
-        seletorDeArquivo.style.display = 'inline-block'
+        tabelaVazia()
         }else{
-        tabela.style.display = 'block'
-        containerM0.style.display = 'block'
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
-        formatoEX.style.display = 'inline-block'
-        ordenar.style.display = 'inline-block'
-        posicao.style.display = 'inline-block'
+        tabelaCheia()
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td colspan="2">${soma3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
         }
     } else if (tempTypeMed == 1) {
@@ -601,25 +569,10 @@ function exibeArea2() {
             soma3 += Number(array2d[i][5]);
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
-        tabela.style.display = 'none'
-        containerM0.style.display = 'none'
-        menosC2.style.display = 'none'
-        export2.style.display = 'none'
-        resetC2.style.display = 'none'
-        formatoEX.style.display = 'none'
-        tabela1.style.display = 'none'
-        ordenar.style.display = 'none'
-        posicao.style.display = 'none'
+        tabelaVazia()
         seletorDeArquivo.style.display = 'inline-block'
         }else{
-        tabela.style.display = 'block'
-        containerM0.style.display = 'block'
-        menosC2.style.display = 'inline-block'
-        export2.style.display = 'inline-block'
-        resetC2.style.display = 'inline-block'
-        formatoEX.style.display = 'inline-block'
-        ordenar.style.display = 'inline-block'
-        posicao.style.display = 'inline-block'
+        tabelaCheia()
         resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
         }
     } else {
@@ -642,29 +595,37 @@ function exibeArea2() {
         }
 
         if (array2d.length == 0) { // Verifica se o array2d está vazio
-            tabela.style.display = 'none'
-            containerM0.style.display = 'none'
-            menosC2.style.display = 'none'
-            export2.style.display = 'none'
-            resetC2.style.display = 'none'
-            formatoEX.style.display = 'none'
-            tabela1.style.display = 'none'
-            ordenar.style.display = 'none'
-            posicao.style.display = 'none'
-            seletorDeArquivo.style.display = 'inline-block'
+            tabelaVazia()
         }else{
-            tabela.style.display = 'block'
-            containerM0.style.display = 'block'
-            menosC2.style.display = 'inline-block'
-            export2.style.display = 'inline-block'
-            resetC2.style.display = 'inline-block'
-            formatoEX.style.display = 'inline-block'
-            ordenar.style.display = 'inline-block'
-            posicao.style.display = 'inline-block'
+            tabelaCheia()
             resS2.innerHTML = `<tr><th colspan="1">Soma:</th><td colspan='1'>${somaA.toLocaleString('pt-BR')}</td><td colspan='1'>${somaL.toLocaleString('pt-BR')}</td><td colspan='1'>${soma2.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome // Ordena o array2d por nome
+}
+
+function tabelaVazia() {
+    tabela.style.display = 'none'
+    containerM0.style.display = 'none'
+    menosC2.style.display = 'none'
+    export2.style.display = 'none'
+    resetC2.style.display = 'none'
+    formatoEX.style.display = 'none'
+    tabela1.style.display = 'none'
+    ordenar.style.display = 'none'
+    posicao.style.display = 'none'
+    seletorDeArquivo.style.display = 'inline-block'
+}
+
+function tabelaCheia() {
+    tabela.style.display = 'block'
+    containerM0.style.display = 'block'
+    menosC2.style.display = 'inline-block'
+    export2.style.display = 'inline-block'
+    resetC2.style.display = 'inline-block'
+    formatoEX.style.display = 'inline-block'
+    ordenar.style.display = 'inline-block'
+    posicao.style.display = 'inline-block'
 }
 
 // Função para editar uma linha da tabela M2
@@ -709,12 +670,14 @@ function editarLinhaM2(index) {
         }
     }
 
-    // Botão salvar
-    const btnSalvar = document.createElement('button');
-    btnSalvar.textContent = 'Alterar';
-    btnSalvar.style.backgroundColor = '#6969AD'; // Cor verde para o botão de salvar
-    btnSalvar.style.color = '#FFD416'; // Cor do texto do botão
-    btnSalvar.onclick = function(e) {
+    
+
+    // Botão Alterar
+    const btnAlterar = document.createElement('button');
+    btnAlterar.textContent = 'Alterar';
+    btnAlterar.style.backgroundColor = '#6969AD'; // Cor verde para o botão de salvar
+    btnAlterar.style.color = '#FFD416'; // Cor do texto do botão
+    btnAlterar.onclick = function(e) {
         e.stopPropagation();
         camposEditaveis.forEach(function(idx) {
             if (inputRefs[idx]) {
@@ -726,8 +689,8 @@ function editarLinhaM2(index) {
         array2d[index] = [nome, altura, largura, altura * largura, pro, altura * largura * pro, pro2, altura * largura * pro * pro2]; //
         exibeArea2();
     };
-    btnSalvar.addEventListener('click', function(e) { e.stopPropagation(); });
-    linha.appendChild(btnSalvar);
+    btnAlterar.addEventListener('click', function(e) { e.stopPropagation(); });
+    linha.appendChild(btnAlterar);
 
     // Botão deletar
     const btnDeletar = document.createElement('button');
@@ -739,7 +702,40 @@ function editarLinhaM2(index) {
     };
     btnDeletar.addEventListener('click', function(e) { e.stopPropagation(); });
     linha.appendChild(btnDeletar);
+
+    // Permite salvar com Enter em qualquer input, chamando o botão 'Alterar'
+    camposEditaveis.forEach(function(idx) {
+        if (inputRefs[idx]) {
+            inputRefs[idx].addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    btnAlterar.click();
+                }
+            });
+        }
+    });
 }
+
+// Função para editar/capturar clique na linha da tabela m1
+// Função para editar/capturar clique na linha da tabela m1
+function editarLinhaM1(index) {
+    // Busca o nome diretamente da primeira célula da linha exibida
+    const resM1 = document.querySelector('#resultadoM1');
+    const linha = resM1.children[index];
+    let nome = '';
+    if (linha && linha.children.length > 0) {
+        nome = linha.children[0].textContent;
+    } else if (arrayM1[index] && arrayM1[index][0]) {
+        nome = arrayM1[index][0];
+    } else {
+        nome = 'Nome não encontrado';
+    }
+    alert('Nome da linha: ' + nome);
+    // Aqui você pode implementar edição ou outra ação desejada
+}
+
+// Ao exibir a tabela m1, torne as linhas clicáveis
+
+
 
 function mudouNome() {
     tabela1 = document.querySelector('table#m1')
@@ -794,25 +790,30 @@ function checarNome(){
             }
             somaPorNome3[somaArea3] += Number(area3); // Adiciona a área à soma correspondente ao nome
             }
+
             if(tempTypeMed == 1){
             for (let nome in somaPorNome) {
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
             }
+
             } else if (tempTypeMed == 2) {
                 for (let nome in somaPorNome) {
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+
             }
             } else if (tempTypeMed == 3) {
                 for (let nome in somaPorNome) {
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+
             }
             } else if (tempTypeMed == 4) {
                 for (let nome in somaPorNome) {
                 arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome], somaPorNome3[nome]]); // Adiciona o nome e a soma ao arrayM1
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome3[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
+
             }
             }
         } else {
@@ -830,10 +831,20 @@ function checarNome(){
             for (let nome in somaPorNome) {
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
                 arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
-            }
+                
         }
         mudouNome()
 }
+}
+
+function editarLinhaM1(nome) {
+    alert(nome)
+        exibeArea2(); // Fecha qualquer edição anterior
+        const tabelaM1 = document.querySelector('#resultadoM1');
+        const linhaM1 = tabelaM1.children[nome];
+        if (!linhaM1) return;
+        alert(nome)
+    }
 
 
 function resetarC2(){
@@ -936,9 +947,6 @@ function exportar() {
 
 
 function exportarParaPDF() {
-
-
-
     const tabela = document.querySelector('table#m2');
     if (!tabela) {
         alert('Tabela não encontrada!');
@@ -1372,7 +1380,6 @@ function exportar13() {
                 <td>${profundidade.toLocaleString('pt-BR')}</td>
                 <td>${area3.toLocaleString('pt-BR')}</td>
             </tr>`;
-        
     }
     // Soma final
     html += `<tr>
@@ -1383,7 +1390,7 @@ function exportar13() {
         <td>${somaP.toLocaleString('pt-BR')}</td>
         <td>${soma3.toLocaleString('pt-BR')}</td>
     </tr>`;
-    html += `<tr colspan='6'></tr>`
+    html += `<tr></tr>`
     html += `<tr><th colspan="3">Soma dos Itens</th><th>Área</th><th colspan='2'>un/Área</th></tr>`
     for (let i = 0; i < arrayM1.length; i++) {
         const [nome, area, area3] = arrayM1[i];
@@ -1506,11 +1513,9 @@ function exportar2(nome1, nome2) {
     let soma2 = 0; // Inicializa a variável de soma
     let somaA = 0; // Inicializa a variável de soma das alturas
     let somaL = 0; // Inicializa a variável de soma das larguras
-    for (let i = 0; i < array2d.length; i++) {
-            soma2 += Number(array2d[i][3]);
-            somaA += Number(array2d[i][1]);
-            somaL += Number(array2d[i][2]);
-    }
+    for (let i = 0; i < array2d.length; i++) soma2 += Number(array2d[i][3]);
+    for (let i = 0; i < array2d.length; i++) somaA += Number(array2d[i][1]);
+    for (let i = 0; i < array2d.length; i++) somaL += Number(array2d[i][2]);
     arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
     arrayTemp.push(["Soma dos Itens",'','', "Área"]);
@@ -1748,8 +1753,6 @@ function exportar24(nome1, nome2) {
 }
 
 
-
-
 function importarCSVparaArray2d(file) {
     const leitor = new FileReader(); // Cria um novo FileReader
     leitor.onload = function(e) { // Define o que fazer quando o arquivo for carregado
@@ -1837,8 +1840,8 @@ function importarCSVparaArray2d(file) {
                     let nome = partes[0]; // Obtém o nome da primeira parte
                     let altura = strNum(partes[1]); // Converte a altura para número, substituindo vírgula por ponto
                     let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
-                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número, substituindo vírgula por ponto
+                    let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let area3 = strNum(partes[5]); // Converte a área 3D para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
