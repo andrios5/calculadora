@@ -445,8 +445,8 @@ function noScroll() {
      if(tempPosicao == 1){
         let larguraDaTela = window.innerWidth;
         if (larguraDaTela <= 360) {
-            let tempScroll = altura2 + 200
-        window.scrollTo(0, tempScroll);} else {window.scrollTo(0, altura2)}
+            let tempScroll = altura2 + 100
+        window.scrollTo(0, tempScroll);} else if (larguraDaTela <= 420) {window.scrollTo(0, altura2 - 150);} else if (larguraDaTela <= 750) {window.scrollTo(0, altura2 - 200);} else {window.scrollTo(0, altura2 - 300);};
     } else {
         cont2.scrollTo(0, altura1)
     }
@@ -715,7 +715,6 @@ function editarLinhaM2(index) {
     });
 }
 
-// Função para editar/capturar clique na linha da tabela m1
 // Função para editar/capturar clique na linha da tabela m1
 function editarLinhaM1(index) {
     // Busca o nome diretamente da primeira célula da linha exibida

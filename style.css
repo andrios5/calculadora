@@ -547,8 +547,71 @@ a {
 }
 
 
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .esquadro-container {
+        padding: 20px;
+        min-height: 350px;
+    }
+    
+    .esquadro {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .lado-vertical {
+        left: -70px;
+    }
+    
+    .lado-horizontal {
+        bottom: -70px;
+    }
+    
+    .input-lado,
+    .input-hipotenusa {
+        width: 70px;
+        height: 35px;
+        font-size: 16px;
+    }
+    
+    .label-lado,
+    .label-hipotenusa {
+        font-size: 14px;
+    }
+}
 
-
+@media (max-width: 480px) {
+    .esquadro-container {
+        padding: 15px;
+        min-height: 300px;
+    }
+    
+    .esquadro {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .lado-vertical {
+        left: -60px;
+    }
+    
+    .lado-horizontal {
+        bottom: -60px;
+    }
+    
+    .input-lado,
+    .input-hipotenusa {
+        width: 60px;
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .label-lado,
+    .label-hipotenusa {
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+}
 
 @media screen and (min-width: 1500px) {
 h1 {
