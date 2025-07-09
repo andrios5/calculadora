@@ -26,3 +26,18 @@ div.containerm2 > label {
 select {
     cursor: pointer;
 }
+
+h3 {
+    background-color: var(--cor2);
+    border-radius: 15px;
+    margin: 15px;
+    display: none;
+}
+
+tr > button {
+    display: inline-block;
+    margin: 7.5px;
+    font-size: 0.75em;
+    padding: 0px 5px;
+    height: 0;
+}

@@ -446,7 +446,7 @@ function exibeArea2() {
     resS2 = document.querySelector('#resultadoS2')
     tabela = document.querySelector('table#m2')
     theadM2 = document.querySelector('#theadM2')
-
+    document.querySelector('h3.edicao').style.display = 'none';
     if (vetorOrdenando === true) { // Verifica se o vetor está sendo ordenado
         ordenarArray2dPorNome(); // Ordena o array2d por nome
     }
@@ -456,7 +456,16 @@ function exibeArea2() {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th><th>R$/un</th><th>Preço</th></tr>`
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, un, area3, preco, area4] = array2d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td  class="cSoma">${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td  class="cSoma">${area3.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td class="cSoma">${area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            let linha = document.createElement('tr');
+            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td  class='cSoma'>${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td  class='cSoma'>${area3.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td class='cSoma'>${area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>`;
+            linha.style.cursor = 'pointer';
+            linha.addEventListener('click', function(e) {
+    // Só chama editarLinhaM2 se não estiver editando já
+            if (!linha.classList.contains('editando')) {
+                    editarLinhaM2(i);
+                }
+            });
+            resM2.appendChild(linha);
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
             soma2 += Number(array2d[i][3]);
@@ -491,7 +500,16 @@ function exibeArea2() {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, un, area3] = array2d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
+            let linha = document.createElement('tr');
+            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td>`;
+            linha.style.cursor = 'pointer';
+            linha.addEventListener('click', function(e) {
+    // Só chama editarLinhaM2 se não estiver editando já
+            if (!linha.classList.contains('editando')) {
+                    editarLinhaM2(i);
+                }
+            });
+            resM2.appendChild(linha);
             soma2 += Number(array2d[i][3]);
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
@@ -525,7 +543,16 @@ function exibeArea2() {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/m²</th><th>Preço</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, preco, area3] = array2d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+            let linha = document.createElement('tr');
+            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>`;
+            linha.style.cursor = 'pointer';
+            linha.addEventListener('click', function(e) {
+    // Só chama editarLinhaM2 se não estiver editando já
+            if (!linha.classList.contains('editando')) {
+                    editarLinhaM2(i);
+                }
+            });
+            resM2.appendChild(linha);
             soma2 += Number(array2d[i][3]);
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
@@ -557,7 +584,16 @@ function exibeArea2() {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>Profund.</th><th>m²</th><th>m³</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, profundidade, area3] = array2d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${profundidade.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td></tr>`;
+            let linha = document.createElement('tr');
+            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${profundidade.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td>`;
+            linha.style.cursor = 'pointer';
+            linha.addEventListener('click', function(e) {
+    // Só chama editarLinhaM2 se não estiver editando já
+            if (!linha.classList.contains('editando')) {
+                    editarLinhaM2(i);
+                }
+            });
+            resM2.appendChild(linha);
             soma2 += Number(array2d[i][3]);
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
@@ -590,11 +626,21 @@ function exibeArea2() {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area] = array2d[i];
-            resM2.innerHTML += `<tr><th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td></tr>`;
+            let linha = document.createElement('tr');
+            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td> <td>${largura.toLocaleString('pt-BR')}</td> <td>${area.toLocaleString('pt-BR')}</td>`;
+            linha.style.cursor = 'pointer';
+            linha.addEventListener('click', function(e) {
+    // Só chama editarLinhaM2 se não estiver editando já
+            if (!linha.classList.contains('editando')) {
+                    editarLinhaM2(i);
+                }
+            });
+            resM2.appendChild(linha);
             soma2 += Number(array2d[i][3]);
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
         }
+
         if (array2d.length == 0) { // Verifica se o array2d está vazio
             tabela.style.display = 'none'
             containerM0.style.display = 'none'
@@ -619,6 +665,80 @@ function exibeArea2() {
         }
     }
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome // Ordena o array2d por nome
+}
+
+// Função para editar uma linha da tabela M2
+function editarLinhaM2(index) {
+    exibeArea2(); // Fecha qualquer edição anterior
+    document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
+    const tabela = document.querySelector('#resultadoM2');
+    const linha = tabela.children[index];
+    if (!linha) return;
+
+    linha.classList.add('editando');
+
+    // Descobre os campos editáveis de acordo com o tipo de medição
+    let camposEditaveis = [];
+    if (typeof tempTypeMed === 'undefined' || tempTypeMed === 0) {
+        camposEditaveis = [0, 1, 2];
+    } else if (tempTypeMed == 1) {
+        camposEditaveis = [0, 1, 2, 3];
+    } else if (tempTypeMed == 2) {
+        camposEditaveis = [0, 1, 2, 4];
+    } else if (tempTypeMed == 3) {
+        camposEditaveis = [0, 1, 2, 4];
+    } else if (tempTypeMed == 4) {
+        camposEditaveis = [0, 1, 2, 4, 6];
+    }
+    let inputRefs = [];
+    const dados = array2d[index].slice();
+    for (let i = 0; i < linha.children.length; i++) {
+        const celula = linha.children[i];
+        if (camposEditaveis.includes(i)) {
+            const input = document.createElement('input');
+            input.type = (i === 0) ? 'text' : 'number';
+            input.value = dados[i] !== undefined ? dados[i] : '';
+            input.style.width = '80px';
+            input.style.backgroundColor = '#f0f0f0';
+            input.style.border = '1px solid #ccc';
+            celula.textContent = '';
+            celula.appendChild(input);
+            inputRefs[i] = input;
+            input.addEventListener('click', function(e) { e.stopPropagation(); });
+            input.addEventListener('focus', function() { this.select(); });
+        }
+    }
+
+    // Botão salvar
+    const btnSalvar = document.createElement('button');
+    btnSalvar.textContent = 'Alterar';
+    btnSalvar.style.backgroundColor = '#6969AD'; // Cor verde para o botão de salvar
+    btnSalvar.style.color = '#FFD416'; // Cor do texto do botão
+    btnSalvar.onclick = function(e) {
+        e.stopPropagation();
+        camposEditaveis.forEach(function(idx) {
+            if (inputRefs[idx]) {
+                array2d[index][idx] = inputRefs[idx].value;
+            }
+        });
+        
+        const [nome, altura, largura, area, pro, area2, pro2] = array2d[index];
+        array2d[index] = [nome, altura, largura, altura * largura, pro, altura * largura * pro, pro2, altura * largura * pro * pro2]; //
+        exibeArea2();
+    };
+    btnSalvar.addEventListener('click', function(e) { e.stopPropagation(); });
+    linha.appendChild(btnSalvar);
+
+    // Botão deletar
+    const btnDeletar = document.createElement('button');
+    btnDeletar.textContent = 'Deletar';
+    btnDeletar.onclick = function(e) {
+        e.stopPropagation();
+        array2d.splice(index, 1); // Remove a linha do array2d
+        exibeArea2(); // Atualiza a tabela
+    };
+    btnDeletar.addEventListener('click', function(e) { e.stopPropagation(); });
+    linha.appendChild(btnDeletar);
 }
 
 function mudouNome() {
