@@ -39,6 +39,7 @@ containerM1 = document.querySelector('#containerM1')
 theadM1 = document.querySelector('#theadM1')
 dataMed = document.querySelector('#dataMed')
 nomeMed = document.querySelector('#nomeMed')
+mEdicao = document.querySelector('#edicaoM2')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -203,10 +204,6 @@ dropArea.addEventListener('drop', function(e) { // Evento de drop
         alteraInput()
 });
 
-
-
-
-
 formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
 formatoEX.innerHTML += `<option value="2">DOC</option>`
@@ -221,7 +218,7 @@ let tempTypeMed = 0 // Variável para armazenar o tipo de medição selecionado
 let tempTypeMed2 = 0
 let tempTypeMed3 = 0 // Variável para armazenar o tipo de medição selecionado
 let tempData = ''
-
+let tempEdicao = 0
 
 typeMed ()
 dataMedicao ()
@@ -355,7 +352,6 @@ function ordenarArray2dPorNome() {
     }
 }
 
-
 function calcularArea2(){
         let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
         alt = document.querySelector('#altura')
@@ -450,7 +446,6 @@ function noScroll() {
     } else {
         cont2.scrollTo(0, altura1)
     }
-    
 }
 
 function exibeArea2() {
@@ -465,6 +460,7 @@ function exibeArea2() {
     tabela = document.querySelector('table#m2')
     theadM2 = document.querySelector('#theadM2')
     document.querySelector('h3.edicao').style.display = 'none';
+    document.querySelector('button.edicao').style.display = 'none';
     if (vetorOrdenando === true) { // Verifica se o vetor está sendo ordenado
         ordenarArray2dPorNome(); // Ordena o array2d por nome
     }
@@ -614,6 +610,7 @@ function tabelaVazia() {
     tabela1.style.display = 'none'
     ordenar.style.display = 'none'
     posicao.style.display = 'none'
+    mEdicao.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
 }
 
@@ -626,17 +623,25 @@ function tabelaCheia() {
     formatoEX.style.display = 'inline-block'
     ordenar.style.display = 'inline-block'
     posicao.style.display = 'inline-block'
+    mEdicao.style.display = 'inline-block'
 }
 
 // Função para editar uma linha da tabela M2
 function editarLinhaM2(index) {
     exibeArea2(); // Fecha qualquer edição anterior
-    document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
     const tabela = document.querySelector('#resultadoM2');
     const linha = tabela.children[index];
+    tempEdicao = 2
+    btnEdicao();
+    document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
+    document.querySelector('h3.edicao').textContent = 'Modo de Edição'; // Exibe o título de edição
     if (!linha) return;
 
     linha.classList.add('editando');
+
+    document.querySelector('button.edicao').addEventListener('click', function() {
+        exibeArea2(); // Fecha qualquer edição anterior
+    });
 
     // Descobre os campos editáveis de acordo com o tipo de medição
     let camposEditaveis = [];
@@ -670,8 +675,6 @@ function editarLinhaM2(index) {
         }
     }
 
-    
-
     // Botão Alterar
     const btnAlterar = document.createElement('button');
     btnAlterar.textContent = 'Alterar';
@@ -686,7 +689,7 @@ function editarLinhaM2(index) {
         });
         
         const [nome, altura, largura, area, pro, area2, pro2] = array2d[index];
-        array2d[index] = [nome, altura, largura, altura * largura, pro, altura * largura * pro, pro2, altura * largura * pro * pro2]; //
+        array2d[index] = [nome, altura, largura, altura * largura, pro, altura * largura * pro, pro2, altura * largura * pro * pro2];
         exibeArea2();
     };
     btnAlterar.addEventListener('click', function(e) { e.stopPropagation(); });
@@ -715,25 +718,6 @@ function editarLinhaM2(index) {
     });
 }
 
-// Função para editar/capturar clique na linha da tabela m1
-function editarLinhaM1(index) {
-    // Busca o nome diretamente da primeira célula da linha exibida
-    const resM1 = document.querySelector('#resultadoM1');
-    const linha = resM1.children[index];
-    let nome = '';
-    if (linha && linha.children.length > 0) {
-        nome = linha.children[0].textContent;
-    } else if (arrayM1[index] && arrayM1[index][0]) {
-        nome = arrayM1[index][0];
-    } else {
-        nome = 'Nome não encontrado';
-    }
-    alert('Nome da linha: ' + nome);
-    // Aqui você pode implementar edição ou outra ação desejada
-}
-
-// Ao exibir a tabela m1, torne as linhas clicáveis
-
 
 
 function mudouNome() {
@@ -741,7 +725,7 @@ function mudouNome() {
     if (arrayM1.length >= 2) { // Verifica se o arrayM1 tem mais de um elemento e se o tipo de medição é diferente de 0
     tabela1.style.display = 'block'
     containerM1.style.display = 'block'
-    if (tempTypeMed == 1) {
+        if (tempTypeMed == 1) {
         theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área(m²)</th><th>Área(m³)</th></tr>`; // Atualiza o cabeçalho da tabela'
         } else if (tempTypeMed == 2) {
             theadM1.innerHTML = `<tr><th>Soma dos Itens</th><th>Área</th><th>R$</th></tr>`; // Atualiza o cabeçalho da tabela
@@ -766,84 +750,61 @@ function checarNome(){
         arrayM1.length = 0; // Array para armazenar os nomes únicos
 
         
-        if(tempTypeMed == 1 || tempTypeMed == 2 || tempTypeMed == 3 || tempTypeMed == 4) { // Verifica se o tipo de medição é 3D ou monetário
-            for (let i = 0; i < array2d.length; i++) {
-            const [nome, , , area, , area2, ,area3] = array2d[i];
+        for (let i = 0; i < array2d.length; i++) {
+        const [nome, , , area, , area2, ,area3] = array2d[i];
 
-            let nomeLimpo = nome
-            let somaArea2 = nome
-            let somaArea3 = nome
+        let nomeLimpo = nome
+        let somaArea2 = nome
+        let somaArea3 = nome
 
-            if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
-                somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
-            }
-            somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
-
-            if (!somaPorNome2[somaArea2]) { // Verifica se o nome já existe no objeto
-                somaPorNome2[somaArea2] = 0; // Inicializa a soma para este nome
-            }
-            somaPorNome2[somaArea2] += Number(area2); // Adiciona a área à soma correspondente ao nome
-
-            if (!somaPorNome3[somaArea3]) { // Verifica se o nome já existe no objeto
-                somaPorNome3[somaArea3] = 0; // Inicializa a soma para este nome
-            }
-            somaPorNome3[somaArea3] += Number(area3); // Adiciona a área à soma correspondente ao nome
-            }
-
-            if(tempTypeMed == 1){
-            for (let nome in somaPorNome) {
-                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
-                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
-            }
-
-            } else if (tempTypeMed == 2) {
-                for (let nome in somaPorNome) {
-                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
-                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
-
-            }
-            } else if (tempTypeMed == 3) {
-                for (let nome in somaPorNome) {
-                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
-                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
-
-            }
-            } else if (tempTypeMed == 4) {
-                for (let nome in somaPorNome) {
-                arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome], somaPorNome3[nome]]); // Adiciona o nome e a soma ao arrayM1
-                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome3[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
-
-            }
-            }
-        } else {
-            for (let i = 0; i < array2d.length; i++) {
-            const [nome, , , area] = array2d[i];
-
-            let nomeLimpo = nome
-
-            if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
-                somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
-            }
-            somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
-            }
-  
-            for (let nome in somaPorNome) {
-                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
-                arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
-                
+        if (!somaPorNome[nomeLimpo]) { // Verifica se o nome já existe no objeto
+            somaPorNome[nomeLimpo] = 0; // Inicializa a soma para este nome
         }
-        mudouNome()
-}
-}
+        somaPorNome[nomeLimpo] += Number(area); // Adiciona a área à soma correspondente ao nome
 
-function editarLinhaM1(nome) {
-    alert(nome)
-        exibeArea2(); // Fecha qualquer edição anterior
-        const tabelaM1 = document.querySelector('#resultadoM1');
-        const linhaM1 = tabelaM1.children[nome];
-        if (!linhaM1) return;
-        alert(nome)
-    }
+        if (!somaPorNome2[somaArea2]) { // Verifica se o nome já existe no objeto
+            somaPorNome2[somaArea2] = 0; // Inicializa a soma para este nome
+        }
+        somaPorNome2[somaArea2] += Number(area2); // Adiciona a área à soma correspondente ao nome
+
+        if (!somaPorNome3[somaArea3]) { // Verifica se o nome já existe no objeto
+            somaPorNome3[somaArea3] = 0; // Inicializa a soma para este nome
+        }
+        somaPorNome3[somaArea3] += Number(area3); // Adiciona a área à soma correspondente ao nome
+        }
+
+        if(tempTypeMed == 1){
+        for (let nome in somaPorNome) {
+            resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
+            arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+        }
+
+        } else if (tempTypeMed == 2) {
+            for (let nome in somaPorNome) {
+            resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
+            arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+
+        }
+        } else if (tempTypeMed == 3) {
+            for (let nome in somaPorNome) {
+            resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
+            arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+
+        }
+        } else if (tempTypeMed == 4) {
+            for (let nome in somaPorNome) {
+            arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome], somaPorNome3[nome]]); // Adiciona o nome e a soma ao arrayM1
+            resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome3[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
+
+        }
+        } else {
+            for (let nome in somaPorNome) {
+                arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
+                resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
+            }
+        }
+    mudouNome()
+}
 
 
 function resetarC2(){
@@ -942,8 +903,6 @@ function exportar() {
     }
 
 }
-
-
 
 function exportarParaPDF() {
     const tabela = document.querySelector('table#m2');
@@ -2023,3 +1982,53 @@ function importarXLSparaArray2d(file) {
     };
     leitor.readAsText(file, 'utf-8');
 }
+
+mEdicao.addEventListener('click', btnEdicao) 
+function btnEdicao(){
+    if (tempEdicao == 0) {
+        exibeArea2(); // Fecha a edição simples
+        tempEdicao = 1; // Ativa o modo de edição
+        mEdicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está editando
+        mEdicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
+        seletorDeArquivo.disabled = true;
+        medType.disabled = true;
+        export2.disabled = true; // Desabilita o botão de exportação
+        ordenarM2.disabled = true; // Desabilita o botão de ordenar
+        menosC2.style.display = 'none'; // Esconde o botão de menos
+        med2.style.display = 'none'; // Esconde o botão de mais
+        document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
+        document.querySelector('h3.edicao').textContent = 'Modo de Edição Multi Itens'; // Atualiza o título de edição
+        multiEdicao();
+    } else if (tempEdicao == 1) {
+        tempEdicao = 0; // Desativa o modo de edição
+        mEdicao.style.backgroundColor = ''; // Restaura a cor original do botão
+        mEdicao.style.boxShadow = ''; // Remove a sombra do botão
+        seletorDeArquivo.disabled = false;
+        medType.disabled = false;
+        export2.disabled = false; // Habilita o botão de exportação
+        ordenarM2.disabled = false; // Habilita o botão de ordenar
+        menosC2.style.display = 'inline'; // Exibe o botão de menos
+        med2.style.display = 'inline'; // Exibe o botão de mais
+        document.querySelector('h3.edicao').style.display = 'none'; // Esconde o título de edição
+        exibeArea2(); // Atualiza a tabela na tela
+    } else if (tempEdicao == 2) {
+        tempEdicao = 0; // Desativa o modo de edição
+        mEdicao.style.backgroundColor = ''; // Restaura a cor original do botão
+        mEdicao.style.boxShadow = ''; // Remove a sombra do botão
+        seletorDeArquivo.disabled = false;
+        medType.disabled = false;
+        export2.disabled = false; // Habilita o botão de exportação
+        ordenarM2.disabled = false; // Habilita o botão de ordenar
+        menosC2.style.display = 'inline'; // Exibe o botão de menos
+        med2.style.display = 'inline'; // Exibe o botão de mais
+        document.querySelector('h3.edicao').style.display = 'none'; // Esconde o título de edição
+    }
+}
+
+function multiEdicao() {
+    if (tempEdicao == 1) {
+        // Desabilita os campos de entrada
+        console.log('Modo de edição ativado');
+    }
+}
+

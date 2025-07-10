@@ -27,6 +27,10 @@ select {
     cursor: pointer;
 }
 
+.edicao {
+    display: none;
+}
+
 h3 {
     border-radius: 15px;
     margin: 15px;
@@ -35,7 +39,12 @@ h3 {
 
 h3.edicao {
     background-color: var(--cor2);
-    display: none;
+}
+
+button.edicao {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 tr > button {

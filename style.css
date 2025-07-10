@@ -391,7 +391,7 @@ section#m2, section#m3 {
     display: block;
 }
 
-button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX, #ordenarM2, #posicaoM2 {
+button#menosC2, button#menosC3, button#export2, button#export3, button#resetC2, button#resetC3, div.containerMedida, select#formatoEX, #ordenarM2, #posicaoM2, #edicaoM2 {
     display: none;
 }
 
@@ -866,7 +866,7 @@ section#m2 input {
         padding: 5px;
     }
 
-    #menosC2, #med2 {
+    #menosC2, #med2, #edicaoM2 {
         width: 90px;
         padding: 20px 10px;
     }
@@ -1010,6 +1010,11 @@ section#m2 input {
     input#seletorDeArquivo {
         min-width: 300px;
     }
+
+    #menosC2, #med2, #edicaoM2 {
+        width: 80px;
+        padding: 20px 10px;
+    }
 }
 
 @media screen and (max-width: 370px) {
@@ -1037,6 +1042,11 @@ section#m2 input {
     }
     input#seletorDeArquivo {
         min-width: 250px;
+    }
+
+    #menosC2, #med2, #edicaoM2 {
+        width: 70px;
+        padding: 15px 10px;
     }
 
 }
