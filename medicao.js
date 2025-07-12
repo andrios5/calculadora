@@ -764,7 +764,7 @@ function mudouNome() {
 function checarNome(){
         resM1 = document.querySelector('#resultadoM1')
         resM1.innerHTML = ''
-        sedition.innerHTML = '...' // Limpa o conteúdo anterior do seletor
+        sedition.innerHTML = '' // Limpa o conteúdo anterior do seletor
         
         let somaPorNome = {}; // Objeto para armazenar a soma por nome
         let somaPorNome2 = {}; // Objeto para armazenar a soma por nome para área 3D
@@ -2046,6 +2046,7 @@ function btnEdicao(){
         deletarM2.style.display = 'none'; // Esconde o botão de deletar
         alterarM2.style.display = 'none'; // Esconde o botão de alterar
         sedition.style.display = 'inline-block'; // Exibe o seletor de edição
+        sedition.value = ''; // Limpa o seletor de edição
         document.querySelector('h3#selecao').style.display = 'block'; // Exibe o título de seleção
         multiEdicao();
     } else if (tempEdicao == 1) {
@@ -2096,7 +2097,6 @@ function multiEdicao() {
             largura.value = ''; // Limpa o campo de largura
             profund.value = ''; // Limpa o campo de profundidade
             profund2.value = ''; // Limpa o campo de profundidade 2
-            
         });
     }
 }
@@ -2146,7 +2146,6 @@ function alterarM2Func() {
             }
         }
     }
-    exibeArea2(); // Atualiza a tabela na tela
     tempEdicao = 0; // Desativa o modo de edição
     btnEdicao(); // Chama a função de edição
 }
