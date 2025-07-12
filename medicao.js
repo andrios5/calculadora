@@ -56,27 +56,31 @@ if (nome2.value == '') { // Verifica se o campo de nome está vazio
 }
 
 document.querySelector('#largura').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+    if (e.key === 'Enter' && tempEdicao == 0) { // Verifica se a tecla pressionada é 'Enter'
         calcularArea2();
-    }
+    } else if (e.key === 'Enter' && tempEdicao > 0) { 
+        alterarM2Func()}// Verifica se a tecla pressionada é 'Enter'
 });
 
 document.querySelector('#altura').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+    if (e.key === 'Enter' && tempEdicao == 0) { // Verifica se a tecla pressionada é 'Enter'
         calcularArea2();
-    }
+    } else if (e.key === 'Enter' && tempEdicao > 0) { 
+        alterarM2Func()}// Verifica se a tecla pressionada é 'Enter'
 });
 
 document.querySelector('#profund').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+    if (e.key === 'Enter' && tempEdicao == 0) { // Verifica se a tecla pressionada é 'Enter'
         calcularArea2();
-    }
+    } else if (e.key === 'Enter' && tempEdicao > 0) { 
+        alterarM2Func()}// Verifica se a tecla pressionada é 'Enter'
 });
 
 document.querySelector('#profund2').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { // Verifica se a tecla pressionada é 'Enter'
+    if (e.key === 'Enter' && tempEdicao == 0) { // Verifica se a tecla pressionada é 'Enter'
         calcularArea2();
-    }
+    } else if (e.key === 'Enter' && tempEdicao > 0) { 
+        alterarM2Func()}// Verifica se a tecla pressionada é 'Enter'
 });
 
 seletorDeArquivo.addEventListener('change', function(e){
@@ -636,6 +640,7 @@ function editarLinhaM2(index) {
     btnEdicao();
     document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
     document.querySelector('h3.edicao').textContent = 'Modo de Edição'; // Exibe o título de edição
+    document.querySelector('button.edicao').style.display = 'inline-block'; // Exibe o botão de edição
     if (!linha) return;
 
     linha.classList.add('editando');
@@ -2073,6 +2078,7 @@ function multiEdicao() {
             largura.value = ''; // Limpa o campo de largura
             profund.value = ''; // Limpa o campo de profundidade
             profund2.value = ''; // Limpa o campo de profundidade 2
+            
         });
     }
 }
