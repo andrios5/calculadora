@@ -47,6 +47,38 @@ button.edicao {
     margin-right: auto;
 }
 
+h3#selecao {
+    background-color: var(--cor3);
+    color: var(--cor5);
+    width: fit-content;
+    margin: 15px auto 0 auto;
+    display: none;
+    box-shadow: none;
+    font-size: 1.25em;
+}
+
+div#selecaoM2 {
+    margin-top: 15px;
+    background-color: var(--cor3);
+    color: var(--cor5);
+    width: fit-content;
+    margin: auto;
+    border-radius: 15px;
+}
+
+
+#sedicaoM2 {
+    display: none;
+    overflow: auto;
+    font-size: 1.25em;
+    min-width: 60%;
+    text-align: center;
+    margin-top: 0px;
+    box-shadow: none;
+    background-color: var(--cor5);
+    color: var(--cor3);
+}
+
 tr > button {
     display: inline-block;
     margin: 7.5px;

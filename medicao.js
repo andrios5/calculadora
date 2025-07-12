@@ -40,6 +40,7 @@ theadM1 = document.querySelector('#theadM1')
 dataMed = document.querySelector('#dataMed')
 nomeMed = document.querySelector('#nomeMed')
 mEdicao = document.querySelector('#edicaoM2')
+sedition = document.getElementById('sedicaoM2')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -740,9 +741,9 @@ function mudouNome() {
 }
 
 function checarNome(){
-    
         resM1 = document.querySelector('#resultadoM1')
         resM1.innerHTML = ''
+        sedition.innerHTML = '' // Limpa o conteúdo anterior do seletor
         
         let somaPorNome = {}; // Objeto para armazenar a soma por nome
         let somaPorNome2 = {}; // Objeto para armazenar a soma por nome para área 3D
@@ -777,30 +778,50 @@ function checarNome(){
         for (let nome in somaPorNome) {
             resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
             arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+            let item = document.createElement('option'); // Cria um elemento span para exibir o nome
+            item.text = nome; // Define o texto do span como o nome
+            item.value = nome; // Define o valor do span como o nome
+            sedition.appendChild(item)
         }
 
         } else if (tempTypeMed == 2) {
             for (let nome in somaPorNome) {
             resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
             arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+            let item = document.createElement('option'); // Cria um elemento span para exibir o nome
+            item.text = nome; // Define o texto do span como o nome
+            item.value = nome; // Define o valor do span como o nome
+            sedition.appendChild(item)
 
         }
         } else if (tempTypeMed == 3) {
             for (let nome in somaPorNome) {
             resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
             arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome]]); // Adiciona o nome e a soma ao arrayM1
+            let item = document.createElement('option'); // Cria um elemento span para exibir o nome
+            item.text = nome; // Define o texto do span como o nome
+            item.value = nome; // Define o valor do span como o nome
+            sedition.appendChild(item)
 
         }
         } else if (tempTypeMed == 4) {
             for (let nome in somaPorNome) {
             arrayM1.push([nome, somaPorNome[nome], somaPorNome2[nome], somaPorNome3[nome]]); // Adiciona o nome e a soma ao arrayM1
             resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome2[nome].toLocaleString('pt-BR')}</td><td>${somaPorNome3[nome].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`; // Exibe a soma por nome na tabela
+            let item = document.createElement('option'); // Cria um elemento span para exibir o nome
+            item.text = nome; // Define o texto do span como o nome
+            item.value = nome; // Define o valor do span como o nome
+            sedition.appendChild(item)
 
         }
         } else {
             for (let nome in somaPorNome) {
                 arrayM1.push([nome, somaPorNome[nome]]); // Adiciona o nome e a soma ao arrayM1
                 resM1.innerHTML += `<tr><th>Soma ${nome.toLocaleString('pt-BR')}:</th><td>${somaPorNome[nome].toLocaleString('pt-BR')}</td></tr>`; // Exibe a soma por nome na tabela
+                let item = document.createElement('option'); // Cria um elemento span para exibir o nome
+                item.text = nome; // Define o texto do span como o nome
+                item.value = nome; // Define o valor do span como o nome
+                sedition.appendChild(item)
             }
         }
     mudouNome()
@@ -1983,6 +2004,9 @@ function importarXLSparaArray2d(file) {
     leitor.readAsText(file, 'utf-8');
 }
 
+deletarM2 = document.querySelector('#deletarM2'); // Botão de deletar
+alterarM2 = document.querySelector('#alterarM2'); // Botão de alterar
+let tempSedition = ''; // Variável para armazenar o seletor de edição
 mEdicao.addEventListener('click', btnEdicao) 
 function btnEdicao(){
     if (tempEdicao == 0) {
@@ -1998,6 +2022,10 @@ function btnEdicao(){
         med2.style.display = 'none'; // Esconde o botão de mais
         document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
         document.querySelector('h3.edicao').textContent = 'Modo de Edição Multi Itens'; // Atualiza o título de edição
+        deletarM2.style.display = 'none'; // Esconde o botão de deletar
+        alterarM2.style.display = 'none'; // Esconde o botão de alterar
+        sedition.style.display = 'inline-block'; // Exibe o seletor de edição
+        document.querySelector('h3#selecao').style.display = 'block'; // Exibe o título de seleção
         multiEdicao();
     } else if (tempEdicao == 1) {
         tempEdicao = 0; // Desativa o modo de edição
@@ -2007,9 +2035,13 @@ function btnEdicao(){
         medType.disabled = false;
         export2.disabled = false; // Habilita o botão de exportação
         ordenarM2.disabled = false; // Habilita o botão de ordenar
-        menosC2.style.display = 'inline'; // Exibe o botão de menos
-        med2.style.display = 'inline'; // Exibe o botão de mais
+        menosC2.style.display = 'inline-block'; // Exibe o botão de menos
+        med2.style.display = 'inline-block'; // Exibe o botão de mais
         document.querySelector('h3.edicao').style.display = 'none'; // Esconde o título de edição
+        deletarM2.style.display = 'none'; // Esconde o botão de deletar
+        alterarM2.style.display = 'none'; // Esconde o botão de alterar
+        sedition.style.display = 'none'; // Esconde o seletor de edição
+        document.querySelector('h3#selecao').style.display = 'none'; // Esconde o título de seleção
         exibeArea2(); // Atualiza a tabela na tela
     } else if (tempEdicao == 2) {
         tempEdicao = 0; // Desativa o modo de edição
@@ -2019,16 +2051,78 @@ function btnEdicao(){
         medType.disabled = false;
         export2.disabled = false; // Habilita o botão de exportação
         ordenarM2.disabled = false; // Habilita o botão de ordenar
-        menosC2.style.display = 'inline'; // Exibe o botão de menos
-        med2.style.display = 'inline'; // Exibe o botão de mais
+        menosC2.style.display = 'inline-block'; // Exibe o botão de menos
+        med2.style.display = 'inline-block'; // Exibe o botão de mais
+        deletarM2.style.display = 'none'; // Esconde o botão de deletar
+        alterarM2.style.display = 'none'; // Esconde o botão de alterar
         document.querySelector('h3.edicao').style.display = 'none'; // Esconde o título de edição
+        sedition.style.display = 'none'; // Esconde o seletor de edição
+        document.querySelector('h3#selecao').style.display = 'none'; // Esconde o título de seleção
     }
 }
 
 function multiEdicao() {
     if (tempEdicao == 1) {
         // Desabilita os campos de entrada
-        console.log('Modo de edição ativado');
+        sedition.addEventListener('change', function() {
+            tempSedition = sedition.value; // Atualiza o valor do seletor de edição
+            deletarM2.style.display = 'inline-block'; // Exibe o botão de deletar
+            alterarM2.style.display = 'inline-block'; // Exibe o botão de alterar
+            document.getElementById('nome2').value = tempSedition; // Atualiza o campo de nome com o valor do seletor de edição
+            altura.value = ''; // Limpa o campo de altura
+            largura.value = ''; // Limpa o campo de largura
+            profund.value = ''; // Limpa o campo de profundidade
+            profund2.value = ''; // Limpa o campo de profundidade 2
+        });
     }
 }
 
+deletarM2.addEventListener('click', deletarM2Func); // Adiciona o evento de clique para deletar
+alterarM2.addEventListener('click', alterarM2Func); // Adiciona o evento de clique para alterar
+
+function deletarM2Func() {
+    if (tempSedition !== '' || tempSedition !== null) {
+        for (let i = 0; i < array2d.length; i++) {
+            if (array2d[i][0] === tempSedition) { // Verifica se o nome do item corresponde ao seletor de edição
+                array2d.splice(i, 1); // Remove o item do array2d
+                i--; // Decrementa o índice para não pular o próximo elemento
+            }
+        }
+    }
+    if (array2d.length > 0){
+        for (let i = 0; i < array2d.length; i++) {
+            const [nome, alt, lar, area, profundidade, area3, preco, area4] = array2d[i];
+            document.getElementById('nome2').value = nome; // Atualiza o campo de nome com o nome do item
+            setCookie('tempNome3', nome, 30);
+            altura.value = alt; // Atualiza o campo de altura com a altura do item
+            largura.value = lar; // Atualiza o campo de largura com a largura do item
+            profund.value = profundidade; // Atualiza o campo de profundidade com a profundidade
+            profund2.value = preco; // Atualiza o campo de profundidade 2 com a profundidade 2 do item
+        }
+        tempEdicao = 0; // Desativa o modo de edição
+        btnEdicao(); // Chama a função de edição
+    } else {
+        tempEdicao = 1; // Desativa o modo de edição
+        btnEdicao(); // Chama a função de edição
+    }
+}
+
+function alterarM2Func() {
+    if (tempSedition !== '' || tempSedition !== null) {
+        for (let i = 0; i < array2d.length; i++) {
+            if (array2d[i][0] === tempSedition) { // Verifica se o nome do item corresponde ao seletor de edição
+                if (document.getElementById('nome2').value != '' || document.getElementById('nome2').value != array2d[i][0]){array2d[i][0] = document.getElementById('nome2').value;} // Atualiza o nome do item
+                if (altura.value != ''){array2d[i][1] = altura.value;} // Atualiza a altura do item
+                if (largura.value != ''){array2d[i][2] = largura.value;} // Atualiza a largura do item
+                if (profund.value != ''){array2d[i][4] = profund.value;} // Atualiza a profundidade do item
+                if (profund2.value != ''){array2d[i][6] = profund2.value;} // Atualiza a profundidade 2 do item
+                array2d[i][3] = Number(array2d[i][1]) * Number(array2d[i][2]); // Calcula a área 3D
+                array2d[i][5] = Number(array2d[i][4]) * Number(array2d[i][3]); // Calcula a área 3D
+                array2d[i][7] = Number(array2d[i][6]) * Number(array2d[i][5]); // Calcula o preço
+            }
+        }
+    }
+    exibeArea2(); // Atualiza a tabela na tela
+    tempEdicao = 0; // Desativa o modo de edição
+    btnEdicao(); // Chama a função de edição
+}
