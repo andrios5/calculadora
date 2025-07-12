@@ -764,7 +764,7 @@ function mudouNome() {
 function checarNome(){
         resM1 = document.querySelector('#resultadoM1')
         resM1.innerHTML = ''
-        sedition.innerHTML = '' // Limpa o conteúdo anterior do seletor
+        sedition.innerHTML = '...' // Limpa o conteúdo anterior do seletor
         
         let somaPorNome = {}; // Objeto para armazenar a soma por nome
         let somaPorNome2 = {}; // Objeto para armazenar a soma por nome para área 3D
@@ -2062,6 +2062,7 @@ function btnEdicao(){
         deletarM2.style.display = 'none'; // Esconde o botão de deletar
         alterarM2.style.display = 'none'; // Esconde o botão de alterar
         sedition.style.display = 'none'; // Esconde o seletor de edição
+        sedition.value = ''; // Limpa o seletor de edição
         document.querySelector('h3#selecao').style.display = 'none'; // Esconde o título de seleção
         exibeArea2(); // Atualiza a tabela na tela
     } else if (tempEdicao == 2) {
@@ -2077,6 +2078,7 @@ function btnEdicao(){
         deletarM2.style.display = 'none'; // Esconde o botão de deletar
         alterarM2.style.display = 'none'; // Esconde o botão de alterar
         document.querySelector('h3.edicao').style.display = 'none'; // Esconde o título de edição
+        sedition.value = ''; // Limpa o seletor de edição
         sedition.style.display = 'none'; // Esconde o seletor de edição
         document.querySelector('h3#selecao').style.display = 'none'; // Esconde o título de seleção
     }
