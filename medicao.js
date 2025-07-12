@@ -2037,7 +2037,6 @@ function btnEdicao(){
         mEdicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
         seletorDeArquivo.disabled = true;
         medType.disabled = true;
-        export2.disabled = true; // Desabilita o botão de exportação
         ordenarM2.disabled = true; // Desabilita o botão de ordenar
         menosC2.style.display = 'none'; // Esconde o botão de menos
         med2.style.display = 'none'; // Esconde o botão de mais
@@ -2048,6 +2047,7 @@ function btnEdicao(){
         sedition.style.display = 'inline-block'; // Exibe o seletor de edição
         sedition.value = ''; // Limpa o seletor de edição
         document.querySelector('h3#selecao').style.display = 'block'; // Exibe o título de seleção
+        document.querySelector('.containerBTN').style.display = 'none'; // Exibe o container de botões
         multiEdicao();
     } else if (tempEdicao == 1) {
         tempEdicao = 0; // Desativa o modo de edição
@@ -2055,7 +2055,6 @@ function btnEdicao(){
         mEdicao.style.boxShadow = ''; // Remove a sombra do botão
         seletorDeArquivo.disabled = false;
         medType.disabled = false;
-        export2.disabled = false; // Habilita o botão de exportação
         ordenarM2.disabled = false; // Habilita o botão de ordenar
         menosC2.style.display = 'inline-block'; // Exibe o botão de menos
         med2.style.display = 'inline-block'; // Exibe o botão de mais
@@ -2065,6 +2064,7 @@ function btnEdicao(){
         sedition.style.display = 'none'; // Esconde o seletor de edição
         sedition.value = ''; // Limpa o seletor de edição
         document.querySelector('h3#selecao').style.display = 'none'; // Esconde o título de seleção
+        document.querySelector('.containerBTN').style.display = 'block'; // Exibe o container de botões
         exibeArea2(); // Atualiza a tabela na tela
     } else if (tempEdicao == 2) {
         tempEdicao = 0; // Desativa o modo de edição
@@ -2072,7 +2072,6 @@ function btnEdicao(){
         mEdicao.style.boxShadow = ''; // Remove a sombra do botão
         seletorDeArquivo.disabled = false;
         medType.disabled = false;
-        export2.disabled = false; // Habilita o botão de exportação
         ordenarM2.disabled = false; // Habilita o botão de ordenar
         menosC2.style.display = 'inline-block'; // Exibe o botão de menos
         med2.style.display = 'inline-block'; // Exibe o botão de mais
@@ -2082,6 +2081,7 @@ function btnEdicao(){
         sedition.value = ''; // Limpa o seletor de edição
         sedition.style.display = 'none'; // Esconde o seletor de edição
         document.querySelector('h3#selecao').style.display = 'none'; // Esconde o título de seleção
+        document.querySelector('.containerBTN').style.display = 'block'; // Exibe o container de botões
     }
 }
 
@@ -2093,6 +2093,7 @@ function multiEdicao() {
             deletarM2.style.display = 'inline-block'; // Exibe o botão de deletar
             alterarM2.style.display = 'inline-block'; // Exibe o botão de alterar
             document.getElementById('nome2').value = tempSedition; // Atualiza o campo de nome com o valor do seletor de edição
+            document.querySelector('.containerBTN').style.display = 'block'; // Exibe o container de botões
             altura.value = ''; // Limpa o campo de altura
             largura.value = ''; // Limpa o campo de largura
             profund.value = ''; // Limpa o campo de profundidade
