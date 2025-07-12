@@ -87,9 +87,15 @@ tr > button {
     height: 0;
 }
 
-p.intro {
-    margin: 0 100px;
-    font-size: 0.9em;
+
+h3.ins {
+    font-size: 1.4em;
+    margin-top: 50px;
+}
+
+ol{
+    margin: 0 10%;
+    color: var(--cor3);
 }
 
 @media screen and (max-width: 750px) {
