@@ -472,11 +472,20 @@ function exibeArea2() {
 
     resM2.innerHTML = '' // Limpa o conteúdo anterior
     if (tempTypeMed == 4) {
-        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th><th>R$/un</th><th>Preço</th></tr>`
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>un</th><th>m²</th><th>un/m²</th><th>R$/un</th><th>Preço</th></tr>`
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, un, area3, preco, area4] = array2d[i];
             let linha = document.createElement('tr');
-            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td  class='cSoma'>${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td  class='cSoma'>${area3.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td class='cSoma'>${area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>`;
+            // Garantir que os valores sejam números antes de formatar
+            const alturaNum = Number(altura) || 0;
+            const larguraNum = Number(largura) || 0;
+            const areaNum = Number(area) || 0;
+            const unNum = Number(un) || 0;
+            const area3Num = Number(area3) || 0;
+            const precoNum = Number(preco) || 0;
+            const area4Num = Number(area4) || 0;
+            
+            linha.innerHTML = `<th>${nome}</th><td>${alturaNum.toLocaleString('pt-BR')}</td><td>${larguraNum.toLocaleString('pt-BR')}</td><td>${unNum.toLocaleString('pt-BR')}</td><td class='cSoma'>${areaNum.toLocaleString('pt-BR')}</td><td class='cSoma'>${area3Num.toLocaleString('pt-BR')}</td><td>${precoNum.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td class='cSoma'>${area4Num.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>`;
             linha.style.cursor = 'pointer';
             linha.addEventListener('click', function(e) {
     // Só chama editarLinhaM2 se não estiver editando já
@@ -485,25 +494,25 @@ function exibeArea2() {
                 }
             });
             resM2.appendChild(linha);
-            somaA += Number(array2d[i][1]);
-            somaL += Number(array2d[i][2]);
-            soma2 += Number(array2d[i][3]);
-            somaP += Number(array2d[i][4]);
-            soma3 += Number(array2d[i][5]);
-            soma4 += Number(array2d[i][7]);
+            somaA += Number(array2d[i][1]) || 0;
+            somaL += Number(array2d[i][2]) || 0;
+            soma2 += Number(array2d[i][3]) || 0;
+            somaP += Number(array2d[i][4]) || 0;
+            soma3 += Number(array2d[i][5]) || 0;
+            soma4 += Number(array2d[i][7]) || 0;
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabelaVazia()
         }else{
         tabelaCheia()
-        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td><td colspan="2">${soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td><td colspan="2">${soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td></tr>`;
         }
     } else if (tempTypeMed == 3) {
-        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>un</th><th>m²</th><th>un/m²</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, un, area3] = array2d[i];
             let linha = document.createElement('tr');
-            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td>`;
+            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${un.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${area3.toLocaleString('pt-BR')}</td>`;
             linha.style.cursor = 'pointer';
             linha.addEventListener('click', function(e) {
     // Só chama editarLinhaM2 se não estiver editando já
@@ -512,9 +521,9 @@ function exibeArea2() {
                 }
             });
             resM2.appendChild(linha);
-            soma2 += Number(array2d[i][3]);
             somaA += Number(array2d[i][1]);
             somaL += Number(array2d[i][2]);
+            soma2 += Number(array2d[i][3]);
             somaP += Number(array2d[i][4]);
             soma3 += Number(array2d[i][5]);
         }
@@ -522,14 +531,21 @@ function exibeArea2() {
         tabelaVazia()
         }else{
         tabelaCheia()
-        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
+        resS2.innerHTML = `<tr><th>Soma:</th><td>${somaA.toLocaleString('pt-BR')}</td><td>${somaL.toLocaleString('pt-BR')}</td><td>${somaP.toLocaleString('pt-BR')}</td><td>${soma2.toLocaleString('pt-BR')}</td><td>${soma3.toLocaleString('pt-BR')}</td></tr>`;
         }
     } else if (tempTypeMed == 2) {
         theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>R$/m²</th><th>Preço</th></tr>`; // Atualiza o cabeçalho da tabela
         for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, preco, area3] = array2d[i];
             let linha = document.createElement('tr');
-            linha.innerHTML = `<th>${nome}</th><td>${altura.toLocaleString('pt-BR')}</td><td>${largura.toLocaleString('pt-BR')}</td><td>${area.toLocaleString('pt-BR')}</td><td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>`;
+            // Garantir que os valores sejam números antes de formatar
+            const alturaNum = Number(altura) || 0;
+            const larguraNum = Number(largura) || 0;
+            const areaNum = Number(area) || 0;
+            const precoNum = Number(preco) || 0;
+            const area3Num = Number(area3) || 0;
+            
+            linha.innerHTML = `<th>${nome}</th><td>${alturaNum.toLocaleString('pt-BR')}</td><td>${larguraNum.toLocaleString('pt-BR')}</td><td>${areaNum.toLocaleString('pt-BR')}</td><td>${precoNum.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td><td>${area3Num.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>`;
             linha.style.cursor = 'pointer';
             linha.addEventListener('click', function(e) {
     // Só chama editarLinhaM2 se não estiver editando já
@@ -538,10 +554,10 @@ function exibeArea2() {
                 }
             });
             resM2.appendChild(linha);
-            soma2 += Number(array2d[i][3]);
-            somaA += Number(array2d[i][1]);
-            somaL += Number(array2d[i][2]);
-            soma3 += Number(array2d[i][5]);
+            soma2 += Number(array2d[i][3]) || 0;
+            somaA += Number(array2d[i][1]) || 0;
+            somaL += Number(array2d[i][2]) || 0;
+            soma3 += Number(array2d[i][5]) || 0;
         }
         if (array2d.length == 0) { // Verifica se o array2d está vazio
         tabelaVazia()
@@ -640,7 +656,7 @@ function editarLinhaM2(index) {
     btnEdicao();
     document.querySelector('h3.edicao').style.display = 'block'; // Exibe o título de edição
     document.querySelector('h3.edicao').textContent = 'Modo de Edição'; // Exibe o título de edição
-    document.querySelector('button.edicao').style.display = 'inline-block'; // Exibe o botão de edição
+    document.querySelector('button.edicao').style.display = 'block'; // Exibe o botão de edição
     if (!linha) return;
 
     linha.classList.add('editando');
@@ -658,9 +674,9 @@ function editarLinhaM2(index) {
     } else if (tempTypeMed == 2) {
         camposEditaveis = [0, 1, 2, 4];
     } else if (tempTypeMed == 3) {
-        camposEditaveis = [0, 1, 2, 4];
+        camposEditaveis = [0, 1, 2, 3];
     } else if (tempTypeMed == 4) {
-        camposEditaveis = [0, 1, 2, 4, 6];
+        camposEditaveis = [0, 1, 2, 3, 6];
     }
     let inputRefs = [];
     const dados = array2d[index].slice();
@@ -1342,8 +1358,8 @@ function exportar13() {
             <th>Nome</th>
             <th>Altura</th>
             <th>Largura</th>
-            <th>Área</th>
             <th>un</th>
+            <th>Área</th>
             <th>un/Área</th>
         </tr>
     `;
@@ -1360,8 +1376,8 @@ function exportar13() {
                 <td>${nome}</td>
                 <td>${altura.toLocaleString('pt-BR')}</td>
                 <td>${largura.toLocaleString('pt-BR')}</td>
-                <td>${area.toLocaleString('pt-BR')}</td>
                 <td>${profundidade.toLocaleString('pt-BR')}</td>
+                <td>${area.toLocaleString('pt-BR')}</td>
                 <td>${area3.toLocaleString('pt-BR')}</td>
             </tr>`;
     }
@@ -1370,8 +1386,8 @@ function exportar13() {
         <th>Soma:</th>
         <td>${somaA.toLocaleString('pt-BR')}</td>
         <td>${somaL.toLocaleString('pt-BR')}</td>
-        <td>${soma2.toLocaleString('pt-BR')}</td>
         <td>${somaP.toLocaleString('pt-BR')}</td>
+        <td>${soma2.toLocaleString('pt-BR')}</td>
         <td>${soma3.toLocaleString('pt-BR')}</td>
     </tr>`;
     html += `<tr></tr>`
@@ -1420,8 +1436,8 @@ function exportar14() {
             <th>Nome</th>
             <th>Altura</th>
             <th>Largura</th>
-            <th>Área</th>
             <th>un</th>
+            <th>Área</th>
             <th>un/Área</th>
             <th>R$/un</th>
             <th>Preço</th>
@@ -1442,8 +1458,8 @@ function exportar14() {
                 <td>${nome}</td>
                 <td>${altura.toLocaleString('pt-BR')}</td>
                 <td>${largura.toLocaleString('pt-BR')}</td>
-                <td>${area.toLocaleString('pt-BR')}</td>
                 <td>${un.toLocaleString('pt-BR')}</td>
+                <td>${area.toLocaleString('pt-BR')}</td>
                 <td>${area3.toLocaleString('pt-BR')}</td>
                 <td>${preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                 <td>${area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
@@ -1454,8 +1470,8 @@ function exportar14() {
         <th>Soma:</th>
         <td>${somaA.toLocaleString('pt-BR')}</td>
         <td>${somaL.toLocaleString('pt-BR')}</td>
-        <td>${soma2.toLocaleString('pt-BR')}</td>
         <td>${somaP.toLocaleString('pt-BR')}</td>
+        <td>${soma2.toLocaleString('pt-BR')}</td>
         <td>${soma3.toLocaleString('pt-BR')}</td>
         <td colspan='2'>${soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
     </tr>`;
@@ -1633,12 +1649,12 @@ function exportar22(nome1, nome2) {
 
 function exportar23(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +   `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;un;un/Área\n`;
+    let csv = '\uFEFF' +   `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;un;Área;un/Área\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, profundidade, area3] = array2d[i];
-            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR')]);
+            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'),profundidade.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR')]);
     }
     // Adiciona a soma final
     let soma2 = 0; // Inicializa a variável de soma
@@ -1653,7 +1669,7 @@ function exportar23(nome1, nome2) {
             somaP += Number(array2d[i][4]); 
             soma3 += Number(array2d[i][5]);
     }
-    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), somaP.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'),somaP.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'), soma3.toLocaleString('pt-BR')]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
     arrayTemp.push(["Soma dos Itens",'','','Área','','un/Área']);
     for (let i = 0; i < arrayM1.length; i++) {
@@ -1683,12 +1699,12 @@ function exportar23(nome1, nome2) {
 
 function exportar24(nome1, nome2) {
     // Monta o cabeçalho CSV
-    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;Área;un;un/Área;R$/un;Preço\n`;
+    let csv = '\uFEFF' +  `Medição:;${nome1};${obterDataHoraFormatada()}\nNome;Altura;Largura;un;Área;un/Área;R$/un;Preço\n`;
     // Adiciona as linhas do array2d
     let arrayTemp = []
     for (let i = 0; i < array2d.length; i++) {
             const [nome, altura, largura, area, profundidade, area3, preco, area4] = array2d[i];
-            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR'), preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}), area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
+            arrayTemp.push([nome, altura.toLocaleString('pt-BR'), largura.toLocaleString('pt-BR'), profundidade.toLocaleString('pt-BR'), area.toLocaleString('pt-BR'), area3.toLocaleString('pt-BR'), preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}), area4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
     }
     // Adiciona a soma final
     let soma2 = 0; // Inicializa a variável de soma
@@ -1705,7 +1721,7 @@ function exportar24(nome1, nome2) {
             soma3 += Number(array2d[i][5]);
             soma4 += Number(array2d[i][7]);
     }
-    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'),somaP.toLocaleString('pt-BR'),soma3.toLocaleString('pt-BR'),'',soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
+    arrayTemp.push(["Soma:", somaA.toLocaleString('pt-BR'), somaL.toLocaleString('pt-BR'),somaP.toLocaleString('pt-BR'), soma2.toLocaleString('pt-BR'),soma3.toLocaleString('pt-BR'),'',soma4.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})]);
     arrayTemp.push([]); // Adiciona uma linha vazia para separação
     arrayTemp.push(["Soma dos Itens",'','','Área','','un/Área','','Preço']);
     for (let i = 0; i < arrayM1.length; i++) {
@@ -1751,7 +1767,7 @@ function importarCSVparaArray2d(file) {
         } else {
             verifT = tempCabecalho; // Se não for o cabeçalho esperado, armazena para verificação posterior
         }
-        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área;r$/un;preço')){ // Verifica se o cabeçalho é o esperado
+        if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;un;área;un/área;r$/un;preço')){ // Verifica se o cabeçalho é o esperado
             medType.value = '4'; // Define o tipo de medição como monetário
             tempTypeMed = 4; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
@@ -1767,13 +1783,13 @@ function importarCSVparaArray2d(file) {
                     let area3 = strNum(partes[5]);
                     let preco = strNum(partes[6]); // Converte o preço para número
                     let area4 = strNum(partes[7]); // Converte a área 4 para número, substituindo vírgula por ponto
-                    array2d.push([nome, altura, largura, area, profundidade, area3, preco, area4]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, profundidade, area, area3, preco, area4]); // Adiciona os valores ao array 2D
                 }
             }
         });
 
             
-        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;un;un/área')){ // Verifica se o cabeçalho é o esperado
+        } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;un;área;un/área')){ // Verifica se o cabeçalho é o esperado
             medType.value = '3'; // Define o tipo de medição como monetário
             tempTypeMed = 3; // Define o tipo de medição como monetário
             typeMed() // Chama a função para definir o tipo de medição
@@ -1787,7 +1803,7 @@ function importarCSVparaArray2d(file) {
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número
                     let area3 = strNum(partes[5]); // Converte a área 3D para número
-                    array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]); // Adiciona os valores ao array 2D
+                    array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
             });
@@ -1950,24 +1966,24 @@ function importarXLSparaArray2d(file) {
                 let nome = celulas[0].textContent.trim();
                 let altura = strNum(celulas[1].textContent);
                 let largura = strNum(celulas[2].textContent);
-                let area = strNum(celulas[3].textContent);
                 let profundidade = strNum(celulas[4].textContent);
+                let area = strNum(celulas[3].textContent);
                 let area3 = strNum(celulas[5].textContent);
                 let preco = strNum(celulas[6].textContent);
                 let area4 = strNum(celulas[7].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
-                    array2d.push([nome, altura, largura, area, profundidade, area3, preco, area4]);
+                    array2d.push([nome, altura, largura, profundidade, area, area3, preco, area4]);
                 }
             // XLS tipo 3 (6 colunas, un/unÁrea)
             } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('un/Área')) {
                 let nome = celulas[0].textContent.trim();
                 let altura = strNum(celulas[1].textContent);
                 let largura = strNum(celulas[2].textContent);
-                let area = strNum(celulas[3].textContent);
                 let profundidade = strNum(celulas[4].textContent);
+                let area = strNum(celulas[3].textContent);
                 let area3 = strNum(celulas[5].textContent);
                 if (nome && !isNaN(altura) && !isNaN(largura) && !isNaN(area)) {
-                    array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]);
+                    array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]);
                 }
             // XLS tipo 2 (6 colunas, R$/m² e Preço)
             } else if (cabecalho.length >= 6 && celulas.length >= 6 && cabecalho.includes('R$/m²')) {
@@ -2118,10 +2134,10 @@ function alterarM2Func() {
         for (let i = 0; i < array2d.length; i++) {
             if (array2d[i][0] === tempSedition) { // Verifica se o nome do item corresponde ao seletor de edição
                 if (document.getElementById('nome2').value != '' || document.getElementById('nome2').value != array2d[i][0]){array2d[i][0] = document.getElementById('nome2').value;} // Atualiza o nome do item
-                if (altura.value != ''){array2d[i][1] = altura.value;} // Atualiza a altura do item
-                if (largura.value != ''){array2d[i][2] = largura.value;} // Atualiza a largura do item
-                if (profund.value != ''){array2d[i][4] = profund.value;} // Atualiza a profundidade do item
-                if (profund2.value != ''){array2d[i][6] = profund2.value;} // Atualiza a profundidade 2 do item
+                if (altura.value != ''){array2d[i][1] = Number(altura.value.replace(',', '.'));} // Atualiza a altura do item
+                if (largura.value != ''){array2d[i][2] = Number(largura.value.replace(',', '.'));} // Atualiza a largura do item
+                if (profund.value != ''){array2d[i][4] = Number(profund.value.replace(',', '.'));} // Atualiza a profundidade do item
+                if (profund2.value != ''){array2d[i][6] = Number(profund2.value.replace(',', '.'));} // Atualiza a profundidade 2 do item
                 array2d[i][3] = Number(array2d[i][1]) * Number(array2d[i][2]); // Calcula a área 3D
                 array2d[i][5] = Number(array2d[i][4]) * Number(array2d[i][3]); // Calcula a área 3D
                 array2d[i][7] = Number(array2d[i][6]) * Number(array2d[i][5]); // Calcula o preço

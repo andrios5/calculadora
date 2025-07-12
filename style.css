@@ -331,7 +331,7 @@ table#m2 > tbody > tr > td {
     border: none;
 }
 
-table#m2 > tbody > tr > td.cSoma:nth-child(2n) {
+table#m2 > tbody > tr > td.cSoma {
     background-color: rgb(216, 226, 255);
 }
 
