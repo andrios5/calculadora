@@ -103,3 +103,58 @@ ol{
         margin: 0 20px;
     }
 }
+
+/* Estilos para o container dos inputs */
+.containerBTN {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 120px;
+    padding: 15px;
+    border: 2px dashed transparent;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: rgba(129, 129, 211, 0.1);
+    margin: 10px;
+}
+
+.containerBTN:hover {
+    border-color: var(--cor3);
+    background-color: rgba(255, 212, 22, 0.15);
+}
+
+/* Estilos para elementos sendo arrastados */
+.containerm2.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border: 2px solid var(--cor3) !important;
+}
+
+/* Área de drop personalizada dentro da containerBTN */
+.drop-area {
+    min-height: 60px;
+    border: 2px dashed var(--cor3);
+    border-radius: 10px;
+    background-color: rgba(255, 212, 22, 0.2);
+    color: var(--cor2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin: 10px;
+    flex: 1 1 100%;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.drop-area:hover,
+.drop-area.drag-over {
+    background-color: var(--cor2);
+    color: var(--cor3);
+    border-color: var(--cor2);
+    transform: scale(1.02);
+}
