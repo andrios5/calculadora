@@ -935,7 +935,6 @@ function exportar() { // Função para exportar os dados da tabela M2
     } else { // Se o formato de exportação for PDF
         exportarParaPDF(); // Exporta para PDF
     }
-
 }
 
 function exportarParaPDF() { // Função para exportar os dados da tabela M2 para PDF
@@ -1113,7 +1112,6 @@ function exportar1() {
     // Adiciona as linhas do array2d
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area] = array2d[i];
-        
             html += `<tr>
                 <td>${nome}</td>
                 <td>${altura.toLocaleString('pt-BR')}</td>
@@ -1184,7 +1182,7 @@ function exportar11() {
         </tr>
     `;
     // Adiciona as linhas do array2d
-    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
+    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0;
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, profundidade, area3] = array2d[i];
             soma2 += Number(array2d[i][3]);
@@ -1262,7 +1260,7 @@ function exportar12() {
         </tr>
     `;
     // Adiciona as linhas do array2d
-    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
+    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0;
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, profundidade, area3] = array2d[i];
             soma2 += Number(array2d[i][3]);
@@ -1339,7 +1337,7 @@ function exportar13() {
         </tr>
     `;
     // Adiciona as linhas do array2d
-    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0; // Inicializa as variáveis de soma
+    let soma2 = 0, somaA = 0, somaL = 0, somaP = 0, soma3 = 0;
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, profundidade, area3] = array2d[i];
             soma2 += Number(array2d[i][3]);
@@ -1420,7 +1418,7 @@ function exportar14() {
     `;
     // Adiciona as linhas do array2d
     let soma2 = 0, somaA = 0, somaL = 0
-    let somaP = 0, soma3 = 0, soma4 = 0; // Inicializa as variáveis de soma
+    let somaP = 0, soma3 = 0, soma4 = 0;
     for (let i = 0; i < array2d.length; i++) {
         const [nome, altura, largura, area, un, area3, preco, area4] = array2d[i];
             somaA += Number(array2d[i][1]);
@@ -1743,8 +1741,8 @@ function importarCSVparaArray2d(file) {
             verifT = tempCabecalho; // Se não for o cabeçalho esperado, armazena para verificação posterior
         }
         if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;un;área;un/área;r$/un;preço')){ // Verifica se o cabeçalho é o esperado
-            medType.value = '4'; // Define o tipo de medição como monetário
-            tempTypeMed = 4; // Define o tipo de medição como monetário
+            medType.value = '4'; // Define o tipo de medição como 4
+            tempTypeMed = 4; // Define o tipo de medição como 4
             typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -1755,7 +1753,7 @@ function importarCSVparaArray2d(file) {
                     let largura = strNum(partes[2]); // Converte a largura
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número
-                    let area3 = strNum(partes[5]);
+                    let area3 = strNum(partes[5]); // Converte a área 3 para número, substituindo vírgula por ponto
                     let preco = strNum(partes[6]); // Converte o preço para número
                     let area4 = strNum(partes[7]); // Converte a área 4 para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, profundidade, area, area3, preco, area4]); // Adiciona os valores ao array 2D
@@ -1765,8 +1763,8 @@ function importarCSVparaArray2d(file) {
 
             
         } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;un;área;un/área')){ // Verifica se o cabeçalho é o esperado
-            medType.value = '3'; // Define o tipo de medição como monetário
-            tempTypeMed = 3; // Define o tipo de medição como monetário
+            medType.value = '3'; // Define o tipo de medição como 3
+            tempTypeMed = 3; // Define o tipo de medição como 3
             typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -1777,7 +1775,7 @@ function importarCSVparaArray2d(file) {
                     let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número
-                    let area3 = strNum(partes[5]); // Converte a área 3D para número
+                    let area3 = strNum(partes[5]); // Converte a área 3 para número
                     array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1785,8 +1783,8 @@ function importarCSVparaArray2d(file) {
 
 
         } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área;r$/m²;preço')){ // Verifica se o cabeçalho é o esperado
-            medType.value = '2'; // Define o tipo de medição como monetário
-            tempTypeMed = 2; // Define o tipo de medição como monetário
+            medType.value = '2'; // Define o tipo de medição como 2
+            tempTypeMed = 2; // Define o tipo de medição como 2
             typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -1797,7 +1795,7 @@ function importarCSVparaArray2d(file) {
                     let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número
-                    let area3 = strNum(partes[5]); // Converte a área 3D para número
+                    let area3 = strNum(partes[5]); // Converte a área 3 para número
                     array2d.push([nome, altura, largura, area, profundidade, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1805,8 +1803,8 @@ function importarCSVparaArray2d(file) {
             
 
         } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;profundidade;área(m²);área(m³)')){ // Verifica se o cabeçalho é o esperado para 3D            
-            medType.value = '1'; // Define o tipo de medição como monetário
-            tempTypeMed = 1; // Define o tipo de medição como monetário
+            medType.value = '1'; // Define o tipo de medição como 1
+            tempTypeMed = 1; // Define o tipo de medição como 1
             typeMed() // Chama a função para definir o tipo de medição
             linhas.forEach(linha => { // Percorre cada linha do CSV
             if (linha.trim() !== '') { // Verifica se a linha não está vazia
@@ -1817,7 +1815,7 @@ function importarCSVparaArray2d(file) {
                     let largura = strNum(partes[2]); // Converte a largura para número, substituindo vírgula por ponto
                     let profundidade = strNum(partes[4]); // Converte a profundidade para número, substituindo vírgula por ponto
                     let area = strNum(partes[3]); // Converte a área para número, substituindo vírgula por ponto
-                    let area3 = strNum(partes[5]); // Converte a área 3D para número, substituindo vírgula por ponto
+                    let area3 = strNum(partes[5]); // Converte a área 3 para número, substituindo vírgula por ponto
                     array2d.push([nome, altura, largura, profundidade, area, area3, 0, 0]); // Adiciona os valores ao array 2D
                     }
                 }
@@ -1825,8 +1823,8 @@ function importarCSVparaArray2d(file) {
 
 
         } else if (verifT.valueOf().toLowerCase().includes('nome;altura;largura;área')){ // Verifica se o cabeçalho é o esperado para 2D
-            medType.value = '0'; // Define o tipo de medição como monetário
-            tempTypeMed = 0; // Define o tipo de medição como monetário
+            medType.value = '0'; // Define o tipo de medição como 0
+            tempTypeMed = 0; // Define o tipo de medição como 0
             typeMed() // Chama a função para definir o tipo de medição
             tempTypeMed = 0; // Define o tipo de medição como 2D
             linhas.forEach(linha => { // Percorre cada linha do CSV
@@ -1895,29 +1893,29 @@ alteraInput()
 }
 
 function importarXLSparaArray2d(file) {
-    const leitor = new FileReader();
-    leitor.onload = function(e) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = e.target.result;
-        const tabela = tempDiv.querySelector('table');
-        if (!tabela) {
+    const leitor = new FileReader(); // Cria um novo FileReader
+    leitor.onload = function(e) { // Define o que fazer quando o arquivo for carregado
+        const tempDiv = document.createElement('div'); // Cria um elemento temporário para armazenar o conteúdo do arquivo
+        tempDiv.innerHTML = e.target.result; // Obtém o conteúdo do arquivo e o insere no elemento temporário
+        const tabela = tempDiv.querySelector('table'); // Seleciona a tabela dentro do conteúdo do arquivo
+        if (!tabela) { // Verifica se a tabela existe
             alert('Arquivo não contém tabela!');
             return;
         }
-        const linhas = tabela.querySelectorAll('tr');
+        const linhas = tabela.querySelectorAll('tr'); // Seleciona todas as linhas da tabela
         // Detecta o tipo de tabela pelo cabeçalho
-        let cabecalho = [];
-        if (linhas.length > 0) {
-            cabecalho = Array.from(linhas[0].querySelectorAll('th,td')).map(td => td.textContent.trim());
+        let cabecalho = []; // Inicializa o cabeçalho como um array vazio
+        if (linhas.length > 0) { // Verifica se há linhas na tabela
+            cabecalho = Array.from(linhas[0].querySelectorAll('th,td')).map(td => td.textContent.trim()); // Obtém o cabeçalho da tabela
         }
 
-        if (cabecalho.includes("Medição:")) {
+        if (cabecalho.includes("Medição:")) { // Verifica se o cabeçalho contém "Medição:"
             nomeMed.value = cabecalho[1]; // Define o nome da medição
             tempData = cabecalho[2]; // Define a data da medição
-            cabecalho = Array.from(linhas[1].querySelectorAll('th,td')).map(td => td.textContent.trim());
+            cabecalho = Array.from(linhas[1].querySelectorAll('th,td')).map(td => td.textContent.trim()); // Atualiza o cabeçalho para a segunda linha
         }
 
-        if (cabecalho.includes('un/Área') && cabecalho.includes('R$/un') && cabecalho.length >= 8) {
+        if (cabecalho.includes('un/Área') && cabecalho.includes('R$/un') && cabecalho.length >= 8) { 
             medType.value = '4'; tempTypeMed = 4; tempTypeMed3 = 1; tempTypeMed2 = 0;
         } else if (cabecalho.includes('un/Área')) {
             medType.value = '3'; tempTypeMed = 3;
@@ -1929,7 +1927,6 @@ function importarXLSparaArray2d(file) {
             medType.value = '0'; tempTypeMed = 0;
         }
         typeMed();
-        
         // Importação para cada formato conhecido
         for (let i = 1; i < linhas.length; i++) { // começa do 1 para pular o cabeçalho
             const celulas = linhas[i].querySelectorAll('td, th');
@@ -1994,24 +1991,23 @@ function importarXLSparaArray2d(file) {
             }
         }
         // Detecta e ajusta tipo de medição
-
         formataVetor(array2d);
     };
     leitor.readAsText(file, 'utf-8');
 }
-
+// Função de Edição Multi Itens
 deletarM2 = document.querySelector('#deletarM2'); // Botão de deletar
 alterarM2 = document.querySelector('#alterarM2'); // Botão de alterar
 let tempSedition = ''; // Variável para armazenar o seletor de edição
-mEdicao.addEventListener('click', btnEdicao) 
-function btnEdicao(){
+mEdicao.addEventListener('click', btnEdicao)  // // Adiciona o evento de clique ao botão de edição
+function btnEdicao(){ // Função para lidar com o botão de edição
     if (tempEdicao == 0) {
         exibeArea2(); // Fecha a edição simples
         tempEdicao = 1; // Ativa o modo de edição
         mEdicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está editando
         mEdicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
-        seletorDeArquivo.disabled = true;
-        medType.disabled = true;
+        seletorDeArquivo.disabled = true; // Desabilita o seletor de arquivo
+        medType.disabled = true; // Desabilita o seletor de tipo de medição
         ordenarM2.disabled = true; // Desabilita o botão de ordenar
         menosC2.style.display = 'none'; // Esconde o botão de menos
         med2.style.display = 'none'; // Esconde o botão de mais
@@ -2023,13 +2019,13 @@ function btnEdicao(){
         sedition.value = ''; // Limpa o seletor de edição
         document.querySelector('h3#selecao').style.display = 'block'; // Exibe o título de seleção
         document.querySelector('.containerBTN').style.display = 'none'; // Exibe o container de botões
-        multiEdicao();
+        multiEdicao(); // Chama a função de edição multi itens
     } else if (tempEdicao == 1) {
         tempEdicao = 0; // Desativa o modo de edição
         mEdicao.style.backgroundColor = ''; // Restaura a cor original do botão
         mEdicao.style.boxShadow = ''; // Remove a sombra do botão
-        seletorDeArquivo.disabled = false;
-        medType.disabled = false;
+        seletorDeArquivo.disabled = false; // Habilita o seletor de arquivo
+        medType.disabled = false; // Habilita o seletor de tipo de medição
         ordenarM2.disabled = false; // Habilita o botão de ordenar
         menosC2.style.display = 'inline-block'; // Exibe o botão de menos
         med2.style.display = 'inline-block'; // Exibe o botão de mais
@@ -2045,8 +2041,8 @@ function btnEdicao(){
         tempEdicao = 0; // Desativa o modo de edição
         mEdicao.style.backgroundColor = ''; // Restaura a cor original do botão
         mEdicao.style.boxShadow = ''; // Remove a sombra do botão
-        seletorDeArquivo.disabled = false;
-        medType.disabled = false;
+        seletorDeArquivo.disabled = false; // Habilita o seletor de arquivo
+        medType.disabled = false; // Habilita o seletor de tipo de medição
         ordenarM2.disabled = false; // Habilita o botão de ordenar
         menosC2.style.display = 'inline-block'; // Exibe o botão de menos
         med2.style.display = 'inline-block'; // Exibe o botão de mais
@@ -2064,15 +2060,15 @@ function multiEdicao() {
     if (tempEdicao == 1) {
         // Desabilita os campos de entrada
         sedition.addEventListener('change', function() {
-            tempSedition = sedition.value; // Atualiza o valor do seletor de edição
-            deletarM2.style.display = 'inline-block'; // Exibe o botão de deletar
-            alterarM2.style.display = 'inline-block'; // Exibe o botão de alterar
-            document.getElementById('nome2').value = tempSedition; // Atualiza o campo de nome com o valor do seletor de edição
-            document.querySelector('.containerBTN').style.display = 'block'; // Exibe o container de botões
-            altura.value = ''; // Limpa o campo de altura
-            largura.value = ''; // Limpa o campo de largura
-            profund.value = ''; // Limpa o campo de profundidade
-            profund2.value = ''; // Limpa o campo de profundidade 2
+        tempSedition = sedition.value; // Atualiza o valor do seletor de edição
+        deletarM2.style.display = 'inline-block'; // Exibe o botão de deletar
+        alterarM2.style.display = 'inline-block'; // Exibe o botão de alterar
+        document.getElementById('nome2').value = tempSedition; // Atualiza o campo de nome com o valor do seletor de edição
+        document.querySelector('.containerBTN').style.display = 'block'; // Exibe o container de botões
+        altura.value = ''; // Limpa o campo de altura
+        largura.value = ''; // Limpa o campo de largura
+        profund.value = ''; // Limpa o campo de profundidade
+        profund2.value = ''; // Limpa o campo de profundidade 2
         });
     }
 }
@@ -2093,7 +2089,7 @@ function deletarM2Func() {
         for (let i = 0; i < array2d.length; i++) {
             const [nome, alt, lar, area, profundidade, area3, preco, area4] = array2d[i];
             document.getElementById('nome2').value = nome; // Atualiza o campo de nome com o nome do item
-            setCookie('tempNome3', nome, 30);
+            setCookie('tempNome3', nome, 30); // Define um cookie com o nome do item
             altura.value = alt; // Atualiza o campo de altura com a altura do item
             largura.value = lar; // Atualiza o campo de largura com a largura do item
             profund.value = profundidade; // Atualiza o campo de profundidade com a profundidade
