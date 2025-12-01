@@ -660,21 +660,26 @@ function editarLinhaM2(index) {
     });
     // Descobre os campos editáveis de acordo com o tipo de medição
     let camposEditaveis = [];
-    if (typeof tempTypeMed === 'undefined' || tempTypeMed === 0) {
+    // Normaliza tempTypeMed (pode vir como string, por ex. '0') para número
+    const ttm = (typeof tempTypeMed === 'undefined' || tempTypeMed === null) ? 0 : Number(tempTypeMed);
+    if (ttm === 0) {
         camposEditaveis = [0, 1, 2];
-    } else if (tempTypeMed == 1) {
-        camposEditaveis = [0, 1, 2, 3];
-    } else if (tempTypeMed == 2) {
+    } else if (ttm === 1) {
         camposEditaveis = [0, 1, 2, 4];
-    } else if (tempTypeMed == 3) {
-        camposEditaveis = [0, 1, 2, 3];
-    } else if (tempTypeMed == 4) {
-        camposEditaveis = [0, 1, 2, 3, 6];
+    } else if (ttm === 2) {
+        camposEditaveis = [0, 1, 2, 4];
+    } else if (ttm === 3) {
+        camposEditaveis = [0, 1, 2, 4];
+    } else if (ttm === 4) {
+        camposEditaveis = [0, 1, 2, 4, 6];
     }
     let inputRefs = []; // Array para armazenar referências aos inputs criados
     const dados = array2d[index].slice(); // Cria uma cópia dos dados da linha selecionada
-    for (let i = 0; i < linha.children.length; i++) { // Itera sobre as células da linha
-        const celula = linha.children[i]; // Seleciona a célula atual
+    // Itera pelo máximo entre células visíveis e os dados armazenados, assim acomodamos variações de estrutura
+    const maxCols = Math.max(linha.children.length, dados.length);
+    for (let i = 0; i < maxCols; i++) { // Itera sobre as possíveis células da linha
+        const celula = linha.children[i]; // Seleciona a célula atual (pode ser undefined se a tabela tiver menos colunas)
+        if (!celula) continue; // Se não houver célula correspondente, pula (evita erros)
         if (camposEditaveis.includes(i)) { // Verifica se o índice da célula está nos campos editáveis
             const input = document.createElement('input'); // Cria um novo input
             // Usamos sempre 'text' para permitir vírgula como separador decimal.
