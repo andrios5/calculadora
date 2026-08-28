@@ -47,52 +47,37 @@
                 <p class="calc-expression" id="calc-expression"></p>
                 <output class="calc-value" id="calc-value">0</output>
             </div>
+                <div class="calc-grid" id="calc-grid" role="group" aria-label="Teclado da calculadora">
+                    <!-- Linha 1 -->
+                    <button type="button" class="calc-btn calc-btn--fn" data-action="clear-all">AC</button>
+                    <button type="button" class="calc-btn calc-btn--fn" data-action="backspace" aria-label="Apagar último dígito">⌫</button>
+                    <button type="button" class="calc-btn calc-btn--fn" data-action="percent" aria-label="Porcentagem">%</button>
+                    <button type="button" class="calc-btn calc-btn--op" data-op="/" aria-label="Dividir">÷</button>
 
-            <div class="calc-grid" id="calc-grid" role="group" aria-label="Teclado da calculadora">
-                <!-- Linha 1 -->
-                <button type="button" class="calc-btn calc-btn--fn" data-action="clear-all">AC</button>
-                <button type="button" class="calc-btn calc-btn--fn" data-action="backspace" aria-label="Apagar último dígito">
-                    <span class="material-symbols-outlined" aria-hidden="true">backspace</span>
-                </button>
-                <button type="button" class="calc-btn calc-btn--fn" data-action="percent" aria-label="Porcentagem">
-                    <span class="material-symbols-outlined" aria-hidden="true">percent</span>
-                </button>
-                <button type="button" class="calc-btn calc-btn--op" data-op="/" aria-label="Dividir">
-                    <span class="material-symbols-outlined" aria-hidden="true">divide</span>
-                </button>
+                    <!-- Linha 2 -->
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="7">7</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="8">8</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="9">9</button>
+                    <button type="button" class="calc-btn calc-btn--op" data-op="*" aria-label="Multiplicar">×</button>
 
-                <!-- Linha 2 -->
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="7">7</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="8">8</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="9">9</button>
-                <button type="button" class="calc-btn calc-btn--op" data-op="*" aria-label="Multiplicar">
-                    <span class="material-symbols-outlined" aria-hidden="true">multiply</span>
-                </button>
+                    <!-- Linha 3 -->
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="4">4</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="5">5</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="6">6</button>
+                    <button type="button" class="calc-btn calc-btn--op" data-op="-" aria-label="Subtrair">−</button>
 
-                <!-- Linha 3 -->
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="4">4</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="5">5</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="6">6</button>
-                <button type="button" class="calc-btn calc-btn--op" data-op="-" aria-label="Subtrair">
-                    <span class="material-symbols-outlined" aria-hidden="true">remove</span>
-                </button>
+                    <!-- Linha 4 -->
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="1">1</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="2">2</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="3">3</button>
+                    <button type="button" class="calc-btn calc-btn--op" data-op="+" aria-label="Somar">+</button>
 
-                <!-- Linha 4 -->
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="1">1</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="2">2</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="3">3</button>
-                <button type="button" class="calc-btn calc-btn--op" data-op="+" aria-label="Somar">
-                    <span class="material-symbols-outlined" aria-hidden="true">add</span>
-                </button>
-
-                <!-- Linha 5 -->
-                <button type="button" class="calc-btn calc-btn--fn" data-action="toggle-sign" aria-label="Inverter sinal">±</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-digit="0">0</button>
-                <button type="button" class="calc-btn calc-btn--digit" data-action="decimal" aria-label="Vírgula decimal">,</button>
-                <button type="button" class="calc-btn calc-btn--equals" data-action="equals" aria-label="Igual">
-                    <span class="material-symbols-outlined" aria-hidden="true">equals</span>
-                </button>
-            </div>
+                    <!-- Linha 5 -->
+                    <button type="button" class="calc-btn calc-btn--fn" data-action="toggle-sign" aria-label="Inverter sinal">±</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-digit="0">0</button>
+                    <button type="button" class="calc-btn calc-btn--digit" data-action="decimal" aria-label="Vírgula decimal">,</button>
+                    <button type="button" class="calc-btn calc-btn--equals" data-action="equals" aria-label="Igual">=</button>
+                </div>
         </section>
 
         <button type="button" class="ins-toggle" aria-expanded="false" aria-controls="instrucoes-calc">
