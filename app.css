@@ -2515,6 +2515,88 @@ button.ins-toggle {
     line-height: 1.6;
 }
 
+/* --- Conversor de Dados (resultado em 2 colunas) --- */
+.conversoes .conv-dados {
+    background: var(--surface);
+}
+
+.conversoes .dados-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.conversoes .dados-col h4 {
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+
+    border-bottom: 2px solid var(--accent);
+
+    color: var(--text);
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.conversoes .dados-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.conversoes .dados-col li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 0;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: .85rem;
+}
+
+.conversoes .dados-col li:last-child {
+    border-bottom: none;
+}
+
+.conversoes .dados-col li span:first-child {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.conversoes .dados-col li span:last-child {
+    color: var(--text);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Select de unidade */
+.conversoes #dadosUnidade {
+    flex: 0 1 auto;
+    min-width: 130px;
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+/* Mobile: colunas empilham */
+@media (max-width: 420px) {
+    .conversoes .dados-colunas {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 /* --- Responsividade --- */
 @media (max-width: 420px) {
     .conversoes .conv-inputs {

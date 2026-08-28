@@ -39,6 +39,44 @@
             <span class="page-icon material-symbols-outlined" aria-hidden="true">swap_horiz</span>
             Conversões
         </h2>
+                <!-- Conversor R$ → US$ -->
+        <section class="conv-card">
+            <h3 class="conv-title">
+                <span class="material-symbols-outlined" aria-hidden="true">currency_exchange</span>
+                Conversor R$ → US$
+            </h3>
+            <div class="conv-inputs conv-dolar">
+                <input type="number" name="reais1" id="reais1" placeholder="Valor em R$:" min="0" step="any">
+                <button type="button" id="dolar">Converter</button>
+            </div>
+            <section id="resultado5" class="conv-result"><p></p></section>
+        </section>
+        
+        <!-- Conversor de Dados -->
+        <section class="conv-card">
+            <h3 class="conv-title">
+                <span class="material-symbols-outlined" aria-hidden="true">storage</span>
+                Conversor de Dados
+            </h3>
+            <div class="conv-inputs">
+                <input type="number" name="dados1" id="dados1" placeholder="Digite o valor:" min="0" step="any">
+                <select name="dadosUnidade" id="dadosUnidade"></select>
+                <button type="button" id="dadosBtn">Converter</button>
+            </div>
+            <section id="resultado6" class="conv-result conv-dados">
+                <div class="dados-colunas">
+                    <div class="dados-col">
+                        <h4>Byte</h4>
+                        <ul id="dadosByte"></ul>
+                    </div>
+                    <div class="dados-col">
+                        <h4>Bit</h4>
+                        <ul id="dadosBit"></ul>
+                    </div>
+                </div>
+            </section>
+        </section>
+
 
         <!-- Ano Bissexto -->
         <section class="conv-card">
@@ -77,20 +115,6 @@
                 <button type="button" id="tem1">Converter</button>
             </div>
             <section id="resultado4" class="conv-result"><p></p></section>
-        </section>
-
-        <!-- Conversor R$ → US$ -->
-        <section class="conv-card">
-            <h3 class="conv-title">
-                <span class="material-symbols-outlined" aria-hidden="true">currency_exchange</span>
-                Conversor R$ → US$
-            </h3>
-            <div class="conv-inputs conv-dolar">
-                <input type="number" name="dolar1" id="dolar1" placeholder="Cotação do dólar:" min="0" step="any">
-                <input type="number" name="reais1" id="reais1" placeholder="Valor em R$:" min="0" step="any">
-                <button type="button" id="dolar">Converter</button>
-            </div>
-            <section id="resultado5" class="conv-result"><p></p></section>
         </section>
 
     </main>
