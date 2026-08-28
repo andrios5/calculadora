@@ -248,7 +248,7 @@ tem.addEventListener('click', converterT)
             const cot = Number(dados.USDBRL.bid)
 
             // Faz o cálculo
-            const reais3 = cot / num2
+            const reais3 = cot * num2
             
             // Imprime na tela do mesmo jeito que você tinha feito
             res51.innerHTML = `<p>O dolar está custando ${cot.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>`
