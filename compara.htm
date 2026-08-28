@@ -1,58 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compara Preço | Calculadora X</title>
+    <meta name="description" content="Compare valores e encontre a melhor opção. Suporta comparação por peso, volume e medida." />
+
+    <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="theme.js"></script>
 </head>
-<body>
-    <header><a href="index.htm" rel="home" >
-        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
-    </a></header>
 
-    <main>
+<body class="app-page compara">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-        <h2>💸 Compara Preço</h2>
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="brand-heading">
+                <a class="brand-link" href="index.htm" rel="home">
+                    <span class="brand-mark material-symbols-outlined" aria-hidden="true">calculate</span>
+                    <span class="brand-name">Calculadora X</span>
+                </a>
+            </h1>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="conteudo" class="app-main">
+        <h2 class="page-title">
+            <span class="page-icon material-symbols-outlined" aria-hidden="true">compare_arrows</span>
+            Compara Preço
+        </h2>
+
         <section class="out" id="comparaPreco">
-            <p class="intro">Para comparar preço basta preencher os dois primeiros campos. Mas se quiser comparar com peso preencha também as duas medidas de baixo:</p>
-            <p class="titulo">1º Preço</p><p class="titulo">2º Preço</p><br>
-            <input type="number" name="valor1" id="valor1" placeholder="Digite o 1º preço:">
-            <input type="number" name="valor2" id="valor2" placeholder="Digite o 2º preço:"><br>
-            <p class="titulo">1º Unidade</p><p class="titulo">2º Unidade</p><br>
-            <input type="number" name="peso1" id="peso1" placeholder="Digite o 1º unidade:">
-            <input type="number" name="peso2" id="peso2" placeholder="Digite o 2º unidade:"><br>
-            <div class="containerMedida">
-            <p class="titulo">1º Medida</p><p class="titulo">2º Medida</p><br>
-                <input type="number" name="medida1" id="medidaU1" placeholder="Digite a 1º medida:">
-                <input type="number" name="medida2" id="medidaU2" placeholder="Digite a 2º medida:"><br>
+
+            <!-- Campos lado a lado -->
+            <div class="compara-grid">
+                <div class="compara-col">
+                    <label for="valor1">1º Preço</label>
+                    <input type="number" name="valor1" id="valor1" placeholder="Digite o 1º preço:" min="0" step="any">
+
+                    <label for="peso1">1º Unidade</label>
+                    <input type="number" name="peso1" id="peso1" placeholder="Digite a 1ª unidade:" min="0" step="any">
+                </div>
+
+                <div class="compara-col">
+                    <label for="valor2">2º Preço</label>
+                    <input type="number" name="valor2" id="valor2" placeholder="Digite o 2º preço:" min="0" step="any">
+
+                    <label for="peso2">2º Unidade</label>
+                    <input type="number" name="peso2" id="peso2" placeholder="Digite a 2ª unidade:" min="0" step="any">
+                </div>
             </div>
-            <select name="peso" id="peso"></select>
-            <button name="dif1" id="dif1">Verificar</button>
-            <select name="pes2" id="pes2"></select><br>
-            <button name="UNM" id="UNM">Modo Un/m</button>
-            <button name="UN" id="UN">Voltar</button>
-            <section id="resultado1" class="in">
-            <ul></ul>
+
+            <!-- Medidas (oculto por padrão, JS mostra) -->
+            <div class="containerMedida compara-grid">
+                <div class="compara-col">
+                    <label for="medidaU1">1º Medida</label>
+                    <input type="number" name="medida1" id="medidaU1" placeholder="Digite a 1ª medida:" min="0" step="any">
+                </div>
+
+                <div class="compara-col">
+                    <label for="medidaU2">2º Medida</label>
+                    <input type="number" name="medida2" id="medidaU2" placeholder="Digite a 2ª medida:" min="0" step="any">
+                </div>
+            </div>
+
+            <!-- Selects + Botão verificar -->
+            <div class="compara-actions">
+                <select name="peso" id="peso"></select>
+                <button name="dif1" id="dif1" type="button">Verificar</button>
+                <select name="pes2" id="pes2"></select>
+            </div>
+
+            <!-- Botões de modo -->
+            <div class="compara-modes">
+                <button name="UNM" id="UNM" type="button">Modo Un/m</button>
+                <button name="UN" id="UN" type="button">Voltar</button>
+            </div>
+
+            <!-- Resultado -->
+            <section id="resultado1" class="compara-result">
+                <ul></ul>
             </section>
         </section>
+        <button type="button" class="ins-toggle" aria-expanded="false" aria-controls="instrucoes">
+        Instruções
+        </button>
 
+        <ol class="instructions" id="instrucoes">
+            <li>Para comparar preço basta preencher os dois primeiros campos.</li>
+            <li>Se quiser comparar com peso, preencha também as unidades de baixo e selecione a medida.</li>
+        </ol>
 
-
+        <script>
+        document.querySelector('.ins-toggle').addEventListener('click', function () {
+            var list = document.getElementById('instrucoes');
+            var isVisible = getComputedStyle(list).display !== 'none';
+            list.style.display = isVisible ? 'none' : 'block';
+            this.setAttribute('aria-expanded', !isVisible);
+        });
+        </script>
     </main>
+
     <script src="comparaPreco.js"></script>
-    
 
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RQ819RVB2H');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RQ819RVB2H');
+    </script>
 </body>
 </html>

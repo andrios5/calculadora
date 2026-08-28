@@ -1,71 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conversões | Calculadora X</title>
+    <meta name="description" content="Converta unidades de medida, temperatura, moedas e verifique anos bissextos." />
+
+    <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="theme.js"></script>
 </head>
-<body>
-    <header><a href="index.htm" rel="home" >
-        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
-    </a></header>
 
-    <main>
+<body class="app-page conversoes">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-        <h2>📅 Verificar Ano Bissexto</h2>
-        <section class="out">
-            <input type="number" name="ano" id="ano" placeholder="Digite um ano:"><br>
-            <button id="anob">Verificar</button>
-            <section id="resultado2" class="in">
-                <p></p>
-            </section>
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="brand-heading">
+                <a class="brand-link" href="index.htm" rel="home">
+                    <span class="brand-mark material-symbols-outlined" aria-hidden="true">calculate</span>
+                    <span class="brand-name">Calculadora X</span>
+                </a>
+            </h1>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="conteudo" class="app-main">
+        <h2 class="page-title">
+            <span class="page-icon material-symbols-outlined" aria-hidden="true">swap_horiz</span>
+            Conversões
+        </h2>
+
+        <!-- Ano Bissexto -->
+        <section class="conv-card">
+            <h3 class="conv-title">
+                <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+                Verificar Ano Bissexto
+            </h3>
+            <div class="conv-inputs">
+                <input type="number" name="ano" id="ano" placeholder="Digite um ano:" min="0" step="1">
+                <button type="button" id="anob">Verificar</button>
+            </div>
+            <section id="resultado2" class="conv-result"><p></p></section>
         </section>
 
-        <h2>⚖️ Conversor de Medidas</h2>
-        <section class="out">
-            <input type="number" name="medida1" id="medida1" placeholder="Digite uma medida em metros:"><br>
-            <button id="med1">Converter</button>
-            <section id="resultado3" class="in">
-                <p></p>
-            </section>
+        <!-- Conversor de Medidas -->
+        <section class="conv-card">
+            <h3 class="conv-title">
+                <span class="material-symbols-outlined" aria-hidden="true">straighten</span>
+                Conversor de Medidas
+            </h3>
+            <div class="conv-inputs">
+                <input type="number" name="medida1" id="medida1" placeholder="Digite uma medida em metros:" min="0" step="any">
+                <button type="button" id="med1">Converter</button>
+            </div>
+            <section id="resultado3" class="conv-result"><p></p></section>
         </section>
 
-        <h2>🌡️ Conversor de Temperatura</h2>
-        <section class="out">
-            <input type="number" name="temp1" id="temp1" placeholder="Digite a temperatura em C°:"><br>
-            <button id="tem1">Converter</button>
-            <section id="resultado4" class="in">
-                <p></p>
-            </section>
+        <!-- Conversor de Temperatura -->
+        <section class="conv-card">
+            <h3 class="conv-title">
+                <span class="material-symbols-outlined" aria-hidden="true">thermostat</span>
+                Conversor de Temperatura
+            </h3>
+            <div class="conv-inputs">
+                <input type="number" name="temp1" id="temp1" placeholder="Digite a temperatura em °C:" step="any">
+                <button type="button" id="tem1">Converter</button>
+            </div>
+            <section id="resultado4" class="conv-result"><p></p></section>
         </section>
 
-        <h2>💵 Conversor R$ → US$</h2>
-        <section class="out">
-            <input type="number" name="dolar1" id="dolar1" placeholder="Digite a cotação do dólar:">
-            <input type="number" name="reais1" id="reais1" placeholder="Digite o valor em R$:"><br>
-            <button id="dolar">Converter</button><br>
-            <section id="resultado5" class="in">
-                <p></p>
-            </section>
+        <!-- Conversor R$ → US$ -->
+        <section class="conv-card">
+            <h3 class="conv-title">
+                <span class="material-symbols-outlined" aria-hidden="true">currency_exchange</span>
+                Conversor R$ → US$
+            </h3>
+            <div class="conv-inputs conv-dolar">
+                <input type="number" name="dolar1" id="dolar1" placeholder="Cotação do dólar:" min="0" step="any">
+                <input type="number" name="reais1" id="reais1" placeholder="Valor em R$:" min="0" step="any">
+                <button type="button" id="dolar">Converter</button>
+            </div>
+            <section id="resultado5" class="conv-result"><p></p></section>
         </section>
-
-
 
     </main>
+
     <script src="script.js"></script>
-    
 
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RQ819RVB2H');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RQ819RVB2H');
+    </script>
 </body>
 </html>

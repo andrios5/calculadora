@@ -366,10 +366,10 @@ function ordenarArray2dPorNome() { // Função para ordenar o array2d por nome
 
 function calcularArea2(){ // Função para calcular a área 2D ou 3D
         let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
-        alt = document.querySelector('#altura') // Seleciona o campo de altura
-        lar = document.querySelector('#largura') // Seleciona o campo de largura
-        pro = document.querySelector('#profund') // Seleciona o campo de profundidade
-        pro2 = document.querySelector('#profund2') // Seleciona o campo de profundidade 2
+    alt = document.querySelector('#altura') // Seleciona o campo de altura
+    lar = document.querySelector('#largura') // Seleciona o campo de largura
+    pro = document.querySelector('#profund') // Seleciona o campo de profundidade
+    pro2 = document.querySelector('#profund2') // Seleciona o campo de profundidade 2
         nome2 = document.querySelector('#nome2').value || 'Área'; // Define o nome, se estiver vazio usa 'Área'
         nome2 = nome2.trim() // Remove espaços em branco no início e no final do nome
         resM2 = document.querySelector('#resultadoM2') // Seleciona o elemento de resultado M2
@@ -381,28 +381,26 @@ function calcularArea2(){ // Função para calcular a área 2D ou 3D
         tempNome3 = tempNome2 // Armazena o nome temporário para a tabela de soma
         setCookie('tempNome3', tempNome3, 30); // Salva o nome no cookie por 30 dias
         
-        if (alt.value.includes(',')){alt = alt.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (lar.value.includes(',')){lar = lar.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (pro.value.includes(',')){pro = pro.replace(",", ".")} //Troca virgula por ponto se tiver
-        if (pro2.value.includes(',')){pro2 = pro2.replace(",", ".")} //Troca virgula por ponto se tiver
-        
-        alt = Number(alt.value) // Converte o valor de altura para número
-        lar = Number(lar.value) // Converte o valor de largura para número
-        pro = Number(pro.value) // Converte o valor de profundidade para número
-        pro2 = Number(pro2.value) // Converte o valor de profundidade 2 para número
+    // Converte para número usando substituição temporária sem alterar o valor visual
+    const altNum = Number(alt.value.replace(',', '.')) || 0;
+    const larNum = Number(lar.value.replace(',', '.')) || 0;
+    const proNum = Number(pro.value.replace(',', '.')) || 0;
+    const pro2Num = Number(pro2.value.replace(',', '.')) || 0;
 
-        area = alt * lar // Calcula a área 2D
+    area = altNum * larNum // Calcula a área 2D
 
-        if (pro == '' || pro == null) { // Verifica se o campo de profundidade está vazio
-            pro = 0; // Define a profundidade como 1 se estiver vazio
+        let proCalc = proNum;
+        if (pro.value == '' || pro.value == null) { // Verifica se o campo de profundidade está vazio
+            proCalc = 0; // Define a profundidade como 0 se estiver vazio
         }
-        if (pro2 == '' || pro2 == null) { // Verifica se o campo de profundidade 2 está vazio
-            pro2 = 0; // Define a profundidade 2 como 0 se estiver vazio
+        let pro2Calc = pro2Num;
+        if (pro2.value == '' || pro2.value == null) { // Verifica se o campo de profundidade 2 está vazio
+            pro2Calc = 0; // Define a profundidade 2 como 0 se estiver vazio
         }
 
-        area2 = alt * lar * pro // Calcula a área 3D
-        area3 = alt * lar * pro2 * pro // Calcula a área 3D para o segundo campo de profundidade
-        array2d.push([nome2, alt, lar, area, pro, area2, pro2, area3]) // Adiciona os valores ao array 2D
+    area2 = altNum * larNum * proCalc // Calcula a área 3D (primeiro multiplicador)
+    area3 = altNum * larNum * proCalc * pro2Calc // Calcula a área 3D considerando o segundo campo
+    array2d.push([nome2, altNum, larNum, area, proCalc, area2, pro2Calc, area3]) // Adiciona os valores ao array 2D com números normalizados
 
         typeMed() // Chama a função para definir o tipo de medição
         exibeArea2(array2d) // Chama a função para exibir os resultados
@@ -660,28 +658,52 @@ function editarLinhaM2(index) {
     document.querySelector('button.edicao').addEventListener('click', function() { // Adiciona um evento de clique ao botão de edição
         exibeArea2(); // Fecha qualquer edição anterior
     });
-
     // Descobre os campos editáveis de acordo com o tipo de medição
     let camposEditaveis = [];
-    if (typeof tempTypeMed === 'undefined' || tempTypeMed === 0) {
+    // Normaliza tempTypeMed (pode vir como string, por ex. '0') para número
+    const ttm = (typeof tempTypeMed === 'undefined' || tempTypeMed === null) ? 0 : Number(tempTypeMed);
+    if (ttm === 0) {
         camposEditaveis = [0, 1, 2];
-    } else if (tempTypeMed == 1) {
-        camposEditaveis = [0, 1, 2, 3];
-    } else if (tempTypeMed == 2) {
+    } else if (ttm === 1) {
         camposEditaveis = [0, 1, 2, 4];
-    } else if (tempTypeMed == 3) {
-        camposEditaveis = [0, 1, 2, 3];
-    } else if (tempTypeMed == 4) {
-        camposEditaveis = [0, 1, 2, 3, 6];
+    } else if (ttm === 2) {
+        camposEditaveis = [0, 1, 2, 4];
+    } else if (ttm === 3) {
+        camposEditaveis = [0, 1, 2, 4];
+    } else if (ttm === 4) {
+        camposEditaveis = [0, 1, 2, 4, 6];
     }
     let inputRefs = []; // Array para armazenar referências aos inputs criados
     const dados = array2d[index].slice(); // Cria uma cópia dos dados da linha selecionada
-    for (let i = 0; i < linha.children.length; i++) { // Itera sobre as células da linha
-        const celula = linha.children[i]; // Seleciona a célula atual
+    // Itera pelo máximo entre células visíveis e os dados armazenados, assim acomodamos variações de estrutura
+    const maxCols = Math.max(linha.children.length, dados.length);
+    for (let i = 0; i < maxCols; i++) { // Itera sobre as possíveis células da linha
+        const celula = linha.children[i]; // Seleciona a célula atual (pode ser undefined se a tabela tiver menos colunas)
+        if (!celula) continue; // Se não houver célula correspondente, pula (evita erros)
         if (camposEditaveis.includes(i)) { // Verifica se o índice da célula está nos campos editáveis
             const input = document.createElement('input'); // Cria um novo input
-            input.type = (i === 0) ? 'text' : 'number'; // Define o tipo do input como texto para o nome e número para os outros campos
-            input.value = dados[i] !== undefined ? dados[i] : ''; // Define o valor do input como o valor correspondente do array2d ou vazio se não existir
+            // Usamos sempre 'text' para permitir vírgula como separador decimal.
+            input.type = 'text';
+            let valorCampo = dados[i] !== undefined ? dados[i] : '';
+            if (i !== 0) { // Campos numéricos
+                // Converte para string e troca ponto por vírgula sem adicionar separador de milhar
+                if (valorCampo !== '' && valorCampo !== null) {
+                    // Se já for número, transforma em string simples
+                    if (typeof valorCampo === 'number') {
+                        valorCampo = valorCampo.toString();
+                    }
+                    // Remove possíveis separadores de milhar (.) vindos de toLocaleString e aplica vírgula no decimal
+                    valorCampo = valorCampo.toString().replace(/\./g, '.'); // normaliza primeiro
+                    // Se houver mais de um ponto (milhares), removemos os extras mantendo apenas o último como decimal
+                    const partes = valorCampo.split('.');
+                    if (partes.length > 2) {
+                        const decimal = partes.pop();
+                        valorCampo = partes.join('') + '.' + decimal;
+                    }
+                    valorCampo = valorCampo.replace('.', ',');
+                }
+            }
+            input.value = valorCampo;
             input.style.width = '80px';
             input.style.backgroundColor = '#f0f0f0';
             input.style.border = '1px solid #ccc';
@@ -690,6 +712,21 @@ function editarLinhaM2(index) {
             inputRefs[i] = input; // Armazena a referência do input no array inputRefs
             input.addEventListener('click', function(e) { e.stopPropagation(); }); // Impede a propagação do evento de clique para evitar fechar a edição
             input.addEventListener('focus', function() { this.select(); }); // Seleciona o texto do input ao focar nele
+            // Sanitiza entrada para permitir apenas números, vírgula e ponto (mas converte ponto em vírgula visualmente)
+            input.addEventListener('input', function() {
+                if (i !== 0) {
+                    // Remove caracteres inválidos
+                    let v = this.value.replace(/[^0-9.,]/g, '');
+                    // Se usuário digitar ponto, converte para vírgula
+                    v = v.replace(/\./g, ',');
+                    // Se mais de uma vírgula, mantém apenas a primeira
+                    const idxVirgula = v.indexOf(',');
+                    if (idxVirgula !== -1) {
+                        v = v.substring(0, idxVirgula + 1) + v.substring(idxVirgula + 1).replace(/,/g, '');
+                    }
+                    this.value = v;
+                }
+            });
         }
     }
 
@@ -702,12 +739,24 @@ function editarLinhaM2(index) {
         e.stopPropagation();
         camposEditaveis.forEach(function(idx) { // Itera sobre os campos editáveis
             if (inputRefs[idx]) { // Verifica se o input existe
-                array2d[index][idx] = inputRefs[idx].value; // Atualiza o valor correspondente no array2d com o valor do input
+                let valor = inputRefs[idx].value;
+                if (idx !== 0) { // Converter vírgula para ponto para cálculo
+                    valor = valor.replace(',', '.');
+                    // Se vazio, considerar 0
+                    valor = valor === '' ? 0 : Number(valor);
+                }
+                array2d[index][idx] = valor; // Atualiza o valor correspondente no array2d
             }
         });
-        
         const [nome, altura, largura, area, pro, area2, pro2] = array2d[index]; // Desestrutura os valores atualizados do array2d
-        array2d[index] = [nome, altura, largura, altura * largura, pro, altura * largura * pro, pro2, altura * largura * pro * pro2]; // Recalcula a área e atualiza o array2d
+        const alturaNum = Number(altura) || 0;
+        const larguraNum = Number(largura) || 0;
+        const proNum = Number(pro) || 0;
+        const pro2Num = Number(pro2) || 0;
+        const areaCalc = alturaNum * larguraNum;
+        const area2Calc = areaCalc * proNum;
+        const area3Calc = area2Calc * pro2Num;
+        array2d[index] = [nome, alturaNum, larguraNum, areaCalc, proNum, area2Calc, pro2Num, area3Calc]; // Recalcula e atualiza
         exibeArea2(); // Atualiza a exibição da tabela
     };
     btnAlterar.addEventListener('click', function(e) { e.stopPropagation(); }); // Impede a propagação do evento de clique para evitar fechar a edição
@@ -989,7 +1038,21 @@ function exportarParaPDF() { // Função para exportar os dados da tabela M2 par
     tableWidth: 'auto', // Largura da tabela automática
     margin: { left: 10, right: 10 } // Margens esquerda e direita de 10
     });
-    doc.save(`${nomeMed.value || document.querySelector('#nome2').value || 'Área'}${obterDataHoraFormatada()}.pdf`); // Salva o PDF com o nome especificado
+    // Adiciona rodapé em todas as páginas
+    const pageCount = doc.internal.getNumberOfPages();
+    const footerTextBase = `${nomeMed.value || document.querySelector('#nome2').value || 'Área'} - ${obterDataHoraFormatada()}`;
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const footerText = `${footerTextBase} - Página ${i} / ${pageCount} - https://andrios5.github.io/calculadora`;
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(footerText, pageWidth / 2, pageHeight - 10, { align: 'center' });
+    }
+
+    // Salva o PDF com o nome especificado
+    doc.save(`${nomeMed.value || document.querySelector('#nome2').value || 'Área'}${obterDataHoraFormatada()}.pdf`);
 }
 
 
@@ -1055,10 +1118,38 @@ async function exportarParaDocx() { // Função para exportar os dados da tabela
             children: row.map(cell => makeCell(cell)), // Mapeia cada célula da linha para criar uma célula formatada
         })
     );
-    // Cria o documento
+    // Texto base do rodapé
+    const footerTextBase = `${nomeMed.value || document.querySelector('#nome2').value || 'Área'} - ${obterDataHoraFormatada()} - https://andrios5.github.io/calculadora`;
+
+    // Cria um rodapé simples (centralizado). Tentamos incluir a numeração de páginas se a biblioteca suportar.
+    const footerParagraphChildren = [
+        new docx.TextRun({ text: footerTextBase + ' - ', size: 18 }),
+    ];
+    // Adiciona número da página atual e total se disponíveis na API
+    try {
+        if (docx.PageNumber) {
+            footerParagraphChildren.push(new docx.TextRun({ children: [docx.PageNumber.CURRENT] }));
+            footerParagraphChildren.push(new docx.TextRun({ text: ' / ' }));
+            footerParagraphChildren.push(new docx.TextRun({ children: [docx.PageNumber.TOTAL_PAGES] }));
+        }
+    } catch (e) {
+        // se a API não suportar, apenas deixamos o texto do rodapé sem paginação
+    }
+
+    const footer = new docx.Footer({
+        children: [
+            new docx.Paragraph({
+                alignment: docx.AlignmentType.CENTER,
+                children: footerParagraphChildren,
+            })
+        ]
+    });
+
+    // Cria o documento com rodapé definido na seção
     const doc = new docx.Document({ // Cria um novo documento Word
         sections: [{ // Define as seções do documento
             properties: {}, // Propriedades da seção
+            footers: { default: footer },
             children: [ // Conteúdo do documento
                 new docx.Paragraph({ // Cria um parágrafo para o título
                     text: `${nomeMed.value || document.querySelector('#nome2').value || 'Área'} ${obterDataHoraFormatada()}`, // Define o texto do título

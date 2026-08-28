@@ -1,117 +1,185 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medição | Calculadora X</title>
+    <meta name="description" content="Calcule medidas e dimensões com rapidez. Suporta M², M³, unidades e valores em R$." />
+
+    <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="medicao.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="theme.js"></script>
 </head>
-<body>
-    <header><a href="index.htm" rel="home" >
-        <h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1>
-    </a></header>
 
-    <main>
+<body class="app-page medicao">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-        <h2>📏 Medição</h2>
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="brand-heading">
+                <a class="brand-link" href="index.htm" rel="home">
+                    <span class="brand-mark material-symbols-outlined" aria-hidden="true">calculate</span>
+                    <span class="brand-name">Calculadora X</span>
+                </a>
+            </h1>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="conteudo" class="app-main">
+        <h2 class="page-title">
+            <span class="page-icon material-symbols-outlined" aria-hidden="true">straighten</span>
+            Medição
+        </h2>
+
         <section class="out" id="medicao">
-            
-            <div class="labelB"><label for="medType" class="med">Medição:</label><select name="medType" id="medType" class="med"></select></div>
-            
-                <section class="in" id="m2">
-                    <div class="containerNome"><label for="nomeMed">Nome: </label><input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição"><span id="dataMed"></span></div>
-                    <h3 class="edicao">Modo de Edição</h3>
-                    <div class="container2" id="container2">
-                            <div class="container" id="containerM0">
-                                <table id="m2">
-                                    <thead id="theadM2">
-                                        <tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>
-                                    </thead>
-                                    <tbody id="resultadoM2">
-                                    </tbody>
-                                    <tfoot id="resultadoS2">
-                                    </tfoot>
-                                </table>
-                            </div>
-                            
-                        </div>
-                        <div id="selecaoM2">
-                            <h3 id="selecao">Selecione um Item:</h3>
-                            <select name="sedicaoM2" id="sedicaoM2" size="5"></select><br>
-                        </div>
-                        <button class="edicao">Sair</button>
-                        <div class="containerBTN">
-                            <div class="containerm2"><label for="nome2" class="labelm2">Item: </label><input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item">
-                            </div><div class="containerm2" id="cpro2"><label for="profund2" id="lpro2" class="labelm2"></label><input type="number" name="profund2" id="profund2"></div>
-                            <div class="containerm2" id="cpro"><label for="profund" id="lpro" class="labelm2"></label><input type="number" name="profund" id="profund"></div>
-                            <div class="containerm2"><label for="altura" class="labelm2">Altura: </label><input type="number" name="altura" id="altura" placeholder="Digite a Altura"></div>
-                            <div class="containerm2"><label for="largura" class="labelm2">Largura: </label><input type="number" name="largura" id="largura" placeholder="Digite a Largura"></div>
-                        </div>
-                    
-                    
-                    
-                    <br id="quebraM"><button id="menosC2">Diminuir</button>
-                    <button id="deletarM2" class="edicao">Deletar</button>
-                    <button id="edicaoM2">Edição</button>
-                    <button id="alterarM2" class="edicao">Alterar</button>
-                    <button id="med2">Somar</button><br>
-                    
-                                <div class="container2" id="containerM1">
-                                    <table id="m1">
-                                        <thead id="theadM1">
-                                            <tr><th id="som1">Soma dos Itens</th><th>Área</th></tr>
-                                        </thead>
-                                        <tbody id="resultadoM1">
-                                        </tbody>
-                                    </table>
-                                </div>
 
-                        <section id="bottonsM2">
-                        <button id="resetC2">Reset</button>
-                        <button id="export2">Salvar</button>
-                        <button id="ordenarM2">Ordenar</button>
-                        <button id="posicaoM2">Exibição</button>
-                        <br>
-                        <select name="formatoEX" id="formatoEX"></select><br>
-                        </section>
+            <!-- Tipo de medição -->
+            <div class="labelB">
+                <label for="medType" class="med">Medição:</label>
+                <select name="medType" id="medType" class="med"></select>
+            </div>
+
+            <section class="in" id="m2">
+
+                <!-- Nome da medição + data -->
+                <div class="containerNome">
+                    <label for="nomeMed">Nome:</label>
+                    <input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição">
+                    <span id="dataMed"></span>
+                </div>
+
+                <!-- Título do modo edição (oculto por padrão) -->
+                <h3 class="edicao">Modo de Edição</h3>
+
+                <!-- Tabela principal -->
+                <div class="container2" id="containerM0">
+                    <table id="m2">
+                        <thead id="theadM2">
+                            <tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th></tr>
+                        </thead>
+                        <tbody id="resultadoM2"></tbody>
+                        <tfoot id="resultadoS2"></tfoot>
+                    </table>
+                </div>
+
+                <!-- Seleção de item para edição multi (oculto) -->
+                <div id="selecaoM2">
+                    <h3 id="selecao">Selecione um Item:</h3>
+                    <select name="sedicaoM2" id="sedicaoM2" size="5"></select>
+                </div>
+
+                <!-- Botão sair edição (oculto) -->
+                <button class="edicao" type="button">Sair</button>
+
+                <!-- Campos de entrada (draggable) -->
+                <div class="containerBTN">
+                    <div class="containerm2">
+                        <label for="nome2" class="labelm2">Item:</label>
+                        <input type="text" name="nome2" id="nome2" autocomplete="on" placeholder="Digite nome do Item">
+                    </div>
+                    <div class="containerm2" id="cpro2">
+                        <label for="profund2" id="lpro2" class="labelm2"></label>
+                        <input type="number" name="profund2" id="profund2">
+                    </div>
+                    <div class="containerm2" id="cpro">
+                        <label for="profund" id="lpro" class="labelm2"></label>
+                        <input type="number" name="profund" id="profund">
+                    </div>
+                    <div class="containerm2">
+                        <label for="altura" class="labelm2">Altura:</label>
+                        <input type="number" name="altura" id="altura" placeholder="Digite a Altura">
+                    </div>
+                    <div class="containerm2">
+                        <label for="largura" class="labelm2">Largura:</label>
+                        <input type="number" name="largura" id="largura" placeholder="Digite a Largura">
+                    </div>
+                </div>
+
+                <!-- Botões de ação principal -->
+                <div class="medicao-actions">
+                    <button id="menosC2" type="button">Diminuir</button>
+                    <button id="deletarM2" class="edicao" type="button">Deletar</button>
+                    <button id="edicaoM2" type="button">Edição</button>
+                    <button id="alterarM2" class="edicao" type="button">Alterar</button>
+                    <button id="med2" type="button">Somar</button>
+                </div>
+
+                <!-- Tabela de soma por item -->
+                <div class="container2" id="containerM1">
+                    <table id="m1">
+                        <thead id="theadM1">
+                            <tr><th>Soma dos Itens</th><th>Área</th></tr>
+                        </thead>
+                        <tbody id="resultadoM1"></tbody>
+                    </table>
+                </div>
+
+                <!-- Botões de exportação -->
+                <section class="medicao-export" id="bottonsM2">
+                    <button id="resetC2" type="button">Reset</button>
+                    <button id="export2" type="button">Salvar</button>
+                    <button id="ordenarM2" type="button">Ordenar</button>
+                    <button id="posicaoM2" type="button">Exibição</button>
+                    <select name="formatoEX" id="formatoEX"></select>
                 </section>
-            <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel">
-           
+
+                <!-- Import de arquivo -->
+                <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel">
+
+            </section>
         </section>
 
-        <h3 class="ins">Instruções</h3>
-        <ol>
+        <button type="button" class="ins-toggle" aria-expanded="false" aria-controls="instrucoes">
+        Instruções
+        </button>
+
+        <ol class="instructions" id="instrucoes">
             <li>Selecione o tipo de medição desejada, você pode alterar a qualquer momento.</li>
-             <li>Preencha os campos necessários, como nome, altura e largura.</li>
+            <li>Preencha os campos necessários, como nome, altura e largura.</li>
             <li>Clique em "Somar" para calcular a área total ou pressione "Enter".</li>
             <li>O último campo sempre vai limpar após a soma, mas você pode alterar a ordem arrastando o campo para baixo.</li>
-            <li>Se desejar você pode atribuir um nome a medição, você pode alterar a qualquer momento.</li>
-            <li>Se você quiser alterar um item basta clicar na tabela no item que deseja alterar e clicar em "alterar" ao lado da tabela ou pressionar "Enter", você também pode deletar o item pressionando no botão.</li>
+            <li>Se desejar você pode atribuir um nome à medição, você pode alterar a qualquer momento.</li>
+            <li>Se você quiser alterar um item basta clicar na linha da tabela e preencher os campos que deseja modificar, depois clique em "Alterar" ou pressione "Enter".</li>
             <li>Se você adicionar itens com nomes diferentes a soma por item vai aparecer em uma segunda tabela.</li>
-            <li>Você pode deletar um conjunto de itens pressionando o botão de "Edição" e escolhendo o item. Você também pode alterar o item preenchendo somente os campos que deseja alterar e clicando em alterar.</li>
-            <li>Você pode exportar os dados em diferentes formatos.</li>
-            <li>Você pode importar novamente os dados criados na Medição salvos em "CSV" e "XLS", você pode importar varias Medições de uma vez.</li>
+            <li>Você pode deletar um conjunto de itens pressionando o botão de "Edição" e escolhendo o item no seletor.</li>
+            <li>Você pode exportar os dados em diferentes formatos (CSV, XLS, DOC, PDF).</li>
+            <li>Você pode importar novamente os dados salvos em CSV ou XLS, importando várias medições de uma vez.</li>
         </ol>
+
+        <script>
+        document.querySelector('.ins-toggle').addEventListener('click', function () {
+            var list = document.getElementById('instrucoes');
+            var isVisible = getComputedStyle(list).display !== 'none';
+            list.style.display = isVisible ? 'none' : 'block';
+            this.setAttribute('aria-expanded', !isVisible);
+        });
+        </script>
 
 
     </main>
+
+    <!-- Bibliotecas de exportação -->
     <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="medicao.js"></script>
-    
 
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RQ819RVB2H');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RQ819RVB2H');
+    </script>
 </body>
 </html>

@@ -1,0 +1,2540 @@
+@charset "UTF-8";
+
+:root {
+    --app-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+
+    --bg: #f6f7fb;
+    --surface: rgba(255, 255, 255, .9);
+    --header-bg: rgba(255, 255, 255, .78);
+    --card-bg: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(247, 248, 252, .9));
+
+    --text: #0b1220;
+    --muted: #5b6478;
+    --border: rgba(15, 23, 42, .08);
+    --chip-bg: rgba(255, 255, 255, .72);
+
+    --accent: #4f46e5;
+    --accent-strong: #4338ca;
+    --accent-soft: rgba(79, 70, 229, .1);
+
+    --grad-1: #4f46e5;
+    --grad-2: #06b6d4;
+
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, .05), 0 8px 24px rgba(16, 24, 40, .05);
+    --shadow-lg: 0 18px 40px rgba(16, 24, 40, .12);
+
+    color-scheme: light;
+}
+
+* {
+margin: 0px;
+padding: 0px;
+}
+
+html[data-theme="dark"] {
+    --bg: #0b1020;
+    --surface: rgba(17, 24, 39, .82);
+    --header-bg: rgba(15, 23, 42, .72);
+    --card-bg: linear-gradient(180deg, rgba(30, 41, 59, .92), rgba(17, 24, 39, .86));
+
+    --text: #f8fafc;
+    --muted: #a1aabf;
+    --border: rgba(255, 255, 255, .08);
+    --chip-bg: rgba(255, 255, 255, .06);
+
+    --accent: #818cf8;
+    --accent-strong: #a5b4fc;
+    --accent-soft: rgba(129, 140, 248, .14);
+
+    --grad-1: #818cf8;
+    --grad-2: #22d3ee;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px rgba(0, 0, 0, .22);
+    --shadow-lg: 0 24px 50px rgba(0, 0, 0, .36);
+
+    color-scheme: dark;
+}
+
+.app-page {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+
+    min-height: 100vh;
+
+    background-color: var(--bg);
+    color: var(--text);
+
+    font-family: var(--app-font);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background:
+        radial-gradient(42rem 32rem at 85% -10%, rgba(79, 70, 229, .16), transparent 60%),
+        radial-gradient(38rem 28rem at -10% 20%, rgba(6, 182, 212, .14), transparent 55%);
+}
+
+html[data-theme="dark"] .app-page::before {
+    background:
+        radial-gradient(42rem 32rem at 85% -10%, rgba(129, 140, 248, .16), transparent 60%),
+        radial-gradient(38rem 28rem at -10% 20%, rgba(34, 211, 238, .10), transparent 55%);
+}
+
+.app-page ::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+}
+
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: -999px;
+    z-index: 100;
+
+    padding: 12px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.skip-link:focus {
+    left: 16px;
+    top: 16px;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    padding: 0;
+
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: none;
+
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px clamp(20px, 5vw, 72px);
+}
+
+.brand-heading {
+    margin: 0;
+    padding: 0;
+
+    color: var(--text);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 750;
+    letter-spacing: -.02em;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand-mark,
+.page-icon {
+    display: grid;
+    place-items: center;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+
+    font-size: 22px;
+    box-shadow: 0 10px 20px rgba(79, 70, 229, .2);
+
+    transition: transform .18s ease;
+}
+
+html[data-theme="dark"] .brand-mark,
+html[data-theme="dark"] .page-icon {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        box-shadow .18s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.app-main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: clamp(36px, 7vw, 72px) clamp(20px, 5vw, 48px) clamp(72px, 10vw, 120px);
+
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: auto;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 0 0 24px;
+    padding: 0;
+
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    color: var(--text);
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    text-align: left;
+}
+
+.page-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    font-size: 24px;
+}
+
+.app-page .aut {
+    cursor: pointer;
+    user-select: none;
+}
+
+.app-page .aut:hover {
+    transform: translateY(-1px) scale(1.04);
+}
+
+.app-page .out {
+    margin: 0;
+    padding: clamp(10px, 2.5vw, 36px);
+
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: var(--shadow-sm);
+
+    text-align: left;
+}
+
+.app-page .intro {
+    margin: 0 0 24px;
+
+    max-width: 72ch;
+
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.65;
+    text-align: left;
+}
+
+.counter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    margin-bottom: 8px;
+}
+
+.app-page button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 56px;
+    min-height: 56px;
+    padding: 12px 20px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+
+    box-shadow: var(--shadow-sm);
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        box-shadow .18s ease;
+}
+
+.app-page button:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.app-page button:active {
+    transform: none;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, .12);
+}
+
+.app-page button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.app-page #menos,
+.app-page #mais {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+
+    border-radius: 999px;
+
+    font-size: 1.4rem;
+}
+
+.app-page #virarDia {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 4px;
+
+    border-radius: 999px;
+
+    font-size: .95rem;
+}
+
+.app-page .tela {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    max-width: 320px;
+    min-height: 120px;
+    margin: 0 auto;
+    padding: 24px;
+
+    border-radius: 24px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+
+    box-shadow: var(--shadow-sm);
+
+    font-variant-numeric: tabular-nums;
+}
+
+.info-row,
+.week-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.app-page .tela15,
+.app-page .tela25 {
+    display: none;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.app-page .tela2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+    padding: 10px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .95rem;
+    font-weight: 700;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.app-page .tela2:empty {
+    display: none;
+}
+
+.app-page #reset,
+.app-page #reset2 {
+    min-width: auto;
+    min-height: 48px;
+    padding: 10px 16px;
+
+    border-radius: 999px;
+
+    font-size: .9rem;
+}
+
+.week-section {
+    margin-top: 28px;
+    text-align: center;
+}
+
+.week-header {
+    margin-bottom: 4px;
+}
+
+.weekly-table-wrap {
+    overflow-x: auto;
+}
+
+#contSem {
+    display: none;
+
+    width: 100%;
+    max-width: 560px;
+    margin: 16px auto 0;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+#contSem th,
+#contSem td {
+    padding: 14px 18px;
+
+    background: transparent;
+    border: none;
+    color: var(--text);
+
+    font-size: .95rem;
+}
+
+#contSem tbody tr + tr th,
+#contSem tbody tr + tr td {
+    border-top: 1px solid var(--border);
+}
+
+#contSem th {
+    width: 50%;
+    text-align: left;
+
+    color: var(--muted);
+    font-weight: 600;
+}
+
+#contSem td {
+    text-align: right;
+
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+#contSem tfoot th,
+#contSem tfoot td {
+    background: var(--accent-soft);
+    border-top: 1px solid var(--border);
+    color: var(--text);
+
+    font-weight: 800;
+}
+
+
+.app-page #tela35 {
+    display: none;
+
+    margin-top: 16px;
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+/* Controles genéricos para as próximas ferramentas */
+.app-page input,
+.app-page select,
+.app-page textarea {
+    width: auto;
+    max-width: 100%;
+
+    padding: 12px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    box-shadow: none;
+}
+
+.app-page input:focus-visible,
+.app-page select:focus-visible,
+.app-page textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+@media (max-width: 600px) {
+    .header-inner {
+        padding-inline: 18px;
+    }
+
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .counter-controls,
+    .info-row,
+    .week-header {
+        gap: 10px;
+    }
+
+    .app-page .tela {
+        min-height: 96px;
+        padding: 20px;
+    }
+
+    #contSem th,
+    #contSem td {
+        padding: 12px 14px;
+        font-size: .9rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle,
+    .app-page button,
+    .brand-mark,
+    .page-icon,
+    .aut {
+        transition: none;
+    }
+}
+
+/* Correção do layout do contador */
+.app-page #virarDia {
+    display: none;
+    width: 100%;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.app-page .tela {
+    min-width: 130px;
+}
+
+.app-page .tela15,
+.app-page .tela25,
+.app-page .tela2,
+.app-page #tela35 {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.app-page #tela35 {
+    margin-top: 16px;
+}
+
+/* ===== Home / index.htm ===== */
+.app-page .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 0;
+    padding: 0;
+
+    color: var(--text);
+    font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+    font-weight: 750;
+    letter-spacing: -.02em;
+}
+
+.hero {
+    max-width: 760px;
+    margin-bottom: clamp(28px, 5vw, 48px);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0 0 16px;
+    padding: 7px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--chip-bg);
+    color: var(--muted);
+
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    margin: 0 0 12px;
+
+    color: var(--text);
+    font-size: clamp(2.1rem, 5vw, 3.7rem);
+    line-height: 1.05;
+    letter-spacing: -.045em;
+    font-weight: 800;
+}
+
+.gradient-text {
+    color: var(--accent);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .gradient-text {
+        background: linear-gradient(90deg, var(--grad-1), var(--grad-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.hero-subtitle {
+    margin: 0;
+
+    max-width: 64ch;
+
+    color: var(--muted);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.6;
+}
+
+.tool-grid {
+    display: grid;
+    gap: clamp(16px, 2vw, 24px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.tool-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: clamp(22px, 3vw, 28px);
+
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+
+    color: inherit;
+    text-decoration: none;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.tool-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .8), transparent);
+    opacity: .7;
+}
+
+html[data-theme="dark"] .tool-card::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .16), transparent);
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg);
+}
+
+.tool-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.card-top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-icon {
+    display: grid;
+    place-items: center;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 18px;
+
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+
+    font-size: 26px;
+    box-shadow: 0 10px 20px rgba(79, 70, 229, .2);
+}
+
+html[data-theme="dark"] .card-icon {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+}
+
+.card-arrow {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+
+    color: var(--muted);
+    font-size: 22px;
+
+    opacity: 0;
+    transform: translateX(-6px);
+
+    transition:
+        opacity .18s ease,
+        transform .18s ease,
+        color .18s ease;
+}
+
+.tool-card:hover .card-arrow,
+.tool-card:focus-visible .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--accent);
+}
+
+.card-title {
+    margin: 0;
+    padding: 0;
+
+    color: var(--text);
+    font-size: 1.08rem;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    font-weight: 700;
+}
+
+.card-desc {
+    margin: 0;
+
+    color: var(--muted);
+    font-size: .96rem;
+    line-height: 1.55;
+}
+
+/* ===== Medição ===== */
+
+.medicao .app-main {
+    max-width: 1120px;
+}
+
+/* --- Tipo de medição (select) --- */
+.medicao .labelB {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    box-sizing: border-box;   /* ← adiciona */
+    width: auto;              /* ← era 100% */
+    max-width: 520px;
+    margin: 0 auto 20px;
+    padding: 8px 12px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.medicao .labelB label.med {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+
+    background: var(--accent-soft);
+    color: var(--text);
+    border-radius: 10px;
+
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.medicao .labelB select.med {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- Nome da medição + data --- */
+.medicao .containerNome {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 20px;
+    padding: 10px 14px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.medicao .containerNome > label {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.medicao .containerNome input#nomeMed {
+    flex: 1;
+    min-width: min(60%, 280px);
+    padding: 8px 12px;
+
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    color: var(--text);
+    font-size: .95rem;
+}
+
+.medicao .containerNome span#dataMed {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding: 5px 12px;
+
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+/* --- Modo edição (título + botão sair) --- */
+.medicao h3.edicao {
+    display: none; /* JS controla visibilidade */
+
+    width: fit-content;
+    margin: 16px auto 12px;
+    padding: 8px 18px;
+
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .9rem;
+    text-align: center;
+}
+
+.medicao button.edicao {
+    display: none; /* JS controla visibilidade */
+
+    margin: 12px auto 0;
+    min-width: auto;
+    min-height: 44px;
+    padding: 10px 20px;
+
+    border-radius: 999px;
+    font-size: .9rem;
+}
+
+/* --- Seleção de item (edição multi) --- */
+.medicao #selecaoM2 {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+.medicao #selecaoM2:has(#sedicaoM2[style*="inline-block"]) {
+    margin-top: 16px;
+    padding: 14px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.medicao #selecao {
+    display: none; /* JS controla visibilidade */
+
+    margin-bottom: 10px;
+    padding: 6px 14px;
+
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .9rem;
+}
+
+.medicao #sedicaoM2 {
+    display: none; /* JS controla visibilidade */
+
+    width: 100%;
+    min-width: 240px;
+    padding: 8px 12px;
+
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    font-size: .95rem;
+}
+
+/* --- Tabela principal (#m2) --- */
+.medicao #containerM0 {
+    display: none; /* JS controla visibilidade */
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 16px;
+    overflow-x: auto;
+}
+
+.medicao table#m2 {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    overflow-x: auto;
+}
+
+
+.medicao table#m2 thead th {
+    padding: 14px 16px;
+
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+
+    font-size: .85rem;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.medicao table#m2 tbody tr {
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+.medicao table#m2 tbody tr:hover {
+    background: var(--accent-soft);
+}
+
+.medicao table#m2 tbody th,
+.medicao table#m2 tbody td {
+    padding: 12px 16px;
+
+    border-top: 1px solid var(--border);
+    color: var(--text);
+
+    font-size: .95rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.medicao table#m2 tbody th {
+    font-weight: 700;
+}
+
+/* Células de soma (classe adicionada pelo JS) */
+.medicao table#m2 tbody td.cSoma {
+    background: var(--accent-soft);
+    font-weight: 600;
+}
+
+/* Linha em edição */
+.medicao table#m2 tbody tr.editando {
+    background: var(--accent-soft);
+    cursor: default;
+}
+
+/* Rodapé da tabela principal (soma) */
+.medicao table#m2 tfoot th,
+.medicao table#m2 tfoot td {
+    padding: 14px 20px;
+
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .9rem;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+
+    border-top: 1px solid var(--border);
+}
+
+
+.medicao table#m2 tbody tr.editando input {
+    width: 80px !important;
+    padding: 6px 10px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px;
+    background-color: var(--surface) !important;
+    color: var(--text) !important;
+    font-size: .9rem;
+    text-align: center;
+}
+
+/* Botões "Alterar" e "Deletar" criados dinamicamente na linha */
+.medicao table#m2 tbody tr.editando button {
+    background-color: var(--accent) !important;
+    color: #fff !important;
+    border: none;
+    min-width: auto;
+    min-height: 50px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: .8rem;
+    font-weight: 700;
+    margin-top: 0.35em;
+}
+
+.medicao table#m2 tbody tr.editando button:hover {
+    background-color: var(--accent-strong) !important;
+}
+
+
+/* Botões dinâmicos dentro da linha (criados pelo JS) */
+.medicao table#m2 tbody tr button {
+    min-width: auto;
+    min-height: 36px;
+    padding: 6px 14px;
+
+    border-radius: 8px;
+    font-size: .8rem;
+}
+
+/* Tabela de soma por item (#m1) */
+.medicao #containerM1 {
+    display: none; /* JS controla visibilidade */
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 16px;
+    overflow-x: auto;
+}
+
+.medicao table#m1 {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    overflow: hidden;
+}
+
+.medicao table#m1 thead th {
+    padding: 12px 16px;
+
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .85rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.medicao table#m1 tbody th,
+.medicao table#m1 tbody td {
+    padding: 12px 16px;
+
+    border-top: 1px solid var(--border);
+    color: var(--text);
+
+    font-size: .95rem;
+    text-align: center;
+}
+
+.medicao table#m1 tbody th {
+    font-weight: 700;
+    text-align: left;
+}
+
+/* --- Campos de entrada (draggable) --- */
+.medicao .containerBTN {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 12px;
+
+    min-height: 60px;
+    padding: 16px;
+    margin-bottom: 16px;
+
+    border: 2px dashed transparent;
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+
+    transition: border-color .2s ease, background-color .2s ease;
+}
+
+.medicao .containerBTN:hover {
+    border-color: var(--border);
+}
+
+.medicao .containerm2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    cursor: grab;
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+
+.medicao .containerm2:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.medicao .containerm2:active {
+    cursor: grabbing;
+}
+
+/* Estado de arrasto (classe adicionada pelo JS) */
+.medicao .containerm2.dragging {
+    opacity: .5;
+    transform: rotate(1deg) scale(1.03);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
+}
+
+/* Área de drop (criada dinamicamente pelo JS) */
+.medicao .drop-area {
+    display: none; /* JS controla visibilidade */
+
+    flex: 1 1 100%;
+    min-height: 50px;
+    padding: 12px;
+
+    border: 2px dashed var(--accent);
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.medicao .drop-area.drag-over {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent-strong);
+    transform: scale(1.01);
+}
+
+/* Labels e inputs dentro dos containers */
+.medicao .labelm2 {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: .85rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.medicao .containerm2 input {
+    width: 100px;
+    max-width: 140px;
+    padding: 8px 10px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    color: var(--text);
+    font-size: .9rem;
+}
+
+.medicao .containerm2 input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: var(--accent);
+}
+
+/* --- Botões de ação principal --- */
+.medicao .medicao-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.medicao .medicao-actions button {
+    min-width: auto;
+    min-height: 48px;
+    padding: 10px 20px;
+
+    border-radius: 999px;
+    font-size: .9rem;
+}
+
+/* Botões que o JS esconde por padrão (tabela vazia) */
+.medicao #menosC2,
+.medicao #export2,
+.medicao #resetC2,
+.medicao #formatoEX,
+.medicao #ordenarM2,
+.medicao #posicaoM2,
+.medicao #edicaoM2 {
+    display: none; /* JS mostra quando há dados */
+}
+
+/* --- Botões de exportação --- */
+.medicao .medicao-export {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.medicao .medicao-export button {
+    min-width: auto;
+    min-height: 48px;
+    padding: 10px 18px;
+
+    border-radius: 999px;
+    font-size: .9rem;
+}
+
+.medicao #formatoEX {
+    padding: 10px 14px;
+
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+/* --- Input de arquivo (import) --- */
+.medicao #seletorDeArquivo {
+    display: block;
+    width: 100%;
+    max-width: 50vw;
+    margin: auto;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: .85rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.medicao #seletorDeArquivo:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg);
+}
+
+.medicao #seletorDeArquivo:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+
+/* --- Botão de instruções (toggle) --- */
+button.ins-toggle {
+    display: block;
+    gap: 8px;
+
+    margin: 36px auto 0;
+    padding: 10px 22px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: var(--shadow-sm);
+
+    transition: transform .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.ins-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.ins-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.ins-toggle .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* Lista de instruções (oculta por padrão) */
+.instructions {
+    display: none; /* JS mostra ao clicar no botão */
+
+    max-width: 72ch;
+    margin: 16px auto 0;
+    padding: 20px 35px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow-sm);
+
+    color: var(--muted);
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+.instructions li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* --- Responsividade --- */
+@media (max-width: 750px) {
+    .medicao .containerBTN {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .medicao .containerm2 {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 140px;
+        padding: 8px 10px;
+    }
+
+    .medicao .containerm2 input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .medicao table#m2 tbody th,
+    .medicao table#m2 tbody td,
+    .medicao table#m1 tbody th,
+    .medicao table#m1 tbody td {
+        padding: 10px 12px;
+        font-size: .85rem;
+    }
+
+    .medicao table#m2 thead th {
+        padding: 10px 12px;
+        font-size: .8rem;
+    }
+
+    .medicao .medicao-actions button,
+    .medicao .medicao-export button {
+        min-height: 44px;
+        padding: 8px 16px;
+        font-size: .85rem;
+    }
+
+    .medicao .containerNome input#nomeMed{
+        min-width: 120px;
+    }
+
+}
+
+@media (max-width: 420px) {
+    
+    .brand-heading {
+        font-size: 1.25rem;
+    }
+
+    .medicao .containerm2 {
+        flex: 1 1 100%;
+    }
+
+    .medicao .labelB {
+    padding: 6px 10px;
+    gap: 8px;
+    }
+
+    .medicao .labelB label.med {
+        font-size: .8rem;
+        padding: 6px 10px;
+    }
+
+    .medicao .labelB select.med {
+        font-size: .85rem;
+    }
+
+    .medicao .containerNome {
+        padding: 8px 10px;
+    }
+
+    .medicao table#m2 tbody th,
+    .medicao table#m2 tbody td,
+    .medicao table#m1 tbody th,
+    .medicao table#m1 tbody td {
+        padding: 8px 10px;
+        font-size: .8rem;
+    }
+
+    .medicao #seletorDeArquivo {
+        min-width: unset;
+    }
+
+    .medicao .containerNome input#nomeMed{
+        min-width: 80px;
+    }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .medicao .containerm2,
+    .medicao table#m2 tbody tr,
+    .medicao .drop-area {
+        transition: none;
+    }
+}
+
+/* ===== Dinheiro Gasto ===== */
+
+.dinheiro .app-main {
+    max-width: 640px;
+}
+
+/* --- Controles (- input +) --- */
+.dinheiro .dinheiro-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    margin-bottom: 24px;
+}
+
+.dinheiro .dinheiro-controls button {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    padding: 0;
+
+    border-radius: 999px;
+    font-size: 1.4rem;
+}
+
+.dinheiro .dinheiro-controls button .material-symbols-outlined {
+    font-size: 28px;
+}
+
+.dinheiro .dinheiro-controls input {
+    width: 160px;
+    max-width: 50vw;
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.dinheiro .dinheiro-controls input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+/* --- Displays de valor --- */
+.dinheiro .dinheiro-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    max-width: 100%;
+    min-height: 80px;
+    margin: 0 auto 20px;
+    padding: 20px 32px;
+
+    border-radius: 20px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+
+    color: var(--text);
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-weight: 800;
+    text-align: center;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.dinheiro .dinheiro-display-money {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    max-width: 100%;
+    min-height: 56px;
+    margin: 0 auto 20px;
+    padding: 14px 24px;
+
+    border-radius: 999px;
+
+    background: var(--accent-soft);
+    color: var(--text);
+
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- Botões de reset --- */
+.dinheiro .dinheiro-resets {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-bottom: 24px;
+}
+
+.dinheiro .dinheiro-resets button {
+    min-width: auto;
+    min-height: 48px;
+    padding: 10px 22px;
+
+    border-radius: 999px;
+    font-size: .9rem;
+}
+
+/* --- Telas informativas (dia anterior, data inicial, mês anterior) --- */
+.dinheiro .telaV1,
+.dinheiro .telaV3,
+.dinheiro .telaV4 {
+    display: none; /* JS controla visibilidade */
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 12px;
+    padding: 8px 16px;
+
+    border-radius: 999px;
+
+    background: var(--chip-bg);
+    color: var(--muted);
+
+    font-size: .85rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* --- Tela do teto de gastos (telaV5) --- */
+.dinheiro .telaV5 {
+    display: none; /* JS controla visibilidade */
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 16px;
+    padding: 14px 20px;
+
+    border-radius: 16px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+
+    color: var(--text);
+    font-size: .95rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.dinheiro .telaV5 p#teto {
+    margin-top: 6px;
+
+    color: var(--muted);
+    font-size: .8rem;
+    font-weight: 500;
+}
+
+/* --- Menu de teto (seta + input + botão) --- */
+.dinheiro .dinheiro-teto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 8px;
+}
+
+.dinheiro #setaGasto {
+    font-size: 32px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: transform .2s ease, color .2s ease;
+}
+
+.dinheiro #setaGasto:hover {
+    color: var(--accent);
+}
+
+.dinheiro #tetoGasto {
+    display: none; /* JS controla */
+
+    width: 160px;
+    padding: 10px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .9rem;
+    text-align: center;
+}
+
+.dinheiro #definirTeto {
+    display: none; /* JS controla */
+
+    min-width: auto;
+    min-height: 44px;
+    padding: 10px 18px;
+
+    border-radius: 999px;
+    font-size: .85rem;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 420px) {
+    .dinheiro .dinheiro-controls input {
+        width: 120px;
+        padding: 12px 12px;
+        font-size: 1rem;
+    }
+
+    .dinheiro .dinheiro-display {
+        min-height: 64px;
+        padding: 16px 20px;
+    }
+
+    .dinheiro #tetoGasto {
+        width: 130px;
+    }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .dinheiro #setaGasto,
+    .dinheiro .dinheiro-controls button,
+    .dinheiro .dinheiro-resets button {
+        transition: none;
+    }
+}
+
+/* ===== Compara Preço ===== */
+
+.compara .app-main {
+    max-width: 720px;
+}
+
+/* --- Grid de campos (2 colunas) --- */
+.compara .compara-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.compara .compara-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.compara .compara-col label {
+    color: var(--muted);
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+.compara .compara-col input {
+    width: 100%;
+    max-width: 250px;
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 1rem;
+}
+
+.compara .compara-col input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+/* --- Container de medidas (oculto por padrão) --- */
+.compara .containerMedida {
+    display: none; /* JS seta 'block' */
+    margin-bottom: 20px;
+    overflow: hidden; /* clearfix p/ floats */
+}
+
+.compara .containerMedida .compara-col {
+    float: left;
+    width: calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.compara .containerMedida .compara-col:last-child {
+    margin-left: 20px;
+}
+
+
+/* --- Selects + Botão verificar --- */
+.compara .compara-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.compara .compara-actions select {
+    padding: 10px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.compara #dif1 {
+    min-width: auto;
+    min-height: 48px;
+    padding: 12px 28px;
+
+    border-radius: 999px;
+    font-size: .95rem;
+    font-weight: 700;
+
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+    border: none;
+}
+
+.compara #dif1:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, .3);
+}
+
+/* --- Botões de modo (Un/m / Voltar) --- */
+.compara .compara-modes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin-bottom: 24px;
+}
+
+.compara #UNM,
+.compara #UN {
+    min-width: auto;
+    min-height: 44px;
+    padding: 8px 18px;
+
+    border-radius: 999px;
+    font-size: .85rem;
+}
+
+.compara #UN {
+    display: none; /* JS controla */
+}
+
+/* --- Resultado --- */
+.compara .compara-result {
+    display: none; /* JS controla */
+
+    padding: 24px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.compara .compara-result ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.compara .compara-result li,
+.compara .compara-result p {
+    color: var(--text);
+    font-size: .95rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.compara .compara-result li:last-child,
+.compara .compara-result p:last-child {
+    margin-bottom: 0;
+}
+
+.compara .compara-result li.maior,
+.compara .compara-result p.maior {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.compara .compara-result strong {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.compara .compara-result mark {
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: transparent; /* JS seta inline (red/green) */
+}
+
+/* --- Responsividade --- */
+@media (max-width:700px) {
+    .compara .compara-col input{
+        max-width: 34vw;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .compara .compara-actions select {
+        width: 100%;
+        max-width: 25vw;
+    }
+}
+
+@media (max-width: 480px) {
+        .compara .compara-actions select {
+        max-width: 22vw;
+    }
+    .compara .compara-col input{
+        max-width: 30vw;
+    }
+}
+
+@media (max-width: 370px) {
+        .compara .compara-actions {
+        flex-direction: column;
+    }
+        .compara .compara-actions select {
+        max-width: 50vw;
+    }
+
+     .compara .compara-col input{
+        max-width: 25vw;
+    }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .compara #dif1,
+    .compara .compara-modes button {
+        transition: none;
+    }
+}
+
+/* ===== Esquadro ===== */
+
+.esquadro-page .app-main {
+    max-width: 640px;
+}
+
+/* --- Container do triângulo --- */
+.esquadro-container {
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+.esquadro {
+    position: relative;
+    width: 280px;
+    height: 270px;
+}
+
+/* Triângulo decorativo (SVG) */
+.esq-tri {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    color: var(--accent);
+    opacity: .25;
+}
+
+/* --- Lado A (vertical, esquerda) --- */
+.esquadro .lado-vertical {
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- Lado B (horizontal, baixo) --- */
+.esquadro .lado-horizontal {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- Hipotenusa (diagonal, superior direito) --- */
+.esquadro .hipotenusa {
+    position: absolute;
+    top: 80px;
+    right: 70px; 
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- Inputs dos lados --- */
+.esquadro .input-lado,
+.esquadro .input-hipotenusa {
+    width: 72px;
+    height: 40px;
+    padding: 8px 10px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+
+    box-shadow: var(--shadow-sm);
+
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.esquadro .input-lado:focus-visible,
+.esquadro .input-hipotenusa:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+/* Labels */
+.esquadro .label-lado,
+.esquadro .label-hipotenusa {
+    color: var(--muted);
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+/* --- Fórmulas de referência --- */
+.esquadro-formulas {
+    margin-top: 24px;
+    padding: 16px 20px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+
+    text-align: center;
+}
+
+.esquadro-formulas p {
+    color: var(--text);
+    font-size: .95rem;
+    margin-bottom: 6px;
+}
+
+.esquadro-formulas p:last-child {
+    margin-bottom: 0;
+}
+
+.esquadro-formulas strong {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.esquadro-formulas .esq-hint {
+    color: var(--muted);
+    font-size: .8rem;
+}
+
+.esquadro-reset {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.esquadro-reset button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 44px;
+    padding: 10px 22px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: var(--shadow-sm);
+
+    transition: transform .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.esquadro-reset button:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.esquadro-reset button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.esquadro-reset .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* --- Responsividade --- */
+@media (max-width: 500px) {
+    .esquadro-container {
+        padding: 24px 8px;
+    }
+
+    .esquadro {
+        width: 240px;
+        height: 240px;
+    }
+
+    .esquadro .input-lado,
+    .esquadro .input-hipotenusa {
+        width: 64px;
+        height: 36px;
+        font-size: .9rem;
+    }
+
+    .esquadro .label-lado,
+    .esquadro .label-hipotenusa {
+        font-size: .7rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .esquadro {
+        width: 210px;
+        height: 210px;
+    }
+
+    .esquadro .input-lado,
+    .esquadro .input-hipotenusa {
+        width: 56px;
+        height: 34px;
+        font-size: .85rem;
+        padding: 6px 8px;
+    }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .esquadro .input-lado,
+    .esquadro .input-hipotenusa {
+        transition: none;
+    }
+}
+
+/* ===== Porcentagem ===== */
+
+.porcentagem .app-main {
+    max-width: 680px;
+}
+
+/* --- Grid dos dois primeiros valores --- */
+.porcentagem .porc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* --- Campos (label + input) --- */
+.porcentagem .porc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.porcentagem .porc-field label,
+.porcentagem .porc-field1 label {
+    color: var(--muted);
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+.porcentagem .porc-field input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.porc-field1 input{
+    width: 20vw;
+    max-width: 200px;
+}
+.porcentagem .porc-field input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+/* --- Campo de porcentagem (com sufixo %) --- */
+.porcentagem .porc-pct {
+    margin-bottom: 24px;
+}
+
+.porcentagem .porc-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.porcentagem .porc-input-wrap input {
+    padding-right: 36px;
+}
+
+.porcentagem .porc-suffix {
+    position: absolute;
+    right: 14px;
+
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+/* --- Botão reset --- */
+.porcentagem .porc-reset {
+    display: flex;
+    justify-content: center;
+}
+
+.porcentagem #resetP {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 48px;
+    padding: 12px 28px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: var(--shadow-sm);
+
+    transition: transform .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.porcentagem #resetP:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.porcentagem #resetP:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.porcentagem #resetP .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 500px) {
+    .porc-field1 input{
+    max-width: 18vw;
+    }
+}
+
+@media (max-width: 410px) {
+    .porcentagem .porc-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .porc-field1 input{
+    max-width: 40vw;
+    }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .porcentagem #resetP {
+        transition: none;
+    }
+}
+
+/* ===== Conversões ===== */
+
+.conversoes .app-main {
+    max-width: 640px;
+}
+
+/* --- Card de cada conversor --- */
+.conversoes .conv-card {
+    padding: clamp(20px, 3vw, 28px);
+    margin-bottom: 20px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.conversoes .conv-card:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Título de cada conversor --- */
+.conversoes .conv-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 0 0 16px;
+    padding: 0;
+
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.conversoes .conv-title .material-symbols-outlined {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+
+    font-size: 20px;
+}
+
+/* --- Inputs + botão --- */
+.conversoes .conv-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.conversoes .conv-inputs input {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: .95rem;
+}
+
+.conversoes .conv-inputs input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+.conversoes .conv-inputs button {
+    min-width: auto;
+    min-height: 46px;
+    padding: 10px 22px;
+
+    border-radius: 999px;
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+/* Dólar tem 2 inputs + botão */
+.conversoes .conv-dolar input {
+    min-width: 120px;
+}
+
+/* --- Resultado (oculto por padrão) --- */
+.conversoes .conv-result {
+    display: none; /* JS controla */
+
+    margin-top: 16px;
+    padding: 14px 18px;
+
+    background: var(--accent-soft);
+    border-radius: 12px;
+
+    color: var(--text);
+}
+
+.conversoes .conv-result p {
+    margin: 0;
+    font-size: .95rem;
+    line-height: 1.6;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 420px) {
+    .conversoes .conv-inputs {
+        flex-direction: column;
+    }
+
+    .conversoes .conv-inputs input,
+    .conversoes .conv-dolar input {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .conversoes .conv-inputs button {
+        width: 100%;
+    }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .conversoes .conv-inputs button {
+        transition: none;
+    }
+}

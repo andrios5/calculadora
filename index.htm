@@ -1,36 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora X | Ferramentas rápidas</title>
+    <meta name="description" content="Calculadora X reúne ferramentas úteis para medição, controle de gastos, comparação de preços, porcentagens e conversões." />
+
+    <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="styleindex.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="theme.js"></script>
+
 </head>
-<body>
-    <header><h1><img src="favicon.ico" alt="Calculadora">Calculadora X</h1></header>
 
-    <main>
-        <h2><a href="medicao.htm" rel="next">📏 Medição</a></h2>
+<body class="app-page">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-        <h2><a href="contador.htm" rel="next">⏲️ Contador Diario</a></h2>
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="brand-heading">
+                <a class="brand-link" href="index.htm" rel="home">
+                    <span class="brand-mark material-symbols-outlined" aria-hidden="true">calculate</span>
+                    <span class="brand-name">Calculadora X</span>
+                </a>
+            </h1>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+            </button>
+        </div>
+    </header>
 
-        <h2><a href="dinheiro.htm" rel="next">💳 Dinheiro Gasto</a></h2>
+    <main id="conteudo" class="app-main">
+        <section class="hero" aria-label="Introdução da página inicial">
+            <p class="eyebrow">Painel de ferramentas</p>
+            <p class="hero-title">Escolha uma ferramenta e comece em <span class="gradient-text">segundos</span>.</p>
+            <p class="hero-subtitle">Uma interface limpa para acessar suas calculadoras favoritas no computador ou celular.</p>
+        </section>
 
-        <h2><a href="compara.htm" rel="next">💸 Compara Preço</a></h2>
-        
-        <h2><a href="esquadro.htm">📐 Esquadro</a></h2>
+        <div class="tool-grid">
+            <a href="medicao.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">straighten</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
 
-        <h2><a href="porcentagem.htm">📊 Porcentagem</a></h2>
+                <h3 class="card-title">Medição</h3>
+                <p class="card-desc">Calcule medidas e dimensões com rapidez.</p>
+            </a>
 
-        <h2><a href="conversoes.htm">💱 Conversões</a></h2>
-        
+            <a href="contador.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">timer</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
 
+                <h3 class="card-title">Contador Diário</h3>
+                <p class="card-desc">Acompanhe contagens do dia a dia.</p>
+            </a>
+
+            <a href="dinheiro.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">payments</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
+
+                <h3 class="card-title">Dinheiro Gasto</h3>
+                <p class="card-desc">Controle seus gastos de forma simples.</p>
+            </a>
+
+            <a href="compara.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">compare_arrows</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
+
+                <h3 class="card-title">Compara Preço</h3>
+                <p class="card-desc">Compare valores e encontre a melhor opção.</p>
+            </a>
+
+            <a href="esquadro.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">square_foot</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
+
+                <h3 class="card-title">Esquadro</h3>
+                <p class="card-desc">Resolva cálculos de triângulos retângulos.</p>
+            </a>
+
+            <a href="porcentagem.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">percent</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
+
+                <h3 class="card-title">Porcentagem</h3>
+                <p class="card-desc">Calcule percentuais em segundos.</p>
+            </a>
+
+            <a href="conversoes.htm" class="tool-card">
+                <div class="card-top">
+                    <span class="card-icon material-symbols-outlined" aria-hidden="true">swap_horiz</span>
+                    <span class="card-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </div>
+
+                <h3 class="card-title">Conversões</h3>
+                <p class="card-desc">Converta unidades e valores facilmente.</p>
+            </a>
+        </div>
     </main>
- 
- <!-- Google tag (gtag.js) -->
+
+    <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -41,3 +126,4 @@
 </script>
 </body>
 </html>
+
