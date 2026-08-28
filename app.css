@@ -2524,6 +2524,7 @@ button.ins-toggle {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+    overflow-x: auto;
 }
 
 .conversoes .dados-col h4 {
@@ -2574,13 +2575,9 @@ button.ins-toggle {
 }
 
 /* Select de unidade */
-.containerdados{
-    overflow-x: auto;
-}
 
 .conversoes #dadosUnidade {
     flex: 0 1 auto;
-    min-width: 130px;
     padding: 12px 14px;
 
     border: 1px solid var(--border);
@@ -2593,28 +2590,49 @@ button.ins-toggle {
     cursor: pointer;
 }
 
-/* Mobile: colunas empilham */
-@media (max-width: 420px) {
-    .conversoes .dados-colunas {
-        grid-template-columns: 1fr;
+@media (max-width: 600px) {
+    .conversoes #dadosUnidade {
+        width: 50px;
+    }
+    input#dados1{
+        max-width: 40vw;
+    }
+}
+
+@media (max-width: 500px) {
+    .conversoes #dadosUnidade {
+        width: 50px;
+    }
+
+    .conversoes button{
+        max-width: 22vw;
     }
 }
 
 
+
 /* --- Responsividade --- */
-@media (max-width: 420px) {
+@media (max-width: 400px) {
+
+    .conversoes .dados-colunas {
+    grid-template-columns: 1fr;
+    }
     .conversoes .conv-inputs {
         flex-direction: column;
     }
 
     .conversoes .conv-inputs input,
     .conversoes .conv-dolar input {
-        width: 100%;
+        width: 40vw;
         min-width: unset;
     }
 
     .conversoes .conv-inputs button {
-        width: 100%;
+        width: 40vw;
+    }
+
+    .conversoes #dadosUnidade {
+        width: 40vw;
     }
 }
 
