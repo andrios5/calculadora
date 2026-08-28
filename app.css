@@ -2574,6 +2574,10 @@ button.ins-toggle {
 }
 
 /* Select de unidade */
+.containerdados{
+    overflow-x: auto;
+}
+
 .conversoes #dadosUnidade {
     flex: 0 1 auto;
     min-width: 130px;
