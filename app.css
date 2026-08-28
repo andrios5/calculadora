@@ -2592,18 +2592,18 @@ button.ins-toggle {
 
 @media (max-width: 600px) {
     .conversoes #dadosUnidade {
-        width: 50px;
+        width: 60px;
     }
     input#dados1{
         max-width: 40vw;
     }
 }
 
-@media (max-width: 500px) {
-    .conversoes #dadosUnidade {
-        width: 50px;
+@media (max-width: 460px) {
+    input#dados1{
+        min-width: 1vw;
+        max-width: 40vw;
     }
-
     .conversoes button{
         max-width: 22vw;
     }
