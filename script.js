@@ -72,11 +72,6 @@ tem.addEventListener('click', converterT)
  
     }
 
-    res5 = document.querySelector('section#resultado5')
-    vel = document.querySelector('#dolar')
-    vel.addEventListener('click', converterV)
-    
-    
 // ===== Conversor R$ → US$ (COM API) =====
     res5 = document.querySelector('section#resultado5')
     vel = document.querySelector('#dolar')
@@ -218,6 +213,53 @@ tem.addEventListener('click', converterT)
     });
 })();
 
+// ===== Conversor US$ → R$ (COM API) =====
+    res51 = document.querySelector('section#resultado7')
+    vel2 = document.querySelector('#reais12')
+    vel2.addEventListener('click', converterVS)
     
+    async function converterVS(){
+        // Mostra a seção de resultado com uma mensagem de carregamento
+        res51.style.display = 'block'
+        res51.innerHTML = `<p>Buscando cotação atual do dólar...</p>`
+        
+        // Pega o valor digitado em REAIS
+        let numInput2 = document.querySelector('#reais11').value
+        
+        // Troca vírgula por ponto se tiver
+        if (numInput2.includes(',')){
+            numInput2 = numInput2.replace(",", ".")
+        }
+        
+        let num2 = Number(numInput2)
+
+        // Se o usuário não digitou nada ou digitou zero, avisa para preencher
+        if (num2 <= 0 || isNaN(num2)) {
+            res51.innerHTML = `<p>Por favor, insira um valor válido em R$.</p>`
+            return // Para a execução da função aqui
+        }
+
+        try {
+            // Consulta o valor real na API
+            const resposta = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL')
+            const dados = await resposta.json()
+            
+            // Pega o preço de compra do dólar retornado pela API
+            const cot = Number(dados.USDBRL.bid)
+
+            // Faz o cálculo
+            const reais3 = cot / num2
+            
+            // Imprime na tela do mesmo jeito que você tinha feito
+            res51.innerHTML = `<p>O dolar está custando ${cot.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>`
+            res51.innerHTML += `<p>E você tem ${num2.toLocaleString('en-US', {style: 'currency', currency: 'USD'})} que equivale a ${reais3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>`
+            
+        } catch (erro) {
+            // Se o usuário estiver sem internet ou a API cair
+            res51.innerHTML = `<p style="color: red;">Erro ao consultar cotação. Verifique sua conexão.</p>`
+            console.error(erro)
+        }
+    }
+
 
 
