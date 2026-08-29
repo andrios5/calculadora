@@ -1401,12 +1401,19 @@ html[data-theme="dark"] .card-icon {
 /* --- Botão de instruções (toggle) --- */
 #calc-iframe {
     display: block;
-    margin: 25px auto 0;
+    margin: 50px auto 0;
     margin-bottom: 0;
-    width: 320px;
+    width: 350px;
     min-width: 280px;
     overflow: hidden;
     border-radius: 25px;
+}
+
+#calc-Index {
+    display: block;
+    width: 350px;
+    min-width: 280px;
+    overflow: hidden;
 }
 
 #ins-toggle-container {
@@ -2868,8 +2875,11 @@ button.ins-toggle {
 
 @media (max-width: 480px) {
     #calc-iframe {
-        margin-top: 0;
         width: 70%;
+    }
+    #calc-Index {
+        width: 70%;
+        margin: 0 auto;
     }
     .calc-card {
         width: 100%;
