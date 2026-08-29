@@ -2905,6 +2905,10 @@ button.ins-toggle {
         min-height: 42px; /* antes: 48 */
         font-size: clamp(.8rem, 2.4vw, .9rem); /* antes: .85/2.6/.95 */
     }
+
+    #calcSMP {
+        max-width: 320px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
