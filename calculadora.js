@@ -10,6 +10,7 @@
     let waitingForOperand = false;
     let justEvaluated = false;
     let expr = '';
+    let angleMode = 'deg';
 
     const MAX_LEN = 16;
 
@@ -19,6 +20,7 @@
             case '-': return '−';
             case '*': return '×';
             case '/': return '÷';
+            case '^': return '^';
             default: return '';
         }
     }
@@ -45,6 +47,19 @@
         return String(n).replace('.', ',');
     }
 
+    function syncAngleButton() {
+        const btn = document.querySelector('[data-action="angle-mode"]');
+        if (!btn) return;
+
+        btn.textContent = angleMode.toUpperCase();
+        btn.setAttribute(
+            'aria-label',
+            angleMode === 'deg'
+                ? 'Modo graus. Clique para alternar para radianos.'
+                : 'Modo radianos. Clique para alternar para graus.'
+        );
+    }
+
     function update() {
         valueEl.textContent = current === 'Error' ? 'Erro' : current;
         exprEl.textContent = expr;
@@ -52,6 +67,8 @@
         const len = String(current).length;
         valueEl.classList.toggle('calc-value--sm', len > 12 && len <= 18);
         valueEl.classList.toggle('calc-value--xs', len > 18);
+
+        syncAngleButton();
     }
 
     function allClear() {
@@ -76,6 +93,14 @@
         }
 
         update();
+    }
+
+    function markEntryComplete() {
+        if (previous !== null && operator) {
+            waitingForOperand = true;
+        } else {
+            justEvaluated = true;
+        }
     }
 
     function inputDigit(d) {
@@ -136,6 +161,8 @@
             case '/':
                 if (b === 0) return NaN;
                 return a / b;
+            case '^':
+                return Math.pow(a, b);
             default:
                 return NaN;
         }
@@ -232,7 +259,8 @@
         if (justEvaluated) {
             current = '0';
             justEvaluated = false;
-            waitingForOperand = true;
+            waitingForOperand = false;
+            expr = '';
             update();
             return;
         }
@@ -253,6 +281,7 @@
 
         if (current === '-') current = '0';
 
+        justEvaluated = false;
         update();
     }
 
@@ -268,7 +297,115 @@
             current = '-' + current;
         }
 
+        markEntryComplete();
         update();
+    }
+
+    function trig(fn, value) {
+        const rad = angleMode === 'deg' ? value * Math.PI / 180 : value;
+        return fn(rad);
+    }
+
+    function factorial(n) {
+        if (!Number.isInteger(n) || n < 0 || n > 170) return NaN;
+
+        let result = 1;
+        for (let i = 2; i <= n; i++) {
+            result *= i;
+        }
+
+        return result;
+    }
+
+    function applyFunction(fn) {
+        if (current === 'Error') return allClear();
+
+        const hasPendingOp = previous !== null && operator;
+
+        if (fn === 'pi') {
+            current = formatNumber(Math.PI);
+            if (!hasPendingOp) expr = '';
+            markEntryComplete();
+            update();
+            return;
+        }
+
+        if (fn === 'e') {
+            current = formatNumber(Math.E);
+            if (!hasPendingOp) expr = '';
+            markEntryComplete();
+            update();
+            return;
+        }
+
+        const value = toNumber(current);
+        let result;
+
+        switch (fn) {
+            case 'sin':
+                result = trig(Math.sin, value);
+                break;
+
+            case 'cos':
+                result = trig(Math.cos, value);
+                break;
+
+            case 'tan':
+                result = trig(Math.tan, value);
+                break;
+
+            case 'ln':
+                if (value <= 0) return setError();
+                result = Math.log(value);
+                break;
+
+            case 'log':
+                if (value <= 0) return setError();
+                result = Math.log10(value);
+                break;
+
+            case 'sqrt':
+                if (value < 0) return setError();
+                result = Math.sqrt(value);
+                break;
+
+            case 'square':
+                result = value * value;
+                break;
+
+            case 'fact':
+                result = factorial(value);
+                break;
+
+            default:
+                return;
+        }
+
+        if (!Number.isFinite(result)) {
+            return setError();
+        }
+
+        current = formatNumber(Number(Number(result).toPrecision(12)));
+
+        if (!hasPendingOp) expr = '';
+
+        markEntryComplete();
+        update();
+    }
+
+    function setError() {
+        current = 'Error';
+        previous = null;
+        operator = null;
+        waitingForOperand = false;
+        justEvaluated = true;
+        expr = '';
+        update();
+    }
+
+    function toggleAngleMode() {
+        angleMode = angleMode === 'deg' ? 'rad' : 'deg';
+        syncAngleButton();
     }
 
     function handleKey(event) {
@@ -325,6 +462,11 @@
                 setOperator('/');
                 break;
 
+            case '^':
+                setOperator('^');
+                event.preventDefault();
+                break;
+
             case '%':
                 percent();
                 event.preventDefault();
@@ -356,30 +498,29 @@
         }
     }
 
-    const grid = document.querySelector('#calc-grid');
+    document.addEventListener('click', function (event) {
+        const btn = event.target.closest('.calc-btn');
+        if (!btn) return;
 
-    if (grid) {
-        grid.addEventListener('click', function (event) {
-            const btn = event.target.closest('.calc-btn');
-            if (!btn || !grid.contains(btn)) return;
+        const action = btn.dataset.action;
 
-            const action = btn.dataset.action;
+        if (action === 'clear-all') allClear();
+        else if (action === 'backspace') backspace();
+        else if (action === 'percent') percent();
+        else if (action === 'toggle-sign') toggleSign();
+        else if (action === 'equals') equals();
+        else if (action === 'decimal') inputDecimal();
+        else if (action === 'angle-mode') toggleAngleMode();
+        else if (btn.dataset.fn !== undefined) applyFunction(btn.dataset.fn);
+        else if (btn.dataset.digit !== undefined) inputDigit(btn.dataset.digit);
+        else if (btn.dataset.op !== undefined) setOperator(btn.dataset.op);
 
-            if (action === 'clear-all') allClear();
-            else if (action === 'backspace') backspace();
-            else if (action === 'percent') percent();
-            else if (action === 'toggle-sign') toggleSign();
-            else if (action === 'equals') equals();
-            else if (action === 'decimal') inputDecimal();
-            else if (btn.dataset.digit !== undefined) inputDigit(btn.dataset.digit);
-            else if (btn.dataset.op !== undefined) setOperator(btn.dataset.op);
-
-            // Remove o foco após clique/toque para facilitar o uso do teclado físico depois.
-            if (event.detail > 0) btn.blur();
-        });
-    }
+        // Remove o foco após clique/toque para facilitar o uso do teclado físico depois.
+        if (event.detail > 0) btn.blur();
+    });
 
     window.addEventListener('keydown', handleKey);
 
+    syncAngleButton();
     update();
 })();

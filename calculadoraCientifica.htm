@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora Científica | Calculadora X</title>
+    <meta name="description" content="Calculadora científica com funções trigonométricas, logaritmos, raiz, potência e constantes, no mesmo padrão da Calculadora X." />
+
+    <!-- Se ainda não tiver ico/calculadora-cientifica.ico, troque por ico/favicon.ico -->
+    <link rel="shortcut icon" href="ico/calculadora-cientifica.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
+    <link rel="stylesheet" href="app.css">
+    <script src="theme.js"></script>
+</head>
+
+<body class="app-page calculadora calculadora-cientifica">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="brand-heading">
+                <a class="brand-link" href="index.htm" rel="home">
+                    <span class="brand-mark material-symbols-outlined" aria-hidden="true">calculate</span>
+                    <span class="brand-name">Calculadora X</span>
+                </a>
+            </h1>
+
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="conteudo" class="app-main">
+        <h2 class="page-title">
+            <span class="page-icon material-symbols-outlined" aria-hidden="true">functions</span>
+            Calculadora Científica
+        </h2>
+
+        <section class="out calc-card" aria-label="Calculadora científica">
+            <div class="calc-display" role="status" aria-live="polite">
+                <p class="calc-expression" id="calc-expression"></p>
+                <output class="calc-value" id="calc-value">0</output>
+            </div>
+
+            <!-- Funções científicas -->
+            <div class="calc-sci-grid" role="group" aria-label="Funções científicas">
+                <button type="button" class="calc-btn calc-btn--sci calc-btn--angle" data-action="angle-mode" aria-label="Alternar entre graus e radianos">DEG</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="sin" aria-label="Seno">sin</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="cos" aria-label="Cosseno">cos</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="tan" aria-label="Tangente">tan</button>
+
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="ln" aria-label="Logaritmo natural">ln</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="log" aria-label="Logaritmo na base 10">log</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="sqrt" aria-label="Raiz quadrada">√</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="square" aria-label="Elevado ao quadrado">x²</button>
+
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="pi" aria-label="Constante pi">π</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="e" aria-label="Constante e">e</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-op="^" aria-label="Potência">xʸ</button>
+                <button type="button" class="calc-btn calc-btn--sci" data-fn="fact" aria-label="Fatorial">!</button>
+            </div>
+
+            <!-- Teclado básico -->
+            <div class="calc-grid" id="calc-grid" role="group" aria-label="Teclado da calculadora">
+                <!-- Linha 1 -->
+                <button type="button" class="calc-btn calc-btn--fn" data-action="clear-all">AC</button>
+                <button type="button" class="calc-btn calc-btn--fn" data-action="backspace" aria-label="Apagar último dígito">⌫</button>
+                <button type="button" class="calc-btn calc-btn--fn" data-action="percent" aria-label="Porcentagem">%</button>
+                <button type="button" class="calc-btn calc-btn--op" data-op="/" aria-label="Dividir">÷</button>
+
+                <!-- Linha 2 -->
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="7">7</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="8">8</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="9">9</button>
+                <button type="button" class="calc-btn calc-btn--op" data-op="*" aria-label="Multiplicar">×</button>
+
+                <!-- Linha 3 -->
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="4">4</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="5">5</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="6">6</button>
+                <button type="button" class="calc-btn calc-btn--op" data-op="-" aria-label="Subtrair">−</button>
+
+                <!-- Linha 4 -->
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="1">1</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="2">2</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="3">3</button>
+                <button type="button" class="calc-btn calc-btn--op" data-op="+" aria-label="Somar">+</button>
+
+                <!-- Linha 5 -->
+                <button type="button" class="calc-btn calc-btn--fn" data-action="toggle-sign" aria-label="Inverter sinal">±</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-digit="0">0</button>
+                <button type="button" class="calc-btn calc-btn--digit" data-action="decimal" aria-label="Vírgula decimal">,</button>
+                <button type="button" class="calc-btn calc-btn--equals" data-action="equals" aria-label="Igual">=</button>
+            </div>
+        </section>
+
+        <button type="button" class="ins-toggle" aria-expanded="false" aria-controls="instrucoes-calc-sci">
+            Instruções
+        </button>
+
+        <ol class="instructions" id="instrucoes-calc-sci">
+            <li>Você pode usar os botões da tela ou o teclado físico.</li>
+            <li>No teclado: números, `+`, `-`, `*` ou `x`, `/`, `.`, `,`, `%`, `=`, `Enter`, `Backspace`, `Esc` e `Delete` funcionam como na calculadora básica.</li>
+            <li>O botão `DEG/RAD` alterna o modo dos cálculos trigonométricos entre graus e radianos.</li>
+            <li>`sin`, `cos`, `tan`, `ln`, `log`, `√`, `x²` e `!` aplicam a função ao número atual.</li>
+            <li>`π` e `e` inserem as constantes. `xʸ` calcula potência; no teclado você também pode usar `^`.</li>
+        </ol>
+    </main>
+
+    <script>
+        document.querySelector('.ins-toggle').addEventListener('click', function () {
+            var list = document.getElementById('instrucoes-calc-sci');
+            var isVisible = getComputedStyle(list).display !== 'none';
+            list.style.display = isVisible ? 'none' : 'block';
+            this.setAttribute('aria-expanded', !isVisible ? 'true' : 'false');
+        });
+    </script>
+
+    <script src="calculadora.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQ819RVB2H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-RQ819RVB2H');
+    </script>
+</body>
+</html>

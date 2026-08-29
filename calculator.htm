@@ -19,29 +19,6 @@
 </head>
 
 <body class="app-page calculadora">
-    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-
-    <header class="site-header">
-        <div class="header-inner">
-            <h1 class="brand-heading">
-                <a class="brand-link" href="index.htm" rel="home">
-                    <span class="brand-mark material-symbols-outlined" aria-hidden="true">calculate</span>
-                    <span class="brand-name">Calculadora X</span>
-                </a>
-            </h1>
-
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
-                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
-            </button>
-        </div>
-    </header>
-
-        <main id="conteudo" class="app-main">
-        <h2 class="page-title">
-            <span class="page-icon material-symbols-outlined" aria-hidden="true">calculate</span>
-            Calculadora
-        </h2>
-
         <section class="out calc-card" aria-label="Calculadora">
             <div class="calc-display" role="status" aria-live="polite">
                 <p class="calc-expression" id="calc-expression"></p>
@@ -80,25 +57,6 @@
                 </div>
         </section>
 
-        <button type="button" class="ins-toggle" aria-expanded="false" aria-controls="instrucoes-calc">
-            Instruções
-        </button>
-
-        <ol class="instructions" id="instrucoes-calc">
-            <li>Você pode usar os botões da tela ou o teclado físico.</li>
-            <li>No teclado: números, `+`, `-`, `*` ou `x`, `/`, `.`, `,`, `%`, `=` ou `Enter`.</li>
-            <li>`Backspace` apaga o último dígito. `Esc` limpa tudo. `Delete` limpa apenas a entrada atual.</li>
-        </ol>
-    </main>
-
-    <script>
-        document.querySelector('.ins-toggle').addEventListener('click', function () {
-            var list = document.getElementById('instrucoes-calc');
-            var isVisible = getComputedStyle(list).display !== 'none';
-            list.style.display = isVisible ? 'none' : 'block';
-            this.setAttribute('aria-expanded', !isVisible ? 'true' : 'false');
-        });
-    </script>
 
     <script src="calculadora.js"></script>
 

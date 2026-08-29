@@ -1389,11 +1389,29 @@ html[data-theme="dark"] .card-icon {
 
 
 /* --- Botão de instruções (toggle) --- */
-button.ins-toggle {
+iframe {
     display: block;
+    margin: 25px auto 0;
+    margin-bottom: 0;
+    width: 300px;
+    height: 435px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+#ins-toggle-container {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100px;
+}
+
+button.ins-toggle {
     gap: 8px;
 
-    margin: 36px auto 0;
+    margin: 15px auto 0;
     padding: 10px 22px;
 
     border: 1px solid var(--border);
@@ -1442,6 +1460,7 @@ button.ins-toggle {
     font-size: .95rem;
     line-height: 1.7;
 }
+
 
 .instructions li {
     margin-bottom: 8px;
@@ -2644,48 +2663,60 @@ button.ins-toggle {
     }
 }
 
-/* ===== Calculadora ===== */
+/* ===== Calculadora (básica + científica) ===== */
 
+.calculadora .calc-card,
+.calculadora .calc-card * {
+    box-sizing: border-box;
+}
+
+/* Tamanhos ~10% menores que a versão anterior */
 .calculadora .app-main {
-    max-width: 520px;
+    max-width: 470px; /* antes: 520px */
+}
+
+.calculadora-cientifica .app-main {
+    max-width: 576px; /* antes: 640px */
 }
 
 .calculadora .calc-card {
-    padding: clamp(18px, 3vw, 28px);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: clamp(16px, 3vw, 24px); /* antes: 18/28 */
 }
 
-/* Display com a expressão “flutuando” no topo e o número centralizado */
+/* Display estável + sem estouro (border-box acima resolve o overflow) */
 .calculadora .calc-display {
-    position: relative;
-
-    display: flex;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
     align-items: center;
-    justify-content: center;
+    justify-items: stretch;
 
-    width: 89%;
-    min-height: 132px;
-    margin-bottom: 20px;
-    padding: 24px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 118px; /* antes: 132px */
+    margin-bottom: 18px;
+    padding: 18px 20px; /* antes: 20/24 */
 
     border: 1px solid var(--border);
-    border-radius: 24px;
+    border-radius: 22px; /* antes: 24 */
 
     background: var(--surface);
     box-shadow: var(--shadow-sm);
 }
 
 .calculadora .calc-expression {
-    position: absolute;
-    top: 14px;
-    left: 24px;
-    right: 24px;
+    align-self: end;
+    height: 1.3em;
 
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     color: var(--muted);
-    font-size: .95rem;
+    font-size: .9rem; /* antes: .95 */
     font-weight: 600;
     text-align: right;
 }
@@ -2693,13 +2724,14 @@ button.ins-toggle {
 .calculadora .calc-value {
     display: block;
     width: 100%;
+    max-width: 100%;
 
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     color: var(--text);
-    font-size: clamp(2.4rem, 9vw, 3.8rem);
+    font-size: clamp(2.1rem, 8vw, 3.4rem); /* antes: 2.4/9vw/3.8 */
     line-height: 1.05;
     letter-spacing: -.02em;
     font-weight: 800;
@@ -2709,23 +2741,25 @@ button.ins-toggle {
 }
 
 .calculadora .calc-value--sm {
-    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    font-size: clamp(1.7rem, 5.5vw, 2.3rem); /* antes: 1.8/6/2.6 */
 }
 
 .calculadora .calc-value--xs {
-    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-size: clamp(1.4rem, 4.5vw, 1.9rem); /* antes: 1.4/5/2 */
 }
 
+/* Grid principal */
 .calculadora .calc-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(8px, 2vw, 12px);
+    gap: clamp(8px, 2vw, 10px); /* antes: até 12 */
 }
 
+/* Botões base (~10% menores) */
 .calculadora .calc-btn {
     width: 100%;
     min-width: 0;
-    min-height: 64px;
+    min-height: 57px; /* antes: 64px */
     padding: 0;
 
     display: inline-flex;
@@ -2736,19 +2770,18 @@ button.ins-toggle {
     line-height: 1;
     white-space: nowrap;
 
-    border-radius: 18px;
+    border-radius: 16px; /* antes: 18 */
 
-    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    font-size: clamp(1rem, 2.8vw, 1.2rem); /* antes: 1.1/3/1.35 */
     font-weight: 700;
 }
 
-/* Operadores e igual com símbolo um pouco maior para ficar legível */
 .calculadora .calc-btn--op {
-    font-size: clamp(1.4rem, 4vw, 1.7rem);
+    font-size: clamp(1.3rem, 3.6vw, 1.5rem); /* antes: 1.4/4/1.7 */
 }
 
 .calculadora .calc-btn--equals {
-    font-size: clamp(1.5rem, 4.5vw, 1.9rem);
+    font-size: clamp(1.4rem, 4vw, 1.7rem); /* antes: 1.5/4.5/1.9 */
 }
 
 .calculadora .calc-btn--fn {
@@ -2776,67 +2809,85 @@ button.ins-toggle {
     background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
     color: #fff;
     border: 0;
-    box-shadow: 0 10px 24px rgba(79, 70, 229, .28);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, .26);
 }
 
 .calculadora .calc-btn--equals:hover {
     transform: translateY(-1px);
     color: #fff;
     border-color: transparent;
-    box-shadow: 0 14px 30px rgba(79, 70, 229, .35);
+    box-shadow: 0 12px 26px rgba(79, 70, 229, .34);
+}
+
+/* ===== Calculadora Científica ===== */
+
+.calculadora .calc-sci-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(8px, 2vw, 10px);
+
+    margin-bottom: 10px; /* antes: 12 */
+}
+
+.calculadora .calc-sci-grid .calc-btn {
+    min-height: 47px; /* antes: 52 */
+    border-radius: 12px; /* antes: 14 */
+
+    background: var(--chip-bg);
+    color: var(--muted);
+
+    font-size: clamp(.85rem, 2.4vw, .95rem); /* antes: .9/2.6/1 */
+}
+
+.calculadora .calc-sci-grid .calc-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.calculadora .calc-btn--angle {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+.calculadora .calc-btn--angle:hover {
+    color: var(--accent-strong);
+    border-color: var(--accent);
 }
 
 @media (max-width: 480px) {
     .calculadora .calc-display {
-        min-height: 116px;
-        padding: 20px 18px;
-        width: 88.8%;
-    }
-
-    .calculadora .calc-expression {
-        top: 12px;
-        left: 18px;
-        right: 18px;
+        min-height: 104px; /* antes: 116 */
+        padding: 14px 16px; /* antes: 16/18 */
     }
 
     .calculadora .calc-value {
-        font-size: clamp(2rem, 10vw, 3rem);
+        font-size: clamp(1.8rem, 9vw, 2.7rem); /* antes: 2/10/3 */
     }
 
-    .calculadora .calc-grid {
-        gap: 8px;
+    .calculadora .calc-grid,
+    .calculadora .calc-sci-grid {
+        gap: 7px; /* antes: 8 */
     }
 
     .calculadora .calc-btn {
-        min-height: 56px;
-        border-radius: 16px;
-        font-size: clamp(1.05rem, 3.2vw, 1.2rem);
+        min-height: 50px; /* antes: 56 */
+        border-radius: 14px;
+        font-size: clamp(.95rem, 3vw, 1.1rem); /* antes: 1.05/3.2/1.2 */
     }
 
     .calculadora .calc-btn--op {
-        font-size: clamp(1.25rem, 4vw, 1.5rem);
+        font-size: clamp(1.2rem, 3.6vw, 1.4rem); /* antes: 1.25/4/1.5 */
     }
 
     .calculadora .calc-btn--equals {
-        font-size: clamp(1.35rem, 4.5vw, 1.7rem);
+        font-size: clamp(1.25rem, 4vw, 1.5rem); /* antes: 1.35/4.5/1.7 */
     }
-}
 
-@media (max-width: 400px) {
-    .calculadora .calc-display {
-        width: 88%;
-    }
-}
-
-@media (max-width: 360px) {
-    .calculadora .calc-display {
-        width: 86%;
-    }
-}
-
-@media (max-width: 320px) {
-    .calculadora .calc-display {
-        width: 84%;
+    .calculadora .calc-sci-grid .calc-btn {
+        min-height: 42px; /* antes: 48 */
+        font-size: clamp(.8rem, 2.4vw, .9rem); /* antes: .85/2.6/.95 */
     }
 }
 

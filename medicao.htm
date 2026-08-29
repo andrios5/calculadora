@@ -137,11 +137,17 @@
 
             </section>
         </section>
-
-        <button type="button" class="ins-toggle" aria-expanded="false" aria-controls="instrucoes">
-        Instruções
-        </button>
-
+        <iframe src="calculator.htm" frameborder="0" id="calc-iframe" style="display:none">
+        <a href="calculator.htm">calculator</a>
+        </iframe>
+        <div id="ins-toggle-container">
+            <button type="button" class="ins-toggle" id="ins-toggleCalc" aria-expanded="false" aria-controls="calc-grid">
+            Calculadora
+            </button>
+            <button type="button" class="ins-toggle" id="ins-toggleInst" aria-expanded="false" aria-controls="instrucoes">
+            Instruções
+            </button>
+        </div>
         <ol class="instructions" id="instrucoes">
             <li>Selecione o tipo de medição desejada, você pode alterar a qualquer momento.</li>
             <li>Preencha os campos necessários, como nome, altura e largura.</li>
@@ -156,17 +162,20 @@
         </ol>
 
         <script>
-        document.querySelector('.ins-toggle').addEventListener('click', function () {
+        document.querySelector('#ins-toggleInst').addEventListener('click', function () {
             var list = document.getElementById('instrucoes');
             var isVisible = getComputedStyle(list).display !== 'none';
             list.style.display = isVisible ? 'none' : 'block';
             this.setAttribute('aria-expanded', !isVisible);
         });
+        document.querySelector('#ins-toggleCalc').addEventListener('click', function () {
+            var iframe = document.getElementById('calc-iframe');
+            var isVisible = getComputedStyle(iframe).display !== 'none';
+            iframe.style.display = isVisible ? 'none' : 'block';
+            this.setAttribute('aria-expanded', !isVisible);
+        });
         </script>
-
-
-    </main>
-
+</main>
     <!-- Bibliotecas de exportação -->
     <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
