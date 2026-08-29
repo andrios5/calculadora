@@ -2867,6 +2867,11 @@ button.ins-toggle {
     border-color: var(--accent);
 }
 
+#calcSMP {
+    max-width: 380px;
+    margin: auto;
+}
+
 @media (max-width: 480px) {
     .calculadora .calc-display {
         min-height: 104px; /* antes: 116 */
