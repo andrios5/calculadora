@@ -26,9 +26,16 @@
                     <span class="brand-name">Calculadora X</span>
                 </a>
             </h1>
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
-                <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
-            </button>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+                    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+                </button>
+                <button type="button" class="menu-toggle" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -208,6 +215,85 @@
         });
         </script>
 </main>
+<nav id="menu-lateral" class="side-menu" aria-label="Menu de navegação" aria-hidden="true" inert>
+    <div class="side-menu-head">
+        <span class="side-menu-title">Ferramentas</span>
+    </div>
+
+    <ul class="side-menu-list">
+        <li>
+            <a href="index.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">home</span>
+                <span class="side-menu-label">Início</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="medicao.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">straighten</span>
+                <span class="side-menu-label">Medição</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="contador.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">timer</span>
+                <span class="side-menu-label">Contador Diário</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="dinheiro.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">payments</span>
+                <span class="side-menu-label">Dinheiro Gasto</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="compara.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">compare_arrows</span>
+                <span class="side-menu-label">Compara Preço</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="esquadro.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">square_foot</span>
+                <span class="side-menu-label">Esquadro</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="porcentagem.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">percent</span>
+                <span class="side-menu-label">Porcentagem</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="conversoes.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">swap_horiz</span>
+                <span class="side-menu-label">Conversões</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="calculadora.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">calculate</span>
+                <span class="side-menu-label">Calculadora</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+        <li>
+            <a href="calculadoraCientifica.htm" class="side-menu-link">
+                <span class="side-menu-icon material-symbols-outlined" aria-hidden="true">functions</span>
+                <span class="side-menu-label">Calculadora Científica</span>
+                <span class="side-menu-arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<script src="menu.js"></script>
     <!-- Bibliotecas de exportação -->
     <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
