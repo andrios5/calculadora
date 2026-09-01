@@ -33,7 +33,7 @@ padding: 0px;
 
 /* Compensa o espaço do scrollbar */
 html {
-    scrollbar-gutter: stable;
+    scrollbar-gutter: stable both-edges;
 }
 
 html[data-theme="dark"] {
@@ -58,6 +58,25 @@ html[data-theme="dark"] {
     --shadow-lg: 0 24px 50px rgba(0, 0, 0, .36);
 
     color-scheme: dark;
+}
+
+body {
+  /* Impede que o usuário selecione textos da interface (como títulos e botões) acidentalmente ao arrastar */
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* Remove o "flash" azul/cinza que o navegador exibe na tela ao tocar em botões ou links */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Melhora o comportamento da rolagem elástica e impede o "puxar para atualizar" (pull-to-refresh) do navegador */
+  overscroll-behavior-y: contain;
+}
+
+/* Permite selecionar e cópiar textos de inputs, tabelas e outputs */
+
+input, tbody, output {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 .app-page {
@@ -486,8 +505,6 @@ html[data-theme="dark"] .card-icon {
 
 .app-page .out {
     margin: 0;
-    padding: clamp(10px, 2.5vw, 36px);
-
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 28px;
@@ -2729,7 +2746,7 @@ button.ins-toggle {
     max-width: 100%;
     min-height: 118px;
     margin-bottom: 18px;
-    padding: 18px 20px;
+    padding: 14px 16px;
 
     border: 1px solid var(--border);
     border-radius: 22px;
@@ -2737,6 +2754,7 @@ button.ins-toggle {
     background: var(--surface);
     box-shadow: var(--shadow-sm);
 }
+
 
 .calc-card .calc-expression {
     align-self: end;
@@ -2762,7 +2780,7 @@ button.ins-toggle {
     white-space: nowrap;
 
     color: var(--text);
-    font-size: clamp(2.1rem, 8vw, 3.4rem);
+    font-size: clamp(1.8rem, 9vw, 2.7rem);
     line-height: 1.05;
     letter-spacing: -.02em;
     font-weight: 800;
@@ -2783,7 +2801,7 @@ button.ins-toggle {
 .calc-card .calc-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(8px, 2vw, 10px);
+    gap: clamp(8px, 2vw, 9px);
 }
 
 
@@ -2857,7 +2875,7 @@ button.ins-toggle {
 .calc-card .calc-sci-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(8px, 2vw, 10px);
+    gap: clamp(8px, 2vw, 9px);
     margin-bottom: 10px;
 }
 
@@ -2900,12 +2918,8 @@ button.ins-toggle {
     }
     .calc-card .calc-display {
         min-height: 104px;
-        padding: 14px 16px;
     }
 
-    .calc-card .calc-value {
-        font-size: clamp(1.8rem, 9vw, 2.7rem);
-    }
 
     .calc-card .calc-grid,
     .calc-card .calc-sci-grid {
