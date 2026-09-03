@@ -48,19 +48,21 @@
         <section class="out" id="medicao">
 
             <!-- Tipo de medição -->
-            <div class="labelB">
-                <label for="medType" class="med">Medição:</label>
-                <select name="medType" id="medType" class="med"></select>
+            <div class="containerTipo">
+                <div class="labelB">
+                    <label for="medType" class="med">Medição:</label>
+                    <select name="medType" id="medType" class="med"></select>
+                </div>
+                <div class="containerNome">
+                        <label for="nomeMed">Nome:</label>
+                        <input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição">
+                        <span id="dataMed"></span>
+                </div>
             </div>
 
             <section class="in" id="m2">
 
                 <!-- Nome da medição + data -->
-                <div class="containerNome">
-                    <label for="nomeMed">Nome:</label>
-                    <input type="text" name="nomeMed" id="nomeMed" placeholder="Digite o nome da Medição">
-                    <span id="dataMed"></span>
-                </div>
 
                 <!-- Título do modo edição (oculto por padrão) -->
                 <h3 class="edicao">Modo de Edição</h3>
@@ -131,17 +133,14 @@
                 <!-- Botões de exportação -->
                 <section class="medicao-export" id="bottonsM2">
                     <button id="resetC2" type="button">Reset</button>
-                    <button id="export2" type="button">Salvar</button>
                     <button id="ordenarM2" type="button">Ordenar</button>
-                    <button id="posicaoM2" type="button">Exibição</button>
-                    <select name="formatoEX" id="formatoEX"></select>
+                    <button id="export2" type="button">Salvar</button>
+                    <select name="formatoEX" id="formatoEX" tabindex="-1"></select>  <!-- Para não selecionar com o teclado, use tabindex="-1" -->
                 </section>
-
-                <!-- Import de arquivo -->
-                <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel">
 
             </section>
         </section>
+        <!-- Import de arquivo -->
             <div id="calc-iframe" style="display: none;">
                 <section class="out calc-card" aria-label="Calculadora">
                     <div class="calc-display" role="status" aria-live="polite">
@@ -183,6 +182,7 @@
             <button type="button" class="ins-toggle" id="ins-toggleCalc" aria-expanded="false" aria-controls="calc-grid">
             Calculadora
             </button>
+            <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel" tabindex="-1">
             <button type="button" class="ins-toggle" id="ins-toggleInst" aria-expanded="false" aria-controls="instrucoes">
             Instruções
             </button>

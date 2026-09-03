@@ -529,9 +529,8 @@ html[data-theme="dark"] .card-icon {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 16px;
-
     margin-bottom: 8px;
 }
 
@@ -611,7 +610,6 @@ html[data-theme="dark"] .card-icon {
     width: auto;
     max-width: 320px;
     min-height: 120px;
-    margin: 0 auto;
     padding: 24px;
 
     border-radius: 24px;
@@ -886,29 +884,13 @@ html[data-theme="dark"] .card-icon {
     display: flex;
     align-items: center;
     gap: 10px;
-
     box-sizing: border-box;
     width: auto;
-    max-width: 520px;
-    margin: 0 auto 10px;
-    padding: 8px 12px;
-
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow-sm);
 }
 
 .medicao .labelB label.med {
     flex: 0 0 auto;
-    padding: 8px 14px;
-
-    background: var(--accent-soft);
     color: var(--text);
-    border-radius: 10px;
-
-    font-size: .9rem;
-    font-weight: 700;
 }
 
 .medicao .labelB select.med {
@@ -925,33 +907,37 @@ html[data-theme="dark"] .card-icon {
     cursor: pointer;
 }
 
-/* --- Nome da medição + data --- */
-.medicao .containerNome {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+.containerTipo{
     gap: 10px;
+    margin-top: 0;
     margin-bottom: 20px;
     padding: 10px 14px;
-
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
     box-shadow: var(--shadow-sm);
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* --- Nome da medição + data --- */
+.medicao .containerNome {
+    display: flex;
+    align-items: center;
+    padding: 8px 0 0 0;
 }
 
 .medicao .containerNome > label {
     flex: 0 0 auto;
-    color: var(--muted);
-    font-size: .9rem;
-    font-weight: 700;
+    color: var(--text);
 }
 
 .medicao .containerNome input#nomeMed {
     flex: 1;
     min-width: min(60%, 280px);
     padding: 8px 12px;
-
+    margin: 0 5px 0 5px;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -994,7 +980,7 @@ html[data-theme="dark"] .card-icon {
 
     margin: 12px auto 0;
     min-width: auto;
-    min-height: 44px;
+    height: 40px;
     padding: 10px 20px;
 
     border-radius: 999px;
@@ -1359,7 +1345,6 @@ html[data-theme="dark"] .card-icon {
 .medicao #resetC2,
 .medicao #formatoEX,
 .medicao #ordenarM2,
-.medicao #posicaoM2,
 .medicao #edicaoM2 {
     display: none; /* JS mostra quando há dados */
 }
@@ -1386,23 +1371,20 @@ html[data-theme="dark"] .card-icon {
 
 .medicao #formatoEX {
     padding: 10px 14px;
-
     background: var(--surface);
     color: var(--text);
     border: 1px solid var(--border);
     border-radius: 999px;
 
     font-size: .9rem;
-    cursor: pointer;
 }
 
 /* --- Input de arquivo (import) --- */
 .medicao #seletorDeArquivo {
     display: block;
-    width: 100%;
-    max-width: 50vw;
-    margin: auto;
-    padding: 10px 16px;
+    max-width: 70%;
+    margin-top: 15px;
+    padding: 20px 15px;
     border: 1px solid var(--border);
     border-radius: 999px;
     background: var(--surface);
@@ -1446,17 +1428,17 @@ html[data-theme="dark"] .card-icon {
     margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 90%;
+    height: 150px;
 }
 
 button.ins-toggle {
     gap: 8px;
-
-    margin: 15px auto 0;
-    padding: 10px 22px;
-
+    min-width: 100px;
+    padding: 10px 20px;
+    margin-top: 15px;
     border: 1px solid var(--border);
     border-radius: 999px;
 
@@ -1520,20 +1502,12 @@ button.ins-toggle {
         gap: 8px;
     }
 
-    .medicao .labelB {
-    margin: 0 auto 8px;
-    }
-
-    .medicao .labelB label.med {
-        font-size: .85rem;
-    }
-
-    .medicao .labelB select.med {
+    .containerTipo {
         font-size: .9rem;
     }
 
     .medicao .containerNome {
-        padding: 6px 10px;
+        padding: 5px 0 0 0;
     }
 
     .medicao .containerm2 {
@@ -1571,6 +1545,10 @@ button.ins-toggle {
         min-width: 120px;
     }
 
+        .ins-toggle{
+        order: 3;
+    }
+
 }
 
 @media (max-width: 450px) {
@@ -1583,26 +1561,15 @@ button.ins-toggle {
         flex: 1 1 100%;
     }
 
-    .medicao .labelB {
-    padding: 6px 10px;
-    gap: 8px;
-    margin: 0 auto 5px;
+    .containerTipo {
+        font-size: .85rem;
+        padding: 10px;
     }
 
-    .medicao .labelB label.med {
-        font-size: .8rem;
-        padding: 6px 10px;
-    }
-
-    .medicao .labelB select.med {
+    #medType {
         font-size: .85rem;
     }
-
-    .medicao .containerNome {
-        padding: 3.5px 8px;
-    }
-
-
+    
     .medicao table#m2 tbody th,
     .medicao table#m2 tbody td,
     .medicao table#m1 tbody th,
@@ -1611,12 +1578,33 @@ button.ins-toggle {
         font-size: .8rem;
     }
 
-    .medicao #seletorDeArquivo {
-        min-width: unset;
-    }
 
     .medicao .containerNome input#nomeMed{
         min-width: 80px;
+    }
+
+}
+
+@media (max-width: 350px) {
+
+    .containerTipo {
+        font-size: .8rem;
+        padding: 8px;
+    }
+    .medicao .containerNome input#nomeMed{
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 320px) {
+    .containerNome {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 6px;
+        justify-content: flex-start;
+    }
+    #dataMed {
+        margin: 0;
     }
 }
 
@@ -3283,6 +3271,15 @@ html[data-theme="dark"] .side-menu-icon {
     .side-menu-link {
         padding: 12px;
     }
+}
+
+
+@media (max-width: 320px) {
+
+    .header-inner {
+        flex-direction: column;
+    }
+        
 }
 
 @media (prefers-reduced-motion: reduce) {

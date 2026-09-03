@@ -25,7 +25,6 @@ menosC2 = document.querySelector('button#menosC2')
 export2 = document.querySelector('button#export2')
 formatoEX = document.querySelector('#formatoEX')
 ordenar = document.querySelector('#ordenarM2')
-posicao = document.querySelector('#posicaoM2')
 profund = document.querySelector('#profund')
 profund2 = document.querySelector('#profund2')
 lpro = document.querySelector('#lpro')
@@ -101,7 +100,6 @@ resetC2.addEventListener('click', resetarC2)
 menosC2.addEventListener('click', diminuirC2)
 export2.addEventListener('click', exportar)
 ordenar.addEventListener('click', ordenarVetor)
-posicao.addEventListener('click', posicaoM)
 
 // Drag and drop para reordenar os elementos
 const parent = document.querySelector('.containerBTN'); // Seleciona o container .containerBTN
@@ -339,8 +337,7 @@ function inverteVetor(array2d) { // Função para inverter o vetor array2d quand
 function ordenarVetor() { // Função para ordenar o vetor array2d por nome
     if (vetorOrdenando === false) { // Verifica se o vetor já está sendo ordenado
     vetorOrdenando = true // Define a variável como verdadeira para indicar que o vetor está sendo ordenado
-    ordenar.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ordenando
-    ordenar.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
+    ordenar.style.boxShadow = 'inset 0 0 25px #00000090'; // Adiciona sombra ao botão
     ordenarArray2dPorNome(); // Chama a função para ordenar o array2d por nome
     exibeArea2(array2d); // Atualiza a exibição após ordenar
     } else { // Se o vetor já está sendo ordenado, desfaz a ordenação
@@ -418,36 +415,18 @@ function alteraInput() { // Função para alterar o input após calcular a área
         ultimoInput.focus(); // Coloca o foco no último input
 }
 
-let tempPosicao = 1 // Variável para controlar a posição do container
-function posicaoM() { // Função para alternar a posição do container
-    if (tempPosicao == 1) { // Verifica se a posição atual é 1
-        tempPosicao = 0; // Altera a posição para 0
-        posicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está ativo
-        posicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
-        document.getElementById('containerM0').style.height = '50vh'; // Define a altura máxima do container para 70vh
-        document.getElementById('containerM1').style.maxHeight = '25vh';
-    } else {
-        tempPosicao = 1; // Altera a posição para 1
-        posicao.style.backgroundColor = ''; // Restaura a cor original do botão
-        posicao.style.boxShadow = ''; // Remove a sombra do botão
-        noScroll(); // Chama a função para não rolar a tela
-        document.getElementById('containerM0').style.height = 'auto'; // Define a altura do container para auto
-        document.getElementById('containerM1').style.maxHeight = 'none'; // Remove a altura máxima do container
-    }
-}
-
 function noScroll() { // Função para não rolar a tela
     cont2 = document.getElementById('containerM0') // Seleciona o container M0
     let altura1 = tabela2.offsetHeight; // Obtém a altura da tabela M2
     let altura2 = cont2.offsetHeight; // Obtém a altura do container M0
-     if(tempPosicao == 1){ // Verifica se a posição é 1
         let larguraDaTela = window.innerWidth; // Obtém a largura da tela
         if (larguraDaTela <= 360) { // Se a largura da tela for menor ou igual a 360px
             let tempScroll = altura2 + 100 // Define um valor temporário de rolagem
-        window.scrollTo(0, tempScroll);} else if (larguraDaTela <= 420) {window.scrollTo(0, altura2 - 150);} else if (larguraDaTela <= 750) {window.scrollTo(0, altura2 - 200);} else {window.scrollTo(0, altura2 - 300);}; // Rola a tela para a altura do container M0
-    } else {
-        cont2.scrollTo(0, altura1) // Rola o container M0 para a altura da tabela M2
-    }
+        window.scrollTo(0, tempScroll);} 
+        else if (larguraDaTela <= 420) {window.scrollTo(0, altura2 - 160);} 
+        else if (larguraDaTela <= 750) {window.scrollTo(0, altura2 - 210);} 
+        else {window.scrollTo(0, altura2 - 300);}; // Rola a tela para a altura do container M0
+    
 }
 
 function exibeArea2() {
@@ -625,7 +604,6 @@ function tabelaVazia() { // Função para exibir a tabela vazia
     formatoEX.style.display = 'none'
     tabela1.style.display = 'none'
     ordenar.style.display = 'none'
-    posicao.style.display = 'none'
     mEdicao.style.display = 'none'
     seletorDeArquivo.style.display = 'inline-block'
 }
@@ -638,7 +616,6 @@ function tabelaCheia() { // Função para exibir a tabela cheia
     resetC2.style.display = 'inline-block'
     formatoEX.style.display = 'inline-block'
     ordenar.style.display = 'inline-block'
-    posicao.style.display = 'inline-block'
     mEdicao.style.display = 'inline-block'
 }
 
@@ -907,7 +884,6 @@ function resetarC2(){
     tabela1.style.display = 'none'
     containerM1.style.display = 'none'
     ordenar.style.display = 'none'
-    posicao.style.display = 'none'
     seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
     array2d = [] // Limpa o array 2D
     tempTypeMed = 0
@@ -916,8 +892,6 @@ function resetarC2(){
     tempData = ''
     vetorOrdenando = true // Reseta o estado de ordenação
     ordenarVetor()
-    tempPosicao = 0
-    posicaoM()
     profund.value = '' // Esconde o campo de profundidade
     profund2.value = '' // Esconde o campo de profundidade 2
     nomeMed.value = ''
@@ -2095,8 +2069,7 @@ function btnEdicao(){ // Função para lidar com o botão de edição
     if (tempEdicao == 0) {
         exibeArea2(); // Fecha a edição simples
         tempEdicao = 1; // Ativa o modo de edição
-        mEdicao.style.backgroundColor = '#8f7501'; // Muda a cor do botão para indicar que está editando
-        mEdicao.style.boxShadow = 'inset 0 0 15px #00000080'; // Adiciona sombra ao botão
+        mEdicao.style.boxShadow = 'inset 0 0 25px #00000090'; // Adiciona sombra ao botão
         seletorDeArquivo.disabled = true; // Desabilita o seletor de arquivo
         medType.disabled = true; // Desabilita o seletor de tipo de medição
         ordenarM2.disabled = true; // Desabilita o botão de ordenar
