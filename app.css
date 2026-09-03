@@ -33,7 +33,7 @@ padding: 0px;
 
 /* Compensa o espaço do scrollbar */
 html {
-    scrollbar-gutter: stable both-edges;
+    scrollbar-gutter: stable;
 }
 
 html[data-theme="dark"] {
@@ -64,9 +64,6 @@ body {
   /* Impede que o usuário selecione textos da interface (como títulos e botões) acidentalmente ao arrastar */
   user-select: none;
   -webkit-user-select: none;
-
-  /* Remove o "flash" azul/cinza que o navegador exibe na tela ao tocar em botões ou links */
-  -webkit-tap-highlight-color: transparent;
 
   /* Melhora o comportamento da rolagem elástica e impede o "puxar para atualizar" (pull-to-refresh) do navegador */
   overscroll-behavior-y: contain;
@@ -654,24 +651,17 @@ html[data-theme="dark"] .card-icon {
 }
 
 .app-page .tela2 {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    padding: 8px 14px;
 
-    min-height: 48px;
-    padding: 10px 16px;
-
-    border: 1px solid var(--border);
     border-radius: 999px;
 
-    background: var(--surface);
+    background: var(--accent-soft);
     color: var(--text);
 
-    font-size: .95rem;
+    font-size: .9rem;
     font-weight: 700;
-
-    box-shadow: var(--shadow-sm);
 }
+
 
 .app-page .tela2:empty {
     display: none;
@@ -891,6 +881,7 @@ html[data-theme="dark"] .card-icon {
 .medicao .labelB label.med {
     flex: 0 0 auto;
     color: var(--text);
+    margin-right: 5px;
 }
 
 .medicao .labelB select.med {
@@ -1422,6 +1413,7 @@ html[data-theme="dark"] .card-icon {
     width: 350px;
     min-width: 280px;
     overflow: hidden;
+    margin: 0 auto;
 }
 
 #ins-toggle-container {
