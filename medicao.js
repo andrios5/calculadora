@@ -593,6 +593,7 @@ function exibeArea2() {
         }
     }
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome
+    backupArray2d(array2d)
 }
 
 function tabelaVazia() { // Função para exibir a tabela vazia
@@ -869,7 +870,7 @@ function checarNome(){ // Função para verificar o nome e exibir a soma por nom
 
 
 function resetarC2(){
-    /*tempNome2 = getCookie('tempNome3') || 'Área'; // Obtém o nome temporário do cookie
+    tempNome2 = getCookie('tempNome3') || 'Área'; // Obtém o nome temporário do cookie
     resM2.innerHTML = ''
     resS2.innerHTML = ''
     tabela.style.display = 'none'
@@ -897,7 +898,8 @@ function resetarC2(){
     nomeMed.value = ''
     typeMed()
     dataMedicao()
-    formatoEX.value = getCookie("formatoEXC") || '0'; // Reseta o formato de exportação para o padrão*/
+    localStorage.removeItem('backupArray2d') // Remove o backup do array 2D do localStorage
+    formatoEX.value = getCookie("formatoEXC") || '0'; // Reseta o formato de exportação para o padrão
     window.location.reload()
 }
 
@@ -2185,3 +2187,24 @@ function alterarM2Func() {
     tempEdicao = 0; // Desativa o modo de edição
     btnEdicao(); // Chama a função de edição
 }
+
+// Função para fazer backup do array2d no localStorage
+function obterLista() {
+  return JSON.parse(localStorage.getItem('backupArray2d')) || [];
+}
+function backupArray2d() {
+    localStorage.removeItem('backupArray2d'); // Remove o backup existente
+    if (array2d.length > 0) { // Verifica se o array2d não está vazio
+        const backupArray2d = JSON.stringify(array2d); // Converte o array2d em uma string JSON
+        localStorage.setItem('backupArray2d', backupArray2d); // Salva a string JSON no localStorage
+        console.log(obterLista()) // Exibe o backup no console para verificação
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const backupArray2d = localStorage.getItem('backupArray2d'); // Obtém o backup do array2d do localStorage
+    if (backupArray2d) { // Verifica se há um backup existente
+        array2d = JSON.parse(backupArray2d); // Converte a string JSON de volta para um array
+        exibeArea2(array2d); // Chama a função para exibir os resultados
+    }
+    
+});
