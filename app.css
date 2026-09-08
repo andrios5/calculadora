@@ -27,8 +27,8 @@
 }
 
 * {
-margin: 0px;
-padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 /* Compensa o espaço do scrollbar */
@@ -70,8 +70,7 @@ body {
 }
 
 /* Permite selecionar e cópiar textos de inputs, tabelas e outputs */
-
-input, tbody, output {
+input, tbody, tfoot, output {
   user-select: text;
   -webkit-user-select: text;
 }
@@ -866,7 +865,7 @@ html[data-theme="dark"] .card-icon {
 /* ===== Medição ===== */
 
 .medicao .app-main {
-    max-width: 1120px;
+    max-width: 1200px;
 }
 
 /* --- Tipo de medição (select) --- */

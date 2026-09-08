@@ -49,11 +49,6 @@ const seletorDeArquivo = document.getElementById('seletorDeArquivo');
 
 nome2 = document.querySelector('#nome2')
 
-if (nome2.value == '') { // Verifica se o campo de nome está vazio
-    tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie do item anterior
-    nome2.value = tempNome3 || 'Área'; // Define o nome, se estiver vazio usa 'Área'
-}
-
 document.querySelector('#largura').addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && tempEdicao == 0) { // Verifica se a tecla pressionada é 'Enter' e se não está em edição
         calcularArea2();
@@ -403,6 +398,7 @@ function calcularArea2(){ // Função para calcular a área 2D ou 3D
         exibeArea2(array2d) // Chama a função para exibir os resultados
         noScroll() // Chama a função para não rolar a tela
         alteraInput(); // Chama a função para alterar o input
+        backupArray2d(array2d)
 }
 
 function alteraInput() { // Função para alterar o input após calcular a área
@@ -593,7 +589,6 @@ function exibeArea2() {
         }
     }
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome
-    backupArray2d(array2d)
 }
 
 function tabelaVazia() { // Função para exibir a tabela vazia
@@ -870,7 +865,6 @@ function checarNome(){ // Função para verificar o nome e exibir a soma por nom
 
 
 function resetarC2(){
-    tempNome2 = getCookie('tempNome3') || 'Área'; // Obtém o nome temporário do cookie
     resM2.innerHTML = ''
     resS2.innerHTML = ''
     tabela.style.display = 'none'
@@ -1027,7 +1021,6 @@ function exportarParaPDF() { // Função para exportar os dados da tabela M2 par
         const footerText = `${footerTextBase} - Página ${i} / ${pageCount} - `
         doc.setFontSize(10);
 
-        // 1. Calcula as larguras para manter tudo centralizado na página
         const textWidth = doc.getTextWidth(footerText);
         const linkWidth = doc.getTextWidth(linkText);
         const totalWidth = textWidth + linkWidth;
@@ -1035,7 +1028,7 @@ function exportarParaPDF() { // Função para exportar os dados da tabela M2 par
 
         doc.setTextColor(100);
         doc.text(footerText, startX, y);
-        doc.setTextColor(0, 0, 255);
+        doc.setTextColor(0, 0, 255); // Link em azul
         doc.textWithLink(linkText, startX + textWidth, y, { url: linkUrl });
     }
 
@@ -2201,22 +2194,40 @@ function alterarM2Func() {
 }
 
 // Função para fazer backup do array2d no localStorage
-function obterLista() {
-  return JSON.parse(localStorage.getItem('backupArray2d')) || [];
-}
 function backupArray2d() {
     localStorage.removeItem('backupArray2d'); // Remove o backup existente
     if (array2d.length > 0) { // Verifica se o array2d não está vazio
-        const backupArray2d = JSON.stringify(array2d); // Converte o array2d em uma string JSON
+        let arrayB = [...array2d];
+        arrayB.unshift(profund2.value); // Adiciona a profundidade 2 no início do array
+        arrayB.unshift(profund.value); // Adiciona a profundidade 2 no início do array
+        arrayB.unshift(altura.value); // Adiciona a altura no início do array
+        arrayB.unshift(tempNome2); // Adiciona o nome da edição no início do array
+        arrayB.unshift(nomeMed.value); // Adiciona o nome da medição no início do array
+        arrayB.unshift(medType.value); // Adiciona o tipo de medição no início do array
+        console.log(arrayB);
+        const backupArray2d = JSON.stringify(arrayB); // Converte o array2d em uma string JSON
         localStorage.setItem('backupArray2d', backupArray2d); // Salva a string JSON no localStorage
-        console.log(obterLista()) // Exibe o backup no console para verificação
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
     const backupArray2d = localStorage.getItem('backupArray2d'); // Obtém o backup do array2d do localStorage
+    let arrayB = [];
     if (backupArray2d) { // Verifica se há um backup existente
-        array2d = JSON.parse(backupArray2d); // Converte a string JSON de volta para um array
+        arrayB = JSON.parse(backupArray2d); // Converte a string JSON de volta para um array
+        medType.value = arrayB.shift(); // Remove o segundo elemento do array e define como o tipo de medição
+        nomeMedT = arrayB.shift(); // Remove o primeiro elemento do array e define como o nome da medição
+        tempNome2 = arrayB.shift(); // Remove o terceiro elemento do array e define como o nome da medição
+        tempAltura = arrayB.shift(); // Remove o quarto elemento do array e define como o nome da medição
+        tempProfundidade = arrayB.shift(); // Remove o quinto elemento do array e define como o nome da medição
+        tempProfundidade2 = arrayB.shift(); // Remove o sexto elemento do array e define como o nome da medição
+        nomeMed.value = nomeMedT; // Atualiza o campo de nome da medição com o valor do backup
+        tempTypeMed = medType.value; // Atualiza a variável tempTypeMed com o valor do tipo de medição
+        nome2.value = tempNome2 || 'Área'; // Atualiza o campo de nome com o valor do backup
+        altura.value = tempAltura; // Atualiza o campo de altura com o valor do backup
+        profund.value = tempProfundidade; // Atualiza o campo de profundidade com o valor do backup
+        profund2.value = tempProfundidade2; // Atualiza o campo de profundidade com o valor do backup
+        array2d = arrayB; // Atualiza o array2d com os valores do backup
         exibeArea2(array2d); // Chama a função para exibir os resultados
+        typeMed();
     }
-    
 });
