@@ -1017,14 +1017,26 @@ function exportarParaPDF() { // Função para exportar os dados da tabela M2 par
     // Adiciona rodapé em todas as páginas
     const pageCount = doc.internal.getNumberOfPages();
     const footerTextBase = `${nomeMed.value || document.querySelector('#nome2').value || 'Área'} - ${obterDataHoraFormatada()}`;
+    const linkText = 'GitHub: andrios5';
+    const linkUrl = 'https://github.com/andrios5';
     for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-        const footerText = `${footerTextBase} - Página ${i} / ${pageCount} - https://andrios5.github.io/calculadora`;
+        const y = pageHeight - 10;
+        const footerText = `${footerTextBase} - Página ${i} / ${pageCount} - `
         doc.setFontSize(10);
+
+        // 1. Calcula as larguras para manter tudo centralizado na página
+        const textWidth = doc.getTextWidth(footerText);
+        const linkWidth = doc.getTextWidth(linkText);
+        const totalWidth = textWidth + linkWidth;
+        const startX = (pageWidth - totalWidth) / 2;
+
         doc.setTextColor(100);
-        doc.text(footerText, pageWidth / 2, pageHeight - 10, { align: 'center' });
+        doc.text(footerText, startX, y);
+        doc.setTextColor(0, 0, 255);
+        doc.textWithLink(linkText, startX + textWidth, y, { url: linkUrl });
     }
 
     // Salva o PDF com o nome especificado
