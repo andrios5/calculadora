@@ -398,7 +398,6 @@ function calcularArea2(){ // Função para calcular a área 2D ou 3D
         exibeArea2(array2d) // Chama a função para exibir os resultados
         noScroll() // Chama a função para não rolar a tela
         alteraInput(); // Chama a função para alterar o input
-        backupArray2d(array2d)
 }
 
 function alteraInput() { // Função para alterar o input após calcular a área
@@ -589,6 +588,7 @@ function exibeArea2() {
         }
     }
     checarNome() // Chama a função para verificar o nome e exibir a soma por nome
+    backupArray2d(array2d)
 }
 
 function tabelaVazia() { // Função para exibir a tabela vazia
@@ -1011,8 +1011,8 @@ function exportarParaPDF() { // Função para exportar os dados da tabela M2 par
     // Adiciona rodapé em todas as páginas
     const pageCount = doc.internal.getNumberOfPages();
     const footerTextBase = `${nomeMed.value || document.querySelector('#nome2').value || 'Área'} - ${obterDataHoraFormatada()}`;
-    const linkText = 'GitHub: andrios5';
-    const linkUrl = 'https://github.com/andrios5';
+    const linkText = 'Calculadora X';
+    const linkUrl = 'https://andrios5.github.io/calculadora/';
     for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
         const pageWidth = doc.internal.pageSize.getWidth();
@@ -2198,6 +2198,7 @@ function backupArray2d() {
     localStorage.removeItem('backupArray2d'); // Remove o backup existente
     if (array2d.length > 0) { // Verifica se o array2d não está vazio
         let arrayB = [...array2d];
+        arrayB.unshift(largura.value); // Adiciona a largura no início do array
         arrayB.unshift(profund2.value); // Adiciona a profundidade 2 no início do array
         arrayB.unshift(profund.value); // Adiciona a profundidade 2 no início do array
         arrayB.unshift(altura.value); // Adiciona a altura no início do array
@@ -2220,12 +2221,14 @@ document.addEventListener('DOMContentLoaded', () => {
         tempAltura = arrayB.shift(); // Remove o quarto elemento do array e define como o nome da medição
         tempProfundidade = arrayB.shift(); // Remove o quinto elemento do array e define como o nome da medição
         tempProfundidade2 = arrayB.shift(); // Remove o sexto elemento do array e define como o nome da medição
+        tempLar = arrayB.shift(); // Remove o sétimo elemento do array e define como o nome da medição
         nomeMed.value = nomeMedT; // Atualiza o campo de nome da medição com o valor do backup
         tempTypeMed = medType.value; // Atualiza a variável tempTypeMed com o valor do tipo de medição
         nome2.value = tempNome2 || 'Área'; // Atualiza o campo de nome com o valor do backup
         altura.value = tempAltura; // Atualiza o campo de altura com o valor do backup
         profund.value = tempProfundidade; // Atualiza o campo de profundidade com o valor do backup
         profund2.value = tempProfundidade2; // Atualiza o campo de profundidade com o valor do backup
+        largura.value = tempLar; // Atualiza o campo de largura com o valor do backup
         array2d = arrayB; // Atualiza o array2d com os valores do backup
         exibeArea2(array2d); // Chama a função para exibir os resultados
         typeMed();
