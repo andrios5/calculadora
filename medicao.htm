@@ -141,6 +141,7 @@
             </section>
         </section>
         <!-- Import de arquivo -->
+            <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel" tabindex="-1">
             <div id="calc-iframe" style="display: none;">
                 <section class="out calc-card" aria-label="Calculadora">
                     <div class="calc-display" role="status" aria-live="polite">
@@ -182,7 +183,7 @@
             <button type="button" class="ins-toggle" id="ins-toggleCalc" aria-expanded="false" aria-controls="calc-grid">
             Calculadora
             </button>
-            <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel" tabindex="-1">
+            <button type="button" class="ins-toggle" id="ins-toggleImport" aria-expanded="false" aria-controls="importar">Importar</button>
             <button type="button" class="ins-toggle" id="ins-toggleInst" aria-expanded="false" aria-controls="instrucoes">
             Instruções
             </button>
@@ -200,20 +201,6 @@
             <li>Você pode importar novamente os dados salvos em CSV ou XLS, importando várias medições de uma vez.</li>
         </ol>
 
-        <script>
-        document.querySelector('#ins-toggleInst').addEventListener('click', function () {
-            var list = document.getElementById('instrucoes');
-            var isVisible = getComputedStyle(list).display !== 'none';
-            list.style.display = isVisible ? 'none' : 'block';
-            this.setAttribute('aria-expanded', !isVisible);
-        });
-        document.querySelector('#ins-toggleCalc').addEventListener('click', function () {
-            var iframe = document.getElementById('calc-iframe');
-            var isVisible = getComputedStyle(iframe).display !== 'none';
-            iframe.style.display = isVisible ? 'none' : 'block';
-            this.setAttribute('aria-expanded', !isVisible);
-        });
-        </script>
 </main>
 <nav id="menu-lateral" class="side-menu" aria-label="Menu de navegação" aria-hidden="true" inert>
     <div class="side-menu-head">

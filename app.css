@@ -1371,9 +1371,9 @@ html[data-theme="dark"] .card-icon {
 
 /* --- Input de arquivo (import) --- */
 .medicao #seletorDeArquivo {
-    display: block;
+    display: none;
     max-width: 70%;
-    margin-top: 15px;
+    margin: 50px auto 0;
     padding: 20px 15px;
     border: 1px solid var(--border);
     border-radius: 999px;

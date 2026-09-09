@@ -1,3 +1,32 @@
+toggleInst = document.querySelector('button#ins-toggleInst');
+toggleImport = document.querySelector('button#ins-toggleImport');
+toggleCalc = document.querySelector('button#ins-toggleCalc');
+instrucoes = document.querySelector('#instrucoes');
+seletorDeArquivo = document.querySelector('#seletorDeArquivo');
+calcIframe = document.querySelector('#calc-iframe');
+
+toggleCalc.addEventListener('click', function () {
+    if (calcIframe.style.display === 'block') {
+        calcIframe.style.display = 'none';} else {
+    calcIframe.style.display = 'block';
+    seletorDeArquivo.style.display = 'none';}
+});
+
+toggleInst.addEventListener('click', function () {
+    if (instrucoes.style.display === 'block') {
+        instrucoes.style.display = 'none';} else {
+    instrucoes.style.display = 'block';}
+});
+
+toggleImport.addEventListener('click', function () {
+    if (seletorDeArquivo.style.display === 'block') {
+        seletorDeArquivo.style.display = 'none';} else {
+    seletorDeArquivo.style.display = 'block';
+    calcIframe.style.display = 'none';}
+});
+
+
+
 // Função para salvar cookies
 function setCookie(name, value, days) {
     const date = new Date();
@@ -45,7 +74,6 @@ document.querySelector('#medType').addEventListener('change', function() {
     typeMed(); // Chama a função para atualizar o tipo de medição
     exibeArea2()
 });
-const seletorDeArquivo = document.getElementById('seletorDeArquivo');
 
 nome2 = document.querySelector('#nome2')
 
@@ -221,7 +249,6 @@ formatoEX.innerHTML = `<option value="0">CSV</option>`
 formatoEX.innerHTML += `<option value="1">XLS</option>`
 formatoEX.innerHTML += `<option value="2">DOC</option>`
 formatoEX.innerHTML += `<option value="3">PDF</option>`
-formatoEX.value = getCookie("formatoEXC") || 0
 
 var tempNome2 // Variável para armazenar o nome temporário
 let vetorOrdenando = false // Variável para controlar se o vetor está sendo ordenado
@@ -893,7 +920,6 @@ function resetarC2(){
     typeMed()
     dataMedicao()
     localStorage.removeItem('backupArray2d') // Remove o backup do array 2D do localStorage
-    formatoEX.value = getCookie("formatoEXC") || '0'; // Reseta o formato de exportação para o padrão
     window.location.reload()
 }
 
@@ -2209,6 +2235,8 @@ function backupArray2d() {
         const backupArray2d = JSON.stringify(arrayB); // Converte o array2d em uma string JSON
         localStorage.setItem('backupArray2d', backupArray2d); // Salva a string JSON no localStorage
     }
+    var tempEX = formatoEX.value;
+    localStorage.setItem('saveEX', tempEX); // Salva o formato de exportação no localStorage
 }
 document.addEventListener('DOMContentLoaded', () => {
     const backupArray2d = localStorage.getItem('backupArray2d'); // Obtém o backup do array2d do localStorage
@@ -2230,6 +2258,8 @@ document.addEventListener('DOMContentLoaded', () => {
         profund2.value = tempProfundidade2; // Atualiza o campo de profundidade com o valor do backup
         largura.value = tempLar; // Atualiza o campo de largura com o valor do backup
         array2d = arrayB; // Atualiza o array2d com os valores do backup
+        var tempEX = localStorage.getItem('saveEX'); // Obtém o formato de exportação do localStorage
+        formatoEX.value = tempEX || 0; // Atualiza o campo de formato de exportação com o valor do backup
         exibeArea2(array2d); // Chama a função para exibir os resultados
         typeMed();
     }
