@@ -26,28 +26,6 @@ toggleImport.addEventListener('click', function () {
 });
 
 
-
-// Função para salvar cookies
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // 1 segundo
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
-
-// Função para ler cookies
-function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.indexOf(name + "=") === 0) {
-            return cookie.substring(name.length + 1);
-        }
-    }
-    return "";
-}
-
 med2 = document.querySelector('button#med2')
 resetC2 = document.querySelector('button#resetC2')
 menosC2 = document.querySelector('button#menosC2')
@@ -279,7 +257,7 @@ function obterDataHoraFormatada() { // Função para obter a data e hora formata
 }
 
 function dataMedicao () { // Função para exibir a data de medição
-    dataMed.innerHTML = tempData || obterDataHoraFormatada(); // Obtém a data de medição do cookie
+    dataMed.innerHTML = tempData || obterDataHoraFormatada();
 }
 
 function typeMed() { // Função para definir o tipo de medição
@@ -384,21 +362,16 @@ function ordenarArray2dPorNome() { // Função para ordenar o array2d por nome
 }
 
 function calcularArea2(){ // Função para calcular a área 2D ou 3D
-        let tempNome3 = getCookie('tempNome3'); // Obtém o nome temporário do cookie
-    alt = document.querySelector('#altura') // Seleciona o campo de altura
-    lar = document.querySelector('#largura') // Seleciona o campo de largura
-    pro = document.querySelector('#profund') // Seleciona o campo de profundidade
-    pro2 = document.querySelector('#profund2') // Seleciona o campo de profundidade 2
+        alt = document.querySelector('#altura') // Seleciona o campo de altura
+        lar = document.querySelector('#largura') // Seleciona o campo de largura
+        pro = document.querySelector('#profund') // Seleciona o campo de profundidade
+        pro2 = document.querySelector('#profund2') // Seleciona o campo de profundidade 2
         nome2 = document.querySelector('#nome2').value || 'Área'; // Define o nome, se estiver vazio usa 'Área'
         nome2 = nome2.trim() // Remove espaços em branco no início e no final do nome
         resM2 = document.querySelector('#resultadoM2') // Seleciona o elemento de resultado M2
         resS2 = document.querySelector('#resultadoS2') // Seleciona o elemento de resultado S2
         tabela = document.querySelector('table#m2') // Seleciona a tabela M2
         tabela1 = document.querySelector('table#m1') // Seleciona a tabela M1
-
-        tempNome2 = nome2 // Armazena o nome temporário
-        tempNome3 = tempNome2 // Armazena o nome temporário para a tabela de soma
-        setCookie('tempNome3', tempNome3, 30); // Salva o nome no cookie por 30 dias
         
     // Converte para número usando substituição temporária sem alterar o valor visual
     const altNum = Number(alt.value.replace(',', '.')) || 0;
@@ -645,6 +618,11 @@ function tabelaCheia() { // Função para exibir a tabela cheia
 // Função para editar uma linha da tabela M2
 function editarLinhaM2(index) {
     exibeArea2(); // Fecha qualquer edição anterior
+    if (tempTypeMed == 4) { // Se estiver em modo de medição, não permite edição
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th><th>R$/un</th><th>Preço</th></tr>`
+    } else if (tempTypeMed == 3) {
+        theadM2.innerHTML = `<tr><th>Nome</th><th>Altura</th><th>Largura</th><th>m²</th><th>un</th><th>un/m²</th></tr>`
+    }
     const tabela = document.querySelector('#resultadoM2'); // Seleciona a tabela de resultados M2
     const linha = tabela.children[index]; // Seleciona a linha correspondente ao índice
     tempEdicao = 2 // Define o tipo de edição como 2 (edição de M2)
@@ -673,6 +651,7 @@ function editarLinhaM2(index) {
     } else if (ttm === 4) {
         camposEditaveis = [0, 1, 2, 4, 6];
     }
+    
     let inputRefs = []; // Array para armazenar referências aos inputs criados
     const dados = array2d[index].slice(); // Cria uma cópia dos dados da linha selecionada
     // Itera pelo máximo entre células visíveis e os dados armazenados, assim acomodamos variações de estrutura
@@ -961,7 +940,6 @@ function exportar() { // Função para exportar os dados da tabela M2
         } else { // Se o tipo de medição for M²
             exportar2(nome1, nome2)
         }
-        setCookie('formatoEXC', 0, 30) // Define o cookie para o formato de exportação como 0 (CSV)
     } else if (formatoEX.value == '1') { // Verifica se o formato de exportação é 1 (XLS)
         if (tempTypeMed == 1){ // Verifica se o tipo de medição é 1 (M³)
             exportar11()
@@ -974,7 +952,6 @@ function exportar() { // Função para exportar os dados da tabela M2
         } else { // Se o tipo de medição for M²
             exportar1()
         }
-        setCookie('formatoEXC', 1, 30) // Define o cookie para o formato de exportação como 1 (XLS)
     } else if (formatoEX.value == '2') { // Verifica se o formato de exportação é 2 (DOCX)
         exportarParaDocx(); // Exporta para documento Word
     } else { // Se o formato de exportação for PDF
@@ -2186,7 +2163,6 @@ function deletarM2Func() {
         for (let i = 0; i < array2d.length; i++) {
             const [nome, alt, lar, area, profundidade, area3, preco, area4] = array2d[i];
             document.getElementById('nome2').value = nome; // Atualiza o campo de nome com o nome do item
-            setCookie('tempNome3', nome, 30); // Define um cookie com o nome do item
             altura.value = alt; // Atualiza o campo de altura com a altura do item
             largura.value = lar; // Atualiza o campo de largura com a largura do item
             profund.value = profundidade; // Atualiza o campo de profundidade com a profundidade
@@ -2231,7 +2207,6 @@ function backupArray2d() {
         arrayB.unshift(tempNome2); // Adiciona o nome da edição no início do array
         arrayB.unshift(nomeMed.value); // Adiciona o nome da medição no início do array
         arrayB.unshift(medType.value); // Adiciona o tipo de medição no início do array
-        console.log(arrayB);
         const backupArray2d = JSON.stringify(arrayB); // Converte o array2d em uma string JSON
         localStorage.setItem('backupArray2d', backupArray2d); // Salva a string JSON no localStorage
     }
