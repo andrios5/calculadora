@@ -968,10 +968,8 @@ html[data-theme="dark"] .card-icon {
 .medicao button.edicao {
     display: none; /* JS controla visibilidade */
 
-    margin: 12px auto 0;
-    min-width: auto;
-    height: 40px;
-    padding: 10px 20px;
+    margin: 12px auto 12px;
+    width: 90px;
 
     border-radius: 999px;
     font-size: .9rem;
@@ -981,7 +979,7 @@ html[data-theme="dark"] .card-icon {
 .medicao #selecaoM2 {
     width: fit-content;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 12px;
     padding: 0;
 
     background: transparent;
