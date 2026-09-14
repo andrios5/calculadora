@@ -1333,7 +1333,8 @@ html[data-theme="dark"] .card-icon {
 .medicao #resetC2,
 .medicao #formatoEX,
 .medicao #ordenarM2,
-.medicao #edicaoM2 {
+.medicao #edicaoM2,
+.medicao #saveL {
     display: none; /* JS mostra quando há dados */
 }
 

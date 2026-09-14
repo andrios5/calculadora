@@ -11,10 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0"/>
     <link rel="stylesheet" href="app.css">
     <script src="theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
 </head>
 
 <body class="app-page medicao">
@@ -113,6 +113,7 @@
 
                 <!-- Botões de ação principal -->
                 <div class="medicao-actions">
+                    <button id="resetC2" type="button">Reset</button>
                     <button id="menosC2" type="button">Diminuir</button>
                     <button id="deletarM2" class="edicao" type="button">Deletar</button>
                     <button id="edicaoM2" type="button">Edição</button>
@@ -132,7 +133,7 @@
 
                 <!-- Botões de exportação -->
                 <section class="medicao-export" id="bottonsM2">
-                    <button id="resetC2" type="button">Reset</button>
+                    <button id="saveL" type="button">Salvar</button>
                     <button id="ordenarM2" type="button">Ordenar</button>
                     <button id="export2" type="button">Exportar</button>
                     <select name="formatoEX" id="formatoEX" tabindex="-1"></select>  <!-- Para não selecionar com o teclado, use tabindex="-1" -->
@@ -277,10 +278,11 @@
     </ul>
 </nav>
 <script src="menu.js"></script>
+<script src="calculadora.js"></script>
     <!-- Bibliotecas de exportação -->
-    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-    <script src="medicao.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="medicao.js"></script>
 </body>
 </html>

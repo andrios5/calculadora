@@ -47,6 +47,7 @@ dataMed = document.querySelector('#dataMed')
 nomeMed = document.querySelector('#nomeMed')
 mEdicao = document.querySelector('#edicaoM2')
 sedition = document.getElementById('sedicaoM2')
+saveL = document.querySelector('#saveL')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor do tipo de medição selecionado
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -101,6 +102,7 @@ resetC2.addEventListener('click', resetarC2)
 menosC2.addEventListener('click', diminuirC2)
 export2.addEventListener('click', exportar)
 ordenar.addEventListener('click', ordenarVetor)
+saveL.addEventListener('click', salvarLocalStorage)
 
 // Drag and drop para reordenar os elementos
 const parent = document.querySelector('.containerBTN'); // Seleciona o container .containerBTN
@@ -613,6 +615,7 @@ function tabelaCheia() { // Função para exibir a tabela cheia
     formatoEX.style.display = 'inline-block'
     ordenar.style.display = 'inline-block'
     mEdicao.style.display = 'inline-block'
+    saveL.style.display = 'inline-block'
 }
 
 // Função para editar uma linha da tabela M2
@@ -885,6 +888,7 @@ function resetarC2(){
     tabela1.style.display = 'none'
     containerM1.style.display = 'none'
     ordenar.style.display = 'none'
+    saveL.style.display = 'none'
     seletorDeArquivo.value = ''; // Limpa o seletor de arquivo após a importação
     array2d = [] // Limpa o array 2D
     tempTypeMed = 0
@@ -2239,3 +2243,24 @@ document.addEventListener('DOMContentLoaded', () => {
         typeMed();
     }
 });
+
+function salvarLocalStorage() {
+    tempData = obterDataHoraFormatada(); // Obtém a data e hora atual formatadas
+// 1. O getItem busca os dados de forma assíncrona
+  localforage.getItem('array4d').then(function(dadosSalvos) {
+    // 2. Se já existirem dados, usa eles. Senão, cria um array vazio []
+    let array4d = dadosSalvos || [];
+
+    // 3. Adiciona a cópia do array2d (usando ... para evitar problemas de referência)
+    array4d.push([...array2d], [nomeMed.value], [tempData], [medType.value], [nome2.value], [tempAltura], [tempProfundidade], [tempProfundidade2], [tempLar]);
+
+    // 4. Salva o array atualizado e encadeia a confirmação
+    return localforage.setItem('array4d', array4d);
+  }).then(function(arraySalvo) {
+    // 5. Sucesso! Só exibe a mensagem APÓS salvar de fato
+    alert('Backup salvo com sucesso!');
+    console.log('Conteúdo salvo:', arraySalvo);
+  }).catch(function(erro) {
+    console.error('Erro ao salvar no localForage:', erro);
+  });
+}
