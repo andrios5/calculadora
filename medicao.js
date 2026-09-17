@@ -42,12 +42,14 @@ tabela1 = document.querySelector('table#m1')
 tabela2 = document.querySelector('table#m2')
 containerM0 = document.querySelector('#containerM0')
 containerM1 = document.querySelector('#containerM1')
+containerM3 = document.querySelector('#containerM3')
 theadM1 = document.querySelector('#theadM1')
 dataMed = document.querySelector('#dataMed')
 nomeMed = document.querySelector('#nomeMed')
 mEdicao = document.querySelector('#edicaoM2')
 sedition = document.getElementById('sedicaoM2')
 saveL = document.querySelector('#saveL')
+loadL = document.querySelector('#loadL')
 document.querySelector('#medType').addEventListener('change', function() {
     tempTypeMed = document.querySelector('#medType').value; // Obtém o valor do tipo de medição selecionado
     typeMed(); // Chama a função para atualizar o tipo de medição
@@ -103,6 +105,7 @@ menosC2.addEventListener('click', diminuirC2)
 export2.addEventListener('click', exportar)
 ordenar.addEventListener('click', ordenarVetor)
 saveL.addEventListener('click', salvarLocalStorage)
+loadL.addEventListener('click', carregarLocalStorage)
 
 // Drag and drop para reordenar os elementos
 const parent = document.querySelector('.containerBTN'); // Seleciona o container .containerBTN
@@ -616,6 +619,7 @@ function tabelaCheia() { // Função para exibir a tabela cheia
     ordenar.style.display = 'inline-block'
     mEdicao.style.display = 'inline-block'
     saveL.style.display = 'inline-block'
+    loadL.style.display = 'inline-block'
 }
 
 // Função para editar uma linha da tabela M2
@@ -2244,23 +2248,502 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+let registrosMedicoesSalvos = [];
+
+function gerarIdMedicao() {
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+
+function clonarProfundo(objeto) {
+    try {
+        return JSON.parse(JSON.stringify(objeto));
+    } catch (e) {
+        return objeto;
+    }
+}
+
+function valorParaInput(valor) {
+    if (valor === undefined || valor === null) return '';
+    if (typeof valor === 'number' && isNaN(valor)) return '';
+    return String(valor);
+}
+
+function numeroBr(valor) {
+    if (valor === undefined || valor === null || valor === '') return 0;
+    if (typeof valor === 'number') return isNaN(valor) ? 0 : valor;
+
+    const texto = String(valor);
+
+    // Usa a sua função strNum() se ela existir, pois ela já trata vírgula/ponto do pt-BR.
+    if (typeof strNum === 'function') {
+        const n = strNum(texto);
+        return isNaN(n) ? 0 : n;
+    }
+
+    const n = Number(texto.replace(',', '.'));
+    return isNaN(n) ? 0 : n;
+}
+
+function calcularSomaTotalMedicao(itens, tipo) {
+    const t = Number(tipo);
+    let soma = 0;
+
+    if (!Array.isArray(itens)) return 0;
+
+    for (let i = 0; i < itens.length; i++) {
+        const item = itens[i];
+        if (!Array.isArray(item)) continue;
+
+        let valor = 0;
+
+        // Estrutura do array2d:
+        // [nome, altura, largura, area, pro/profundidade/preço/un, area2, pro2/preço, area3]
+        if (t === 4) {
+            // UN + R$ -> total em R$ está no índice 7
+            valor = Number(item[7]) || 0;
+        } else if (t === 2 || t === 1 || t === 3) {
+            // M³, R$ e UN -> total relevante está no índice 5
+            valor = Number(item[5]) || 0;
+        } else {
+            // M² -> área está no índice 3
+            valor = Number(item[3]) || 0;
+        }
+
+        soma += valor;
+    }
+
+    return soma;
+}
+
+function formatarSomaTotal(soma, tipo) {
+    const t = Number(tipo);
+    const numero = Number(soma) || 0;
+
+    if (t === 2 || t === 4) {
+        return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    return numero.toLocaleString('pt-BR');
+}
+
+function rotuloTipoMedicao(tipo) {
+    const t = Number(tipo);
+
+    if (t === 1) return 'M³';
+    if (t === 2) return 'R$';
+    if (t === 3) return 'UN';
+    if (t === 4) return 'UN + R$';
+
+    return 'M²';
+}
+
+function grupoResumoMedicao(tipo) {
+    const t = Number(tipo);
+
+    // Agrupa valores monetários para o resumo final.
+    if (t === 2 || t === 4) return 'R$';
+    if (t === 1) return 'M³';
+    if (t === 3) return 'UN';
+
+    return 'M²';
+}
+
+function formatarValorGrupo(grupo, valor) {
+    const numero = Number(valor) || 0;
+
+    if (grupo === 'R$') {
+        return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    return numero.toLocaleString('pt-BR');
+}
+
+function normalizarRegistroMedicao(registro) {
+    if (!registro || typeof registro !== 'object') return null;
+
+    let itens = [];
+    let nomeMedicao = '';
+    let data = '';
+    let tipo = 0;
+    let somaT = 0;
+    let ultimo = {};
+
+    // Suporta o novo formato de objeto:
+    // { id, nomeMedicao, data, tipo, itens, somaT, ultimo }
+    //
+    // Também tenta suportar um possível formato antigo em array:
+    // [itens, nome, data, soma, tipo, ...]
+    if (Array.isArray(registro)) {
+        if (registro.length < 5 || !Array.isArray(registro[0])) return null;
+
+        itens = registro[0];
+        nomeMedicao = String(registro[1] === undefined || registro[1] === null ? '' : registro[1]);
+        data = String(registro[2] === undefined || registro[2] === null ? '' : registro[2]);
+        somaT = Number(registro[3]) || 0;
+        tipo = Number(registro[4]);
+
+        ultimo = {
+            nome: registro[5],
+            altura: registro[6],
+            profundidade: registro[7],
+            profundidade2: registro[8],
+            largura: registro[9]
+        };
+    } else {
+        if (!Array.isArray(registro.itens)) return null;
+
+        itens = registro.itens;
+        nomeMedicao = String(registro.nomeMedicao === undefined || registro.nomeMedicao === null ? '' : registro.nomeMedicao);
+        data = String(registro.data === undefined || registro.data === null ? '' : registro.data);
+        tipo = Number(registro.tipo);
+        somaT = Number(registro.somaT) || 0;
+
+        ultimo = (registro.ultimo && typeof registro.ultimo === 'object') ? registro.ultimo : {};
+    }
+
+    const itensValidos = [];
+
+    for (let i = 0; i < itens.length; i++) {
+        const item = itens[i];
+        if (!Array.isArray(item)) continue;
+
+        const nome = String(item[0] === undefined || item[0] === null ? '' : item[0]).trim();
+
+        // Evita salvar linhas de soma como se fossem itens.
+        if (!nome || nome === 'Soma:' || nome.toLowerCase().indexOf('soma dos itens') === 0) continue;
+
+        const altura = Number(item[1]);
+        const largura = Number(item[2]);
+        const area = Number(item[3]);
+
+        if (isNaN(altura) || isNaN(largura) || isNaN(area)) continue;
+
+        itensValidos.push([
+            nome,
+            altura,
+            largura,
+            area,
+            Number(item[4]) || 0,
+            Number(item[5]) || 0,
+            Number(item[6]) || 0,
+            Number(item[7]) || 0
+        ]);
+    }
+
+    if (itensValidos.length === 0) return null;
+
+    if (isNaN(Number(somaT))) {
+        somaT = calcularSomaTotalMedicao(itensValidos, tipo);
+    }
+
+    if (isNaN(Number(tipo))) {
+        tipo = 0;
+    }
+
+    return {
+        id: registro.id || gerarIdMedicao(),
+        nomeMedicao: nomeMedicao.trim() || 'Sem nome',
+        data: data.trim(),
+        tipo: Number(tipo),
+        itens: itensValidos,
+        somaT: Number(somaT) || 0,
+        ultimo: {
+            nome: String(ultimo.nome === undefined || ultimo.nome === null ? '' : ultimo.nome),
+            altura: numeroBr(ultimo.altura),
+            largura: numeroBr(ultimo.largura),
+            profundidade: numeroBr(ultimo.profundidade),
+            profundidade2: numeroBr(ultimo.profundidade2)
+        }
+    };
+}
+
+function adicionarListenerMedicoesSalvas(tbody) {
+    if (tbody.dataset.listenerMedicoes === 'true') return;
+
+    tbody.dataset.listenerMedicoes = 'true';
+
+    tbody.addEventListener('click', function(e) {
+        const botao = e.target.closest ? e.target.closest('button[data-acao]') : null;
+        if (!botao) return;
+
+        const indiceLista = Number(botao.dataset.indice);
+        const item = registrosMedicoesSalvos[indiceLista];
+
+        if (!item) return;
+
+        if (botao.dataset.acao === 'carregar') {
+            carregarMedicaoPeloIndice(indiceLista);
+        } else if (botao.dataset.acao === 'excluir') {
+            excluirMedicaoPeloOriginalIndex(item.originalIndex, item.registro);
+        }
+    });
+}
+
+function renderListaMedicoesSalvas(dados) {
+    const tbody = document.getElementById('resultadoM3');
+    const thead = document.getElementById('theadM3');
+    const tabela = document.getElementById('m3');
+    const cont = document.getElementById('containerM3');
+
+    if (!tbody || !thead || !tabela || !cont) return;
+
+    cont.style.display = 'block';
+
+    thead.innerHTML = '<tr><th>Nome</th><th>Data</th><th>Soma</th></tr>';
+    tbody.innerHTML = '';
+
+    const listaOriginal = Array.isArray(dados) ? dados : [];
+    registrosMedicoesSalvos = [];
+
+    for (let i = 0; i < listaOriginal.length; i++) {
+        const registro = normalizarRegistroMedicao(listaOriginal[i]);
+        if (!registro) continue;
+
+        // originalIndex é importante para excluir do localforage sem depender da posição exibida na tabela.
+        registrosMedicoesSalvos.push({
+            registro: registro,
+            originalIndex: i
+        });
+    }
+
+    if (registrosMedicoesSalvos.length === 0) {
+        const trVazia = document.createElement('tr');
+        const tdVazia = document.createElement('td');
+        tdVazia.colSpan = 5;
+        tdVazia.textContent = 'Nenhuma medição salva.';
+        trVazia.appendChild(tdVazia);
+        tbody.appendChild(trVazia);
+    } else {
+        registrosMedicoesSalvos.forEach(function(item, indiceLista) {
+            const registro = item.registro;
+
+            const tr = document.createElement('tr');
+
+            const tdNome = document.createElement('td');
+            tdNome.textContent = registro.nomeMedicao || 'Sem nome';
+
+            const tdData = document.createElement('td');
+            tdData.textContent = registro.data || '';
+
+            const tdTotal = document.createElement('td');
+            tdTotal.textContent = formatarSomaTotal(registro.somaT, registro.tipo);
+
+            const tdAcoes = document.createElement('td');
+
+            const btnCarregar = document.createElement('button');
+            btnCarregar.type = 'button';
+            btnCarregar.textContent = 'Carregar';
+            btnCarregar.dataset.acao = 'carregar';
+            btnCarregar.dataset.indice = String(indiceLista);
+
+            const btnExcluir = document.createElement('button');
+            btnExcluir.type = 'button';
+            btnExcluir.textContent = 'Excluir';
+            btnExcluir.dataset.acao = 'excluir';
+            btnExcluir.dataset.indice = String(indiceLista);
+
+            tdAcoes.appendChild(btnCarregar);
+            tdAcoes.appendChild(document.createTextNode(' '));
+            tdAcoes.appendChild(btnExcluir);
+
+            tr.appendChild(tdNome);
+            tr.appendChild(tdData);
+            tr.appendChild(tdTotal);
+            tr.appendChild(tdAcoes);
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Resumo final.
+    const resumoPorGrupo = {};
+
+    registrosMedicoesSalvos.forEach(function(item) {
+        const grupo = grupoResumoMedicao(item.registro.tipo);
+        resumoPorGrupo[grupo] = (resumoPorGrupo[grupo] || 0) + (Number(item.registro.somaT) || 0);
+    });
+
+    let textoResumo = 'Medições salvas: ' + registrosMedicoesSalvos.length;
+    const chaves = Object.keys(resumoPorGrupo);
+
+    if (chaves.length === 1) {
+        const grupo = chaves[0];
+        textoResumo += ' | Soma Total (' + grupo + '): ' + formatarValorGrupo(grupo, resumoPorGrupo[grupo]);
+    } else if (chaves.length > 1) {
+        textoResumo += ' | ' + chaves.map(function(grupo) {
+            return grupo + ': ' + formatarValorGrupo(grupo, resumoPorGrupo[grupo]);
+        }).join(' | ');
+    }
+
+    let tfoot = tabela.querySelector('tfoot');
+    if (!tfoot) {
+        tfoot = document.createElement('tfoot');
+        tabela.appendChild(tfoot);
+    }
+
+    tfoot.innerHTML = '<tr><th colspan="5">' + textoResumo + '</th></tr>';
+
+    adicionarListenerMedicoesSalvas(tbody);
+}
+
+function atualizarListaMedicoesSalvas() {
+    localforage.getItem('array4d').then(function(dados) {
+        renderListaMedicoesSalvas(Array.isArray(dados) ? dados : []);
+    }).catch(function(erro) {
+        console.error('Erro ao carregar lista de medições salvas:', erro);
+    });
+}
+
+function carregarMedicaoPeloIndice(indiceLista) {
+    const item = registrosMedicoesSalvos[indiceLista];
+
+    if (!item || !Array.isArray(item.registro.itens)) {
+        alert('Registro inválido.');
+        return;
+    }
+
+    // Clona para não modificar o registro salvo diretamente.
+    const registro = clonarProfundo(item.registro);
+
+    // Se estiver em modo de edição, sai antes de carregar.
+    if (typeof tempEdicao !== 'undefined' && tempEdicao !== 0) {
+        btnEdicao();
+    }
+
+    array2d = registro.itens;
+
+    const tipo = Number(registro.tipo);
+    const selectTipo = document.getElementById('medType');
+
+    // Zera as flags de inversão para evitar que o typeMed() inverta o vetor indevidamente.
+    tempTypeMed = tipo;
+    tempTypeMed2 = 0;
+    tempTypeMed3 = 0;
+
+    if (selectTipo) {
+        selectTipo.value = String(tipo);
+    }
+
+    document.getElementById('nomeMed').value = registro.nomeMedicao || '';
+    tempData = registro.data || obterDataHoraFormatada();
+    dataMedicao();
+
+    typeMed();
+
+    // Garante o valor selecionado, principalmente quando o tipo é M² e o select é recriado.
+    if (selectTipo) {
+        selectTipo.value = String(tipo);
+    }
+
+    const ultimo = registro.ultimo || {};
+
+    document.getElementById('nome2').value = valorParaInput(ultimo.nome);
+    document.getElementById('altura').value = valorParaInput(ultimo.altura);
+    document.getElementById('profund').value = valorParaInput(ultimo.profundidade);
+    document.getElementById('profund2').value = valorParaInput(ultimo.profundidade2);
+    document.getElementById('largura').value = valorParaInput(ultimo.largura);
+
+    tempNome2 = String(ultimo.nome || '');
+
+    exibeArea2();
+
+    // Esconde a lista de medições salvas após carregar, para o usuário voltar ao fluxo normal.
+    const cont = document.getElementById('containerM3');
+    if (cont) {
+        cont.style.display = 'none';
+    }
+}
+
+function excluirMedicaoPeloOriginalIndex(originalIndex, registroParaConfirmar) {
+    const nome = (registroParaConfirmar && registroParaConfirmar.nomeMedicao) || 'esta medição';
+
+    if (!confirm('Excluir a medição "' + nome + '" salva?')) return;
+
+    localforage.getItem('array4d').then(function(dados) {
+        let lista = Array.isArray(dados) ? dados : [];
+
+        if (originalIndex < 0 || originalIndex >= lista.length) {
+            renderListaMedicoesSalvas(lista);
+            return;
+        }
+
+        lista.splice(originalIndex, 1);
+
+        return localforage.setItem('array4d', lista).then(function() {
+            renderListaMedicoesSalvas(lista);
+        });
+    }).catch(function(erro) {
+        console.error('Erro ao excluir medição salva:', erro);
+    });
+}
+
 function salvarLocalStorage() {
-    tempData = obterDataHoraFormatada(); // Obtém a data e hora atual formatadas
-// 1. O getItem busca os dados de forma assíncrona
-  localforage.getItem('array4d').then(function(dadosSalvos) {
-    // 2. Se já existirem dados, usa eles. Senão, cria um array vazio []
-    let array4d = dadosSalvos || [];
+    if (!array2d || array2d.length === 0) {
+        alert('Não há dados para salvar!');
+        return;
+    }
 
-    // 3. Adiciona a cópia do array2d (usando ... para evitar problemas de referência)
-    array4d.push([...array2d], [nomeMed.value], [tempData], [medType.value], [nome2.value], [tempAltura], [tempProfundidade], [tempProfundidade2], [tempLar]);
+    const selectTipo = document.getElementById('medType');
+    const tipo = Number(selectTipo ? selectTipo.value : 0);
 
-    // 4. Salva o array atualizado e encadeia a confirmação
-    return localforage.setItem('array4d', array4d);
-  }).then(function(arraySalvo) {
-    // 5. Sucesso! Só exibe a mensagem APÓS salvar de fato
-    alert('Backup salvo com sucesso!');
-    console.log('Conteúdo salvo:', arraySalvo);
-  }).catch(function(erro) {
-    console.error('Erro ao salvar no localForage:', erro);
-  });
+    const dataAtual = obterDataHoraFormatada();
+    tempData = dataAtual;
+    dataMedicao();
+
+    // Calcula a somaT diretamente do array2d, sem depender de variáveis locais de outras funções.
+    const somaT = calcularSomaTotalMedicao(array2d, tipo);
+
+    const ultimoItem = array2d[array2d.length - 1] || [];
+
+    const registro = {
+        id: gerarIdMedicao(),
+        nomeMedicao: (document.getElementById('nomeMed').value || '').trim() ||
+                     (document.getElementById('nome2').value || '').trim() ||
+                     'Sem nome',
+        data: dataAtual,
+        tipo: tipo,
+        itens: clonarProfundo(array2d),
+        somaT: somaT,
+        ultimo: {
+            nome: String(ultimoItem[0] === undefined || ultimoItem[0] === null ? '' : ultimoItem[0]),
+            altura: Number(ultimoItem[1]) || 0,
+            largura: Number(ultimoItem[2]) || 0,
+            profundidade: Number(ultimoItem[4]) || 0,
+            profundidade2: Number(ultimoItem[6]) || 0
+        }
+    };
+
+    localforage.getItem('array4d').then(function(dados) {
+        const lista = Array.isArray(dados) ? dados : [];
+
+        // Aqui está a correção principal:
+        // Cada medição salva é UM objeto dentro do array4d.
+        lista.push(registro);
+
+        return localforage.setItem('array4d', lista);
+    }).then(function() {
+        alert('Backup salvo com sucesso!');
+
+        // Se a lista de medições salvas estiver aberta, atualiza ela.
+        const cont = document.getElementById('containerM3');
+        if (cont && cont.style.display === 'block') {
+            atualizarListaMedicoesSalvas();
+        }
+    }).catch(function(erro) {
+        console.error('Erro ao salvar no localForage:', erro);
+    });
+}
+
+function carregarLocalStorage() {
+    const cont = document.getElementById('containerM3');
+    if (!cont) return;
+
+    // O botão Carregar continua funcionando como toggle:
+    // se a tabela estiver aberta, fecha; se estiver fechada, abre e busca os dados.
+    if (cont.style.display === 'block') {
+        cont.style.display = 'none';
+        return;
+    }
+
+    atualizarListaMedicoesSalvas();
 }

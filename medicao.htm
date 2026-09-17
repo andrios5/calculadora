@@ -133,13 +133,23 @@
 
                 <!-- Botões de exportação -->
                 <section class="medicao-export" id="bottonsM2">
+                    <button id="loadL" type="button">Carregar</button>
                     <button id="saveL" type="button">Salvar</button>
                     <button id="ordenarM2" type="button">Ordenar</button>
                     <button id="export2" type="button">Exportar</button>
                     <select name="formatoEX" id="formatoEX" tabindex="-1"></select>  <!-- Para não selecionar com o teclado, use tabindex="-1" -->
                 </section>
 
+                <div class="container3" id="containerM3">
+                    <table id="m3">
+                        <thead id="theadM3">
+                            <!--<tr><th>Soma dos Itens</th><th>Área</th></tr>-->
+                        </thead>
+                        <tbody id="resultadoM3"></tbody>
+                    </table>
+                </div>
             </section>
+
         </section>
         <!-- Import de arquivo -->
             <input type="file" id="seletorDeArquivo" accept=".csv,.xls,text/csv,application/vnd.ms-excel" tabindex="-1">

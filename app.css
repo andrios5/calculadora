@@ -1334,7 +1334,8 @@ html[data-theme="dark"] .card-icon {
 .medicao #formatoEX,
 .medicao #ordenarM2,
 .medicao #edicaoM2,
-.medicao #saveL {
+.medicao #saveL,
+.medicao .container3 {
     display: none; /* JS mostra quando há dados */
 }
 
@@ -1484,6 +1485,19 @@ button.ins-toggle {
 
 .instructions li:last-child {
     margin-bottom: 0;
+}
+
+#m3 {
+    width: 100%;
+}
+
+#m3 th,
+#m3 td {
+    vertical-align: middle;
+}
+
+#resultadoM3 button {
+    margin-right: 4px;
 }
 
 
