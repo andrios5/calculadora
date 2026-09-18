@@ -1319,11 +1319,11 @@ html[data-theme="dark"] .card-icon {
 }
 
 .medicao .medicao-actions button {
-    min-width: auto;
+    width: 90px;
     min-height: 48px;
     padding: 10px 20px;
 
-    border-radius: 999px;
+    
     font-size: .9rem;
 }
 
@@ -1360,13 +1360,13 @@ html[data-theme="dark"] .card-icon {
 }
 
 .medicao #formatoEX {
-    padding: 10px 14px;
+    padding: 8px 10px;
     background: var(--surface);
     color: var(--text);
     border: 1px solid var(--border);
     border-radius: 999px;
 
-    font-size: .9rem;
+    font-size: .8rem;
 }
 
 /* --- Input de arquivo (import) --- */
@@ -1636,6 +1636,12 @@ table#m3 thead th {
     }
     .medicao .containerNome input#nomeMed{
         min-width: 60px;
+    }
+
+    .medicao .medicao-actions button {
+        width: 75px;
+        font-size: 0.8rem;
+        padding: 4px 8px;
     }
 }
 
@@ -2102,7 +2108,12 @@ table#m3 thead th {
 }
 
 @media (max-width: 500px) {
-
+    .medicao .app-main {
+        padding: 10px 5px;
+    }
+    .medicao .out{
+        padding: 8px;
+    }
     .compara .compara-actions select {
         width: 100%;
         max-width: 25vw;
