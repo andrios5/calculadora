@@ -2489,7 +2489,7 @@ function renderListaMedicoesSalvas(dados) {
 
     cont.style.display = 'block';
 
-    thead.innerHTML = '<tr><th>Nome</th><th>Data</th><th>Soma</th></tr>';
+    thead.innerHTML = '<tr><th>Nome</th><th>Data</th><th>Soma</th><th>Ações</th></tr>';
     tbody.innerHTML = '';
 
     const listaOriginal = Array.isArray(dados) ? dados : [];
@@ -2565,12 +2565,13 @@ function renderListaMedicoesSalvas(dados) {
 
     let textoResumo = 'Medições salvas: ' + registrosMedicoesSalvos.length;
     const chaves = Object.keys(resumoPorGrupo);
+    let textoSoma = '';
 
     if (chaves.length === 1) {
         const grupo = chaves[0];
-        textoResumo += ' | Soma Total (' + grupo + '): ' + formatarValorGrupo(grupo, resumoPorGrupo[grupo]);
+        textoSoma += 'Soma Total (' + grupo + '): ' + formatarValorGrupo(grupo, resumoPorGrupo[grupo]);
     } else if (chaves.length > 1) {
-        textoResumo += ' | ' + chaves.map(function(grupo) {
+        textoSoma += chaves.map(function(grupo) {
             return grupo + ': ' + formatarValorGrupo(grupo, resumoPorGrupo[grupo]);
         }).join(' | ');
     }
@@ -2581,7 +2582,7 @@ function renderListaMedicoesSalvas(dados) {
         tabela.appendChild(tfoot);
     }
 
-    tfoot.innerHTML = '<tr><th colspan="5">' + textoResumo + '</th></tr>';
+    tfoot.innerHTML = '<tr><th colspan="2">' + textoResumo + '</th><th colspan="3">' + textoSoma + '</th></tr>';
 
     adicionarListenerMedicoesSalvas(tbody);
 }
