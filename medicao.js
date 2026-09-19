@@ -7,9 +7,11 @@ calcIframe = document.querySelector('#calc-iframe');
 
 toggleCalc.addEventListener('click', function () {
     if (calcIframe.style.display === 'block') {
+        localStorage.setItem('importDisplay', '0');
         calcIframe.style.display = 'none';} else {
     calcIframe.style.display = 'block';
-    seletorDeArquivo.style.display = 'none';}
+    seletorDeArquivo.style.display = 'none';
+    localStorage.setItem('importDisplay', '2');}
 });
 
 toggleInst.addEventListener('click', function () {
@@ -20,9 +22,11 @@ toggleInst.addEventListener('click', function () {
 
 toggleImport.addEventListener('click', function () {
     if (seletorDeArquivo.style.display === 'block') {
-        seletorDeArquivo.style.display = 'none';} else {
+        seletorDeArquivo.style.display = 'none';
+        localStorage.setItem('importDisplay', '0');} else {
     seletorDeArquivo.style.display = 'block';
-    calcIframe.style.display = 'none';}
+    calcIframe.style.display = 'none';
+    localStorage.setItem('importDisplay', '3');}
 });
 
 
@@ -2247,6 +2251,12 @@ document.addEventListener('DOMContentLoaded', () => {
         formatoEX.value = tempEX || 0; // Atualiza o campo de formato de exportação com o valor do backup
         exibeArea2(array2d); // Chama a função para exibir os resultados
         typeMed();
+    }
+    const importDisplay = localStorage.getItem('importDisplay'); // Obtém o valor do importDisplay do localStorage
+    if (importDisplay === '3') { // Verifica se há um valor existente
+        seletorDeArquivo.style.display = 'block';
+    } else if (importDisplay === '2') {
+        calcIframe.style.display = 'block';
     }
 });
 
