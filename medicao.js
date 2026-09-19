@@ -884,7 +884,9 @@ function resetarC2(){
     containerM0.style.display = 'none'
     document.querySelector('#altura').value = ''
     document.querySelector('#largura').value = ''
-    document.querySelector('#nome2').value = tempNome2 // Reseta o campo de nome para o valor temporário
+    if (tempNome2 !== undefined && tempNome2 !== null && tempNome2 !== '') {
+    document.querySelector('#nome2').value = tempNome2} else {
+    document.querySelector('#nome2').value = 'Área';} // Reseta o campo de nome para o valor temporário
     menosC2.style.display = 'none'
     export2.style.display = 'none'
     resetC2.style.display = 'none'
@@ -2248,6 +2250,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Funções para salvar e carregar medições
+
 let registrosMedicoesSalvos = [];
 
 function gerarIdMedicao() {
@@ -2687,8 +2691,7 @@ function salvarLocalStorage() {
     const selectTipo = document.getElementById('medType');
     const tipo = Number(selectTipo ? selectTipo.value : 0);
 
-    const dataAtual = obterDataHoraFormatada();
-    tempData = dataAtual;
+    const dataAtual = tempData || obterDataHoraFormatada();
     dataMedicao();
 
     // Calcula a somaT diretamente do array2d, sem depender de variáveis locais de outras funções.
